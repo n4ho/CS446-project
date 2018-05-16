@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public MainThread thread;
-    public ArrayList<Character> characters;
+    public GameModel model;
 
     public GameView(Context context){
         super(context);
@@ -27,9 +27,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         thread.setRunning(true);
         thread.start();
-        characters=new ArrayList<Character>();
+        model=new GameModel(this.getContext());
 
-        characters.add(new Protagonist(this.getContext(),100,100));
     }
 
     @Override
@@ -56,7 +55,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         if(canvas!=null){
             // draw all the components here
-            for(Character c: characters){
+            for(Character c: model.characters){
                 c.draw(canvas);
             }
         }

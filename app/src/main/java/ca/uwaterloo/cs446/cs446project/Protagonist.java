@@ -18,8 +18,8 @@ public class Protagonist extends Character {
     private int drawIndex;
     private int changeRate=0; // change image per changeRate FPSs
 
-    public Protagonist(Context context, int width, int height) {
-        super(context, width, height);
+    public Protagonist(Context context, GameModel model, int width, int height) {
+        super(context, model, width, height);
         idle=new ArrayList<Bitmap>();
         run=new ArrayList<Bitmap>();
 

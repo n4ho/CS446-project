@@ -12,6 +12,7 @@ import android.graphics.Paint;
 
 public class Character {
     private Context context;
+    protected GameModel model;
 
     // Boundbox for physical collision
     public int top=100;
@@ -25,12 +26,14 @@ public class Character {
 
     // drawable
 
-    public Character(Context context, int width, int height){
+    public Character(Context context, GameModel model, int width, int height){
         this.context=context;
+        this.model=model;
         this.width=width;
         this.height=height;
     }
 
+    // factory method
     public Character CharacterFactory(){
 
         return null;

@@ -6,8 +6,8 @@ import android.content.Context;
  * Created by ethan on 2018-05-16.
  */
 
-public class StaticObject extends PhysicalModel {
-    public StaticObject(Context context){
+public class DynamicObject extends PhysicalModel {
+    public DynamicObject(Context context){
         super(context);
     }
 }
