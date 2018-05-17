@@ -21,7 +21,7 @@ public class Character {
     public int width;
     public int height;
 
-    //hahahah
+    //ha
 
     public int state=1;
     // 0: idle
