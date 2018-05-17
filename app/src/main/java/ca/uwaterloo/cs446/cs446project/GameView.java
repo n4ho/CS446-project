@@ -3,6 +3,7 @@ package ca.uwaterloo.cs446.cs446project;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 
@@ -55,10 +56,39 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         if(canvas!=null){
             // draw all the components here
-            for(Character c: model.characters){
-                c.draw(canvas);
-            }
+            model.optionalDraw(0, canvas);
+            model.optionalDraw(1,canvas);
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                System.out.println("action down");
+                for(UI ui: model.uis){
+                    if(ui.hitTest(event.getX(), event.getY())){
+                        ui.setSelected(true);
+                        if(ui.name=="LeftButton"){
+                            System.out.println("left button clicked");
+                            model.characters.get(0).left-=10;
+                        }else if(ui.name=="RightButton"){
+                            System.out.println("right button clicked");
+                            model.characters.get(0).left+=10;
+                        }
+                    }
+                }
+
+                break;
+
+            case MotionEvent.ACTION_UP:
+
+                break;
+
+            default:
+                break;
+        }
+        return super.onTouchEvent(event);
     }
 
     public void update(){

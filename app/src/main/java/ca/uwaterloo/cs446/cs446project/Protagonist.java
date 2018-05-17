@@ -34,7 +34,6 @@ public class Protagonist extends Character {
     }
 
     public void draw(Canvas canvas){
-        this.left++;
         switch (this.state){
             case 0: // idle
                 canvas.drawBitmap(idle.get(drawIndex),left,top,null);
