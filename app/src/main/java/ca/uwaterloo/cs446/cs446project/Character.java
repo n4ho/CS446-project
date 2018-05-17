@@ -21,7 +21,15 @@ public class Character {
     public int width;
     public int height;
 
-    //ha
+    // Movement
+    double scale;
+    double thrust;
+    double gravity;
+    double velocityX;
+    double velocityY;
+    double maxVelocity;
+
+
 
     public int state=1;
     // 0: idle
@@ -35,6 +43,14 @@ public class Character {
         this.width=width;
         this.height=height;
 
+        //double scale = 60.0 / model.fps;
+        this.scale = 1;
+        this.thrust = 0.25 * scale;
+        this.gravity = 0.01 * scale;
+        this.velocityX = 0;
+        this.velocityY = 0;
+        this.maxVelocity = 0.5;
+
     }
 
     // factory method
@@ -43,7 +59,33 @@ public class Character {
         return null;
     }
 
+    // movement method
+    public void thrustUp() {
+        velocityY -= 3 * thrust;
+    }
+
+    public void thrustLeft() {
+        velocityX -= thrust;
+        if(velocityX > maxVelocity) velocityX = maxVelocity;
+        if(velocityX < -maxVelocity) velocityX = -maxVelocity;
+    }
+
+    public void thrustRight() {
+        velocityX += thrust;
+        if(velocityX > maxVelocity) velocityX = maxVelocity;
+        if(velocityX < -maxVelocity) velocityX = -maxVelocity;
+    }
+
+    public void stopX(){
+        velocityX = 0;
+    }
+
 
     public void draw(Canvas canvas){
+        velocityY += gravity;
+
+        // finally update the position
+        top = top + (int) velocityY;
+        left = left + (int) velocityX;
     }
 }
