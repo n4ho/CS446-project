@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+
 /**
  * Created by ethan on 2018-05-15.
  */
@@ -20,6 +21,8 @@ public class Character {
     public int width;
     public int height;
 
+    //hahahah
+
     public int state=1;
     // 0: idle
     // 1: run
@@ -31,6 +34,7 @@ public class Character {
         this.model=model;
         this.width=width;
         this.height=height;
+
     }
 
     // factory method
