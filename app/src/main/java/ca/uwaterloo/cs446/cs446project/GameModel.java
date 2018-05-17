@@ -70,6 +70,12 @@ public class GameModel {
         }
     }
 
+    public void update(){
+        for (Character c: characters) {
+            c.update();
+        }
+    }
+
     public UI getUI(String name){
         for(UI ui: uis){
             if(ui.name==name) return ui;

@@ -31,9 +31,11 @@ public class Character {
 
 
 
-    public int state=1;
+    public int state=0;
     // 0: idle
     // 1: run
+    // 2: run left
+    // 3: jump
 
     // drawable
 
@@ -45,11 +47,11 @@ public class Character {
 
         //double scale = 60.0 / model.fps;
         this.scale = 1;
-        this.thrust = 0.25 * scale;
-        this.gravity = 0.01 * scale;
+        this.thrust = 5 * scale;
+        this.gravity = 0.05 * scale;
         this.velocityX = 0;
         this.velocityY = 0;
-        this.maxVelocity = 0.5;
+        this.maxVelocity = 15;
 
     }
 
@@ -80,12 +82,29 @@ public class Character {
         velocityX = 0;
     }
 
+    public void update(){
 
-    public void draw(Canvas canvas){
+        // apply gravity
         velocityY += gravity;
 
-        // finally update the position
+        // TO DO: if character is standing on a surface set velocityY to 0
+        if(top >= 800) velocityY = 0;
+
+        // update position
         top = top + (int) velocityY;
         left = left + (int) velocityX;
+
+        // TO DO: if character is too far away from center of the screen, do transformation
+
+        // these bounds is only for testing, should be updated later on
+        if (top > 800) top = 800;
+        if (top < 0) top = 0;
+        if (left > 1900) left = 1900;
+        if (left < 0) left = 0;
+
+    }
+
+
+    public void draw(Canvas canvas){
     }
 }
