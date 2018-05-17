@@ -128,16 +128,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
             case MotionEvent.ACTION_UP:
                 System.out.println("action up");
                 for(UI ui: model.uis){
-                    if(ui.name=="LeftButton"){
-                        System.out.println("left button released");
-                        model.characters.get(0).stopX();
-                        //model.characters.get(0).state=0;
-                        return true;
-                    }else if(ui.name=="RightButton"){
-                        System.out.println("right button released");
-                        model.characters.get(0).stopX();
-                        //model.characters.get(0).state=0;
-                        return true;
+                    if(ui.hitTest(event.getX(), event.getY())) {
+                        ui.setSelected(true);
+                        if (ui.name == "LeftButton") {
+                            System.out.println("left button released");
+                            model.characters.get(0).stopX();
+                            //model.characters.get(0).state=0;
+                            return true;
+                        } else if (ui.name == "RightButton") {
+                            System.out.println("right button released");
+                            model.characters.get(0).stopX();
+                            //model.characters.get(0).state=0;
+                            return true;
+                        }
                     }
                 }
 
@@ -146,13 +149,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
             default:
                 break;
         }
-        return super.onTouchEvent(event);
+        //return super.onTouchEvent(event);
+        return true;
     }
 
     @Override
     public boolean onDown(MotionEvent event) {
-        //Log.d(DEBUG_TAG,"onDown: " + event.toString());
-        return true;
+        System.out.println("On DOwn");
+        return false;
     }
 
     private static final int SWIPE_MIN_DISTANCE = 20;
@@ -161,7 +165,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2,float velocityX, float velocityY) {
-        //Log.d(DEBUG_TAG, "onFling: " + event1.toString() + event2.toString());
         System.out.println("On Fling");
         if (Math.abs(e1.getX() - e2.getX()) > SWIPE_MAX_OFF_PATH){
                 return false;
@@ -171,7 +174,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
             System.out.println("swipe up");
             //model.characters.get(0).left-=10;
             model.characters.get(0).thrustUp();
-            model.characters.get(0).state=0;
+            //model.characters.get(0).state=0;
             return true;
         }
         return false;
@@ -179,19 +182,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
 
     @Override
     public void onLongPress(MotionEvent event) {
-        //Log.d(DEBUG_TAG, "onLongPress: " + event.toString());
+        //System.out.println("On Long Press");
     }
 
     @Override
     public boolean onScroll(MotionEvent event1, MotionEvent event2, float distanceX,
                             float distanceY) {
-        //Log.d(DEBUG_TAG, "onScroll: " + event1.toString() + event2.toString());
+        //System.out.println("On Scroll");
         return true;
     }
 
     @Override
     public void onShowPress(MotionEvent event) {
-        //Log.d(DEBUG_TAG, "onShowPress: " + event.toString());
+        //System.out.println("On Show Press");
     }
 
     @Override
