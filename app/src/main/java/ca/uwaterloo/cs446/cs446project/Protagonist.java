@@ -54,7 +54,7 @@ public class Protagonist extends Character {
 
 
     public void draw(Canvas canvas){
-        this.left++;
+        //this.left++;
 
         super.draw(canvas);
 
