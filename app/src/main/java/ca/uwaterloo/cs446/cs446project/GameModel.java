@@ -1,13 +1,11 @@
 package ca.uwaterloo.cs446.cs446project;
 
 import android.content.Context;
-<<<<<<< HEAD
 import android.graphics.Point;
 import android.view.Display;
-=======
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
->>>>>>> 031528b9577050e39f932771547f240bb60edfea
+
 
 import java.util.ArrayList;
 
