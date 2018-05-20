@@ -9,6 +9,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.support.v4.content.ContextCompat;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 
@@ -86,7 +87,39 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                pp.draw(canvas);
             }
+            model.optionalDraw(0, canvas);
+            model.optionalDraw(1,canvas);
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                System.out.println("action down");
+                for(UI ui: model.uis){
+                    if(ui.hitTest(event.getX(), event.getY())){
+                        ui.setSelected(true);
+                        if(ui.name=="LeftButton"){
+                            System.out.println("left button clicked");
+                            model.characters.get(0).left-=10;
+                        }else if(ui.name=="RightButton"){
+                            System.out.println("right button clicked");
+                            model.characters.get(0).left+=10;
+                        }
+                    }
+                }
+
+                break;
+
+            case MotionEvent.ACTION_UP:
+
+                break;
+
+            default:
+                break;
+        }
+        return super.onTouchEvent(event);
     }
 
     public void update(){
