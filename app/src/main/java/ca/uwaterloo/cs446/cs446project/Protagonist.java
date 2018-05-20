@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 
 import java.util.ArrayList;
 
@@ -34,10 +35,11 @@ public class Protagonist extends Character {
     }
 
     public void draw(Canvas canvas){
+
         this.left++;
         switch (this.state){
             case 0: // idle
-                canvas.drawBitmap(idle.get(drawIndex),left,top,null);
+                canvas.drawBitmap(idle.get(drawIndex),left,top, null);
             if(changeRate==0) {
                 if (drawIndex >= idle.size() - 1) {
                     drawIndex = 0;
@@ -52,7 +54,7 @@ public class Protagonist extends Character {
 
             case 1: // run
 
-                canvas.drawBitmap(run.get(drawIndex),left,top,null);
+                canvas.drawBitmap(run.get(drawIndex),left,top, null);
                 if(changeRate==0) {
                     if (drawIndex >= run.size() - 1) {
                         drawIndex = 0;
