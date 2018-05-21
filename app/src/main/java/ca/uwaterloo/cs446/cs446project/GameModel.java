@@ -15,21 +15,22 @@ import java.util.ArrayList;
 
 public class GameModel {
     public ArrayList<Character> characters;
-    public ArrayList<PhysicalModel> structures;
+    public ArrayList<Frame> structures;
 
     Display display;
-    FloorConstant allFloors;
+
     Point point;
     public ArrayList<UI> uis;
+    public int cur_frame = 3;
 
     public GameModel(Context context, Display d){
         characters=new ArrayList<Character>();
-        structures=new ArrayList<PhysicalModel>();
+        structures=new ArrayList<Frame>();
 
         display = d;
         point = new Point();
         display.getSize(point);
-        allFloors = new FloorConstant(context, point);
+
 
         uis=new ArrayList<UI>();
 
@@ -47,9 +48,8 @@ public class GameModel {
         );
         characters.add(new Protagonist(context,this,100,100));
 
-        structures.add(new log(context, FloorConstant.log3_src, FloorConstant.log3_dest, FloorConstant.log));
-        for (int i = 0; i < FloorConstant.frames.size(); i++) {
-            structures.add(new Floor(context, FloorConstant.frames.get(i), i));
+        for (int i = 0; i < 4; i++) {
+            structures.add(new Frame(i, point, context));
         }
 
     }
@@ -64,7 +64,7 @@ public class GameModel {
                 c.draw(canvas);
             }
         }else if(option==2){
-            for (PhysicalModel pm: structures){
+            for (Frame pm: structures){
                 // add draw method
             }
         }

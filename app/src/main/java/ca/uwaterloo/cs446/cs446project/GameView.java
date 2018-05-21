@@ -83,10 +83,20 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 c.draw(canvas);
             }
 
-           for(PhysicalModel pp : model.structures) {
+            //drawing current frame
+            model.structures.get(model.cur_frame).draw(canvas);
 
-               pp.draw(canvas);
+            for (int i = 0; i < 200; i++) {
+                ((ladder) model.structures.get(model.cur_frame).floors.get(1)).move();
+                try {
+                    wait(500);
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                model.structures.get(model.cur_frame).floors.get(1).draw(canvas);
             }
+
             model.optionalDraw(0, canvas);
             model.optionalDraw(1,canvas);
         }
