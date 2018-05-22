@@ -108,8 +108,8 @@ public class Frame {
         if (num == 0) {
             //first frame
             backgrounds.add(ground);
-            src.add(new Rect (0, ground.getHeight() - point.y, point.x, ground.getHeight()));
-            dest.add( new Rect (0, 0, point.x, point.y));
+            src.add(new Rect (0, 0, point.x, ground.getHeight()));
+            dest.add( new Rect (0, point.y - 200, point.x, point.y));
             floors.add(new Floor(context, ground, src, dest));
 
 
@@ -118,14 +118,18 @@ public class Frame {
         else if (num == 1) {
             //second frame
             backgrounds.add(ground);
-            src.add(new Rect (0, ground.getHeight() - point.y, 300, ground.getHeight()));
-            dest.add( new Rect (0, 0, 250, point.y));
-            src.add(new Rect (0, ground.getHeight() - 200, 200, ground.getHeight()-100));
+            src.add(new Rect (0, 0, 300, ground.getHeight()));
+            dest.add( new Rect (0, point.y-200, 250, point.y));
+
+            src.add(new Rect (0, 0, 200, ground.getHeight()));
             dest.add(new Rect (350, point.y - 350, 550, point.y - 250));
-            src.add(new Rect (300, ground.getHeight() - point.y, 750, ground.getHeight()));
-            dest.add(new Rect (600, 0, 1050, point.y));
-            src.add(new Rect (400, ground.getHeight() - point.y, 800, ground.getHeight()));
-            dest.add(new Rect (1300, -1100, point.x, point.y));
+
+            src.add(new Rect (300, 0, 750, ground.getHeight()));
+            dest.add(new Rect (600, point.y-200, 1050, point.y));
+
+            src.add(new Rect (400, 0, 800, ground.getHeight()));
+            dest.add(new Rect (1300, point.y-450, point.x, point.y));
+
             floors.add(new Floor(context, ground, src, dest));
 
 
@@ -134,11 +138,11 @@ public class Frame {
         else if (num == 2) {
             //third frame
             backgrounds.add(ground);
-            src.add(new Rect (0, ground.getHeight() - point.y, 750, ground.getHeight()));
-            dest.add( new Rect (0, -1700, 750, point.y));
-            src.add(new Rect (500, ground.getHeight() - point.y, 1000,
-                   ground.getHeight()));
-            dest.add(new Rect (1200, 0, point.x, point.y));
+            src.add(new Rect (0, 0, 800, ground.getHeight()));
+            dest.add( new Rect (0, point.y - 370, 750, point.y));
+
+            src.add(new Rect (200, 0, 1000, ground.getHeight()));
+            dest.add(new Rect (1200, point.y - 200, point.x, point.y));
 
             ArrayList<Rect> log_src = new ArrayList<>();
             ArrayList<Rect> log_dest = new ArrayList<>();
@@ -154,32 +158,32 @@ public class Frame {
         else if (num == 3) {
             //forth frame
             backgrounds.add(ground);
-            src.add(new Rect (0, ground.getHeight() - point.y, 400, ground.getHeight()));
-            dest.add( new Rect (0, -400, 400, point.y));
+            src.add(new Rect (0, 0, 400, ground.getHeight()));
+            dest.add( new Rect (0, point.y-250, 400, point.y));
 
-            src.add(new Rect (800, ground.getHeight() - point.y, 950, ground.getHeight()));
-            dest.add( new Rect (475, -900, 625, point.y));
+            src.add(new Rect (800, 0, 950, ground.getHeight()));
+            dest.add( new Rect (475, point.y-350, 625, point.y));
 
-            src.add(new Rect (500, ground.getHeight() - point.y, 800, ground.getHeight()));
-            dest.add( new Rect (675, 200, 975, point.y - 300));
+            src.add(new Rect (500, 0, 800, ground.getHeight()));
+            dest.add( new Rect (675, point.y - 350, 975, point.y - 300));
 
-            src.add(new Rect (0, ground.getHeight() - point.y, 250, ground.getHeight()));
-            dest.add( new Rect (440, 0, 690, point.y - 500));
+            src.add(new Rect (0, 0, 250, ground.getHeight()));
+            dest.add( new Rect (440, point.y - 550, 690, point.y - 500));
 
-            src.add(new Rect (0, ground.getHeight() - point.y, 300, ground.getHeight()));
-            dest.add( new Rect (50, -150, 350, point.y -650));
+            src.add(new Rect (0, 0, 300, ground.getHeight()));
+            dest.add( new Rect (50, point.y - 700, 350, point.y -650));
 
-            src.add(new Rect (100, ground.getHeight() - point.y, 670, ground.getHeight()));
-            dest.add( new Rect (400, -300, 970, point.y -800));
+            src.add(new Rect (100, 0, 670, ground.getHeight()));
+            dest.add( new Rect (400, point.y - 850, 970, point.y -800));
 
-            src.add(new Rect (0, ground.getHeight() - point.y, point.x - 625, ground.getHeight()));
-            dest.add( new Rect (625, 0, point.x, point.y ));
+            src.add(new Rect (0, 0, point.x - 625, ground.getHeight()));
+            dest.add( new Rect (625, point.y - 200, point.x, point.y ));
 
-            src.add(new Rect (0, ground.getHeight() - point.y, 75, ground.getHeight()));
-            dest.add( new Rect (1150, -2000, 1225, point.y ));
+            src.add(new Rect (0, 0, 75, ground.getHeight()));
+            dest.add( new Rect (1150, point.y - 400, 1225, point.y ));
 
-            src.add(new Rect (1400, ground.getHeight() - point.y, point.x, ground.getHeight()));
-            dest.add( new Rect (1400, 0, point.x, point.y - 450 ));
+            src.add(new Rect (1400, 0, point.x, ground.getHeight()));
+            dest.add( new Rect (1400, point.y - 500, point.x, point.y - 450 ));
 
             ArrayList<Rect> spike_src = new ArrayList<>();
             ArrayList<Rect> spike_dest = new ArrayList<>();
@@ -207,22 +211,29 @@ public class Frame {
         else if (num == 4) {
             //fifth frame
             backgrounds.add(ground);
-            src.add(new Rect (0, ground.getHeight() - point.y, 300, ground.getHeight()));
-            dest.add( new Rect (0, -500, 300, point.y));
-            src.add(new Rect (500, ground.getHeight() - point.y, 1030, ground.getHeight()));
-            dest.add( new Rect (430, -1000, 900, point.y));
-            src.add(new Rect (1000, ground.getHeight() - point.y, 1400, ground.getHeight()));
-            dest.add( new Rect (1000, -300, 1400, point.y));
-            src.add(new Rect (1000, ground.getHeight() - point.y, 1400, ground.getHeight()));
-            dest.add( new Rect (1300, -1500, point.x, point.y));
-            src.add(new Rect (200, ground.getHeight() - point.y, 400, ground.getHeight()));
-            dest.add( new Rect (200, 0, 400, point.y-600));
-            src.add(new Rect (550, ground.getHeight() - point.y, 700, ground.getHeight()));
-            dest.add( new Rect (550, -100, 700, point.y-700));
-            src.add(new Rect (850, ground.getHeight() - point.y, 1200, ground.getHeight()));
-            dest.add( new Rect (850, -200, 1200, point.y-750));
-            src.add(new Rect (200, ground.getHeight() - point.y, 400, ground.getHeight()));
-            dest.add( new Rect (1350, 0, 1550, point.y-600));
+            src.add(new Rect (0, 0, 300, ground.getHeight()));
+            dest.add( new Rect (0, point.y - 200, 300, point.y));
+
+            src.add(new Rect (500, 0, 1030, ground.getHeight()));
+            dest.add( new Rect (430, point.y - 270, 900, point.y));
+
+            src.add(new Rect (1000, 0, 1400, ground.getHeight()));
+            dest.add( new Rect (1000, point.y - 200, 1400, point.y));
+
+            src.add(new Rect (1000, 0, 1400, ground.getHeight()));
+            dest.add( new Rect (1300, point.y - 350, point.x, point.y));
+
+            src.add(new Rect (200, 0, 400, ground.getHeight()));
+            dest.add( new Rect (200, point.y - 650, 400, point.y-600));
+
+            src.add(new Rect (550, 0, 700, ground.getHeight()));
+            dest.add( new Rect (550, point.y - 750, 700, point.y-700));
+
+            src.add(new Rect (850, 0, 1200, ground.getHeight()));
+            dest.add( new Rect (850, point.y - 800, 1200, point.y-750));
+
+            src.add(new Rect (200, 0, 400, ground.getHeight()));
+            dest.add( new Rect (1350, point.y - 650, 1550, point.y-600));
 
             //ladder
             ArrayList<Rect> ladder_src = new ArrayList<>();
@@ -237,20 +248,26 @@ public class Frame {
         else if (num == 5) {
             //sixth frame
             backgrounds.add(ground);
-            src.add(new Rect (0, ground.getHeight() - point.y, 300, ground.getHeight()));
-            dest.add( new Rect (0, -500, 300, point.y));
-            src.add(new Rect (0, ground.getHeight() - point.y, 300, ground.getHeight()));
-            dest.add( new Rect (400, -500, 850, point.y));
-            src.add(new Rect (0, ground.getHeight() - point.y, 300, ground.getHeight()));
-            dest.add( new Rect (1000, -500, point.x, point.y));
-            src.add(new Rect (150, ground.getHeight() - point.y, 400, ground.getHeight()));
-            dest.add( new Rect (150, -200, 400, point.y-600));
-            src.add(new Rect (500, ground.getHeight() - point.y, 600, ground.getHeight()));
-            dest.add( new Rect (500, -250, 600, point.y-650));
-            src.add(new Rect (300, ground.getHeight() - point.y, 700, ground.getHeight()));
-            dest.add( new Rect (800, -300, 1100, point.y-700));
-            src.add(new Rect (0, ground.getHeight() - point.y, point.x-1350, ground.getHeight()));
-            dest.add( new Rect (1200, -100, point.x, point.y-550));
+            src.add(new Rect (0, 0, 500, ground.getHeight()));
+            dest.add( new Rect (0, point.y-200, 300, point.y));
+
+            src.add(new Rect (0, 0, 700, ground.getHeight()));
+            dest.add( new Rect (400, point.y - 300, 850, point.y));
+
+            src.add(new Rect (0, 0, 600, ground.getHeight()));
+            dest.add( new Rect (1000, point.y - 220, point.x, point.y));
+
+            src.add(new Rect (150, 0, 400, ground.getHeight()));
+            dest.add( new Rect (150, point.y - 650, 400, point.y-600));
+
+            src.add(new Rect (500, 0, 600, ground.getHeight()));
+            dest.add( new Rect (500, point.y - 700, 600, point.y-650));
+
+            src.add(new Rect (300, 0, 700, ground.getHeight()));
+            dest.add( new Rect (800, point.y - 750, 1100, point.y-700));
+
+            src.add(new Rect (0, 0, point.x-1350, ground.getHeight()));
+            dest.add( new Rect (1200, point.y - 600, point.x, point.y-550));
 
 
             //ladder
@@ -273,10 +290,11 @@ public class Frame {
         else if (num == 6) {
             //forth frame
             backgrounds.add(ground);
-            src.add(new Rect (0, ground.getHeight() - point.y, point.x, ground.getHeight()));
-            dest.add( new Rect (point.x-800, 0, point.x, point.y));
-            src.add(new Rect (0, ground.getHeight() - point.y, point.x, ground.getHeight()));
-            dest.add( new Rect (0, 0, point.x, point.y-350));
+            src.add(new Rect (0, 0, point.x, ground.getHeight()));
+            dest.add( new Rect (point.x-800, point.y - 150, point.x, point.y));
+
+            src.add(new Rect (0, 0, point.x, ground.getHeight()));
+            dest.add( new Rect (0, point.y - 420, point.x, point.y-350));
 
             //magnet
             ArrayList<Rect> magnet_src = new ArrayList<>();
@@ -306,14 +324,17 @@ public class Frame {
         else if (num == 7){
             //fifth frame
             backgrounds.add(ground);
-            src.add(new Rect (0, ground.getHeight() - point.y, 300, ground.getHeight()));
-            dest.add( new Rect (0, 0, 300, point.y-350));
-            src.add(new Rect (0, ground.getHeight() - point.y, point.x, ground.getHeight()));
-            dest.add( new Rect (0, 0, point.x, point.y));
-            src.add(new Rect (0, ground.getHeight() - point.y, 800, ground.getHeight()));
-            dest.add( new Rect (point.x - 800, -200, point.x, point.y-600));
-            src.add(new Rect (0, ground.getHeight() - point.y, 400, ground.getHeight()));
-            dest.add( new Rect (point.x - 500, -150, point.x, point.y-800));
+            src.add(new Rect (0, 0, 300, ground.getHeight()));
+            dest.add( new Rect (0, point.y - 400, 300, point.y-350));
+
+            src.add(new Rect (0, 0, point.x, ground.getHeight()));
+            dest.add( new Rect (0, point.y - 150, point.x, point.y));
+
+            src.add(new Rect (0,0, 800, ground.getHeight()));
+            dest.add( new Rect (point.x - 800, point.y - 650, point.x, point.y-600));
+
+            src.add(new Rect (0, 0, 400, ground.getHeight()));
+            dest.add( new Rect (point.x - 500, point.y-850, point.x, point.y-800));
 
             //ladder
             ArrayList<Rect> ladder_src = new ArrayList<>();
@@ -339,8 +360,8 @@ public class Frame {
         else if (num == 8) {
             //sixth frame
             backgrounds.add(ground);
-            src.add(new Rect (0, ground.getHeight() - point.y, point.x, ground.getHeight()));
-            dest.add( new Rect (0, 0, point.x, point.y));
+            src.add(new Rect (0, 0, point.x, ground.getHeight()));
+            dest.add( new Rect (0, point.y - 150, point.x, point.y));
 
             ArrayList<Rect> wraith_src = new ArrayList<>();
             ArrayList<Rect> wraith_dest = new ArrayList<>();
@@ -357,24 +378,32 @@ public class Frame {
         else if (num == 9) {
 
             backgrounds.add(ground);
-            src.add(new Rect (0, ground.getHeight() - point.y, 200, ground.getHeight()));
-            dest.add( new Rect (0, -2500, 200, point.y));
-            src.add(new Rect (150, ground.getHeight() - point.y, 300, ground.getHeight()));
-            dest.add( new Rect (350, -1500, 500, point.y));
-            src.add(new Rect (0, ground.getHeight() - point.y, 150, ground.getHeight()));
-            dest.add( new Rect (500, -500, 650, point.y));
-            src.add(new Rect (300, ground.getHeight() - point.y, 550, ground.getHeight()));
-            dest.add( new Rect (800, -500, 1050, point.y));
-            src.add(new Rect (0, ground.getHeight() - point.y, 200, ground.getHeight()));
-            dest.add( new Rect (1050, -1500, 1250, point.y));
-            src.add(new Rect (300, ground.getHeight() - point.y, 550, ground.getHeight()));
-            dest.add( new Rect (1250, -500, 1400, point.y));
-            src.add(new Rect (0, ground.getHeight() - point.y, 400, ground.getHeight()));
-            dest.add( new Rect (250, 0, 650, point.y-600));
-            src.add(new Rect (300, ground.getHeight() - point.y, 500, ground.getHeight()));
-            dest.add( new Rect (750, -100,950,  point.y - 700));
-            src.add(new Rect (0, ground.getHeight() - point.y, point.x - 1050, ground.getHeight()));
-            dest.add( new Rect (1050, -200, point.x, point.y-750));
+            src.add(new Rect (0, 0, 700, ground.getHeight()));
+            dest.add( new Rect (0, point.y - 550, 200, point.y));
+
+            src.add(new Rect (150, 0, 600, ground.getHeight()));
+            dest.add( new Rect (350, point.y - 400, 500, point.y));
+
+            src.add(new Rect (0, 0, 150, ground.getHeight()));
+            dest.add( new Rect (500, point.y - 300, 650, point.y));
+
+            src.add(new Rect (300, 0, 550, ground.getHeight()));
+            dest.add( new Rect (800, point.y - 300, 1050, point.y));
+
+            src.add(new Rect (0, 0, 600, ground.getHeight()));
+            dest.add( new Rect (1050, point.y - 400, 1250, point.y));
+
+            src.add(new Rect (300, 0, 550, ground.getHeight()));
+            dest.add( new Rect (1250, point.y - 200, 1400, point.y));
+
+            src.add(new Rect (0, 0, 400, ground.getHeight()));
+            dest.add( new Rect (250, point.y - 650, 650, point.y-600));
+
+            src.add(new Rect (300, 0, 500, ground.getHeight()));
+            dest.add( new Rect (750, point.y - 770,950,  point.y - 700));
+
+            src.add(new Rect (0, 0, point.x - 1050, ground.getHeight()));
+            dest.add( new Rect (1050, point.y - 830, point.x, point.y-750));
 
             ArrayList<Rect> door_src = new ArrayList<>();
             ArrayList<Rect> door_dest = new ArrayList<>();
@@ -393,7 +422,7 @@ public class Frame {
 
             floors.add(new key(context, key, key_src, key_dest, 1300, point.y - 470));
             floors.add(new spike(context, spike_down, spike_src, spike_dest));
-            floors.add(new Floor(context, door, door_src, door_dest));
+            floors.add(new door(context, door, door_src, door_dest));
             floors.add(new Floor(context, ground, src, dest));
 
 

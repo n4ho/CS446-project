@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
@@ -30,9 +31,18 @@ public class Floor extends StaticObject {
         @Override
         public void draw (Canvas c) {
                 super.draw(c);
+                Paint p = new Paint();
+                p.setStyle(Paint.Style.FILL);
+                p.setColor(Color.BLACK);
+
 
                for (int i = 0; i < src.size(); i++) {
-                    c.drawBitmap(background, src.get(i), dest.get(i), null);
+                   Rect temp = new Rect (dest.get(i).left,
+                           dest.get(i).top - background.getHeight(), dest.get(i).right, dest.get(i).top);
+
+                   c.drawBitmap(background, src.get(i), temp, null);
+
+                   c.drawRect(dest.get(i), p);
 
                 }
 

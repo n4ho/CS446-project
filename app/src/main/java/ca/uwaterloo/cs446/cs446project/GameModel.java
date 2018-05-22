@@ -20,9 +20,13 @@ public class GameModel {
 
     Point point;
     public ArrayList<UI> uis;
-    public int cur_frame = 9;
+    public int cur_frame = 5;
+    public int fps;
+    public int current_char = 0;
 
-    public GameModel(Context context, Display d){
+    public GameModel(Context context, Display d, int _fps){
+
+        this.fps = _fps;
         characters=new ArrayList<Character>();
         structures=new ArrayList<Frame>();
 
@@ -36,14 +40,32 @@ public class GameModel {
         uis.add(new UI("LeftButton",
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.left),
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.left),
-                30, 650,
-                280,260)
+                (int)(point.x*0.01), (int)(point.y*0.8),
+                point.x/20,point.y/15)
         );
         uis.add(new UI("RightButton",
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.right),
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.right),
-                1500,650,
-                280,260)
+                (int)(point.x*0.08),(int)(point.y*0.8),
+                point.x/20,point.y/15)
+        );
+        uis.add(new UI("UpButton",
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
+                (int)(point.x*0.05), (int)(point.y*0.735),
+                point.y/15,point.x/20)
+        );
+        uis.add(new UI("DownButton",
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.down),
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.down),
+                (int)(point.x*0.05), (int)(point.y*0.85),
+                point.y/15,point.x/20)
+        );
+        uis.add(new UI("JumpButton",
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
+                (int)(point.x*0.85), (int)(point.y*0.83),
+                point.y/15,point.x/20)
         );
         characters.add(new Protagonist(context,this,100,100));
 
@@ -84,5 +106,25 @@ public class GameModel {
 
     public void hitTest(Rect rect) {
         //add hitTest here.
+    }
+
+    // left button clicked
+    public void left() {
+        // only thrust left/ right if character on ground
+        characters.get(current_char).thrustLeft();
+        characters.get(current_char).state=2;
+    }
+
+    // right button clicked
+    public void right(){
+        //model.characters.get(0).left+=10;
+        characters.get(current_char).thrustRight();
+        characters.get(current_char).state=1;
+    }
+
+    // slide up: jump
+    public void jump(){
+        characters.get(current_char).jump();
+        characters.get(current_char).state=0;
     }
 }

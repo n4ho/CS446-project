@@ -28,6 +28,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
     public GameModel model;
     Display display;
     private GestureDetectorCompat mDetector;
+    int fps = 60;
 
 
     public GameView(Context context, Display d){
@@ -45,7 +46,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         thread.setRunning(true);
         thread.start();
-        model=new GameModel(this.getContext(), display);
+        model=new GameModel(this.getContext(), display,fps);
 
     }
 
@@ -93,19 +94,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
             //drawing current frame
             model.structures.get(model.cur_frame).draw(canvas);
 
-           /* for (int i = 0; i < 200; i++) {
-                ((ladder) model.structures.get(model.cur_frame).floors.get(1)).move();
-                try {
-                    wait(500);
-                }
-                catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                model.structures.get(model.cur_frame).floors.get(1).draw(canvas);
-            }*/
-
-            //((wraith) model.structures.get(model.cur_frame).floors.get(1)).whenBombed();
-
             model.optionalDraw(0, canvas);
             model.optionalDraw(1,canvas);
         }
@@ -122,15 +110,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
                         ui.setSelected(true);
                         if(ui.name=="LeftButton"){
                             System.out.println("left button clicked");
-                            //model.characters.get(0).left-=10;
-                            model.characters.get(0).thrustLeft();
-                            model.characters.get(0).state=2;
+                            model.left();
                             return true;
                         }else if(ui.name=="RightButton"){
                             System.out.println("right button clicked");
-                            //model.characters.get(0).left+=10;
-                            model.characters.get(0).thrustRight();
-                            model.characters.get(0).state=1;
+                            model.right();
                             return true;
                         }
                     }
@@ -140,19 +124,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
             case MotionEvent.ACTION_UP:
                 System.out.println("action up");
                 for(UI ui: model.uis){
-                    if(ui.hitTest(event.getX(), event.getY())) {
-                        ui.setSelected(true);
-                        if (ui.name == "LeftButton") {
+                    if (ui.name == "LeftButton") {
                             System.out.println("left button released");
+                            // if character in air, dont stop
                             model.characters.get(0).stopX();
                             //model.characters.get(0).state=0;
                             return true;
-                        } else if (ui.name == "RightButton") {
+                    } else if (ui.name == "RightButton") {
                             System.out.println("right button released");
                             model.characters.get(0).stopX();
                             //model.characters.get(0).state=0;
                             return true;
-                        }
                     }
                 }
 
@@ -178,17 +160,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2,float velocityX, float velocityY) {
         System.out.println("On Fling");
-        if (Math.abs(e1.getX() - e2.getX()) > SWIPE_MAX_OFF_PATH){
-                return false;
-        }
-        // swipe up
-        if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-            System.out.println("swipe up");
-            //model.characters.get(0).left-=10;
-            model.characters.get(0).thrustUp();
-            //model.characters.get(0).state=0;
-            return true;
-        }
+//        if (Math.abs(e1.getX() - e2.getX()) > SWIPE_MAX_OFF_PATH){
+//                return false;
+//        }
+//        // swipe up
+//        if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+//            System.out.println("swipe up");
+//            model.jump();
+//            return true;
+//        }
         return false;
     }
 
