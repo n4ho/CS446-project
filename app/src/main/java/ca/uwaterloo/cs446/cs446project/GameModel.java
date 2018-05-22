@@ -1,6 +1,8 @@
 package ca.uwaterloo.cs446.cs446project;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.Point;
 import android.view.Display;
 import android.graphics.BitmapFactory;
@@ -38,24 +40,32 @@ public class GameModel {
 
         uis=new ArrayList<UI>();
 
-        uis.add(new UI("LeftButton",
-                BitmapFactory.decodeResource(context.getResources(), R.drawable.left),
-                BitmapFactory.decodeResource(context.getResources(), R.drawable.left),
-                30, 650,
-                280,260)
-        );
         uis.add(new UI("RightButton",
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.right),
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.right),
-                1500,650,
-                280,260)
+                230,point.y-100,
+                100,200)
         );
+
+        uis.add(new UI("LeftButton",
+                FlipBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.right)),
+                FlipBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.right)),
+                30, point.y-100,
+                100,200)
+        );
+
         characters.add(new Protagonist(context,this,100,100));
 
         for (int i = 0; i < 10; i++) {
             structures.add(new Frame(i, point, context));
         }
 
+    }
+
+    public static Bitmap FlipBitmap(Bitmap source) {
+        Matrix matrix = new Matrix();
+        matrix.postScale(-1, 1, source.getWidth()/2f, source.getHeight()/2f);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 
     public void optionalDraw(int option, Canvas canvas){
@@ -90,20 +100,33 @@ public class GameModel {
     // left button clicked
     public void left(){
         // only thrust left/ right if character on ground
-        characters.get(current_char).thrustLeft();
         characters.get(current_char).state=2;
+        characters.get(current_char).thrustLeft();
+    }
+
+    // left button released
+    public void left_release(){
+        // if character in air, velocity in X should not stop
+        //characters.get(current_char).state=0;
+        characters.get(current_char).stopX();
     }
 
     // right button clicked
     public void right(){
-        //model.characters.get(0).left+=10;
-        characters.get(current_char).thrustRight();
         characters.get(current_char).state=1;
+        characters.get(current_char).thrustRight();
+    }
+
+    // right button released
+    public void right_release(){
+        // if character in air, velocity in X should not stop
+        //characters.get(current_char).state=0;
+        characters.get(current_char).stopX();
     }
 
     // slide up: jump
     public void jump(){
+        //characters.get(current_char).state=0;
         characters.get(current_char).jump();
-        characters.get(current_char).state=0;
     }
 }

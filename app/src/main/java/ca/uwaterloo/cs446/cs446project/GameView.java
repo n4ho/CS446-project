@@ -28,7 +28,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
     public GameModel model;
     Display display;
     private GestureDetectorCompat mDetector;
-    int fps = 15;
+    int fps = 60;
 
 
     public GameView(Context context, Display d){
@@ -138,16 +138,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
                 System.out.println("action up");
                 for(UI ui: model.uis){
                     if (ui.name == "LeftButton") {
-                            System.out.println("left button released");
-                            // if character in air, dont stop
-                            model.characters.get(0).stopX();
-                            //model.characters.get(0).state=0;
-                            return true;
+                        System.out.println("left button released");
+                        model.left_release();
+                        return true;
                     } else if (ui.name == "RightButton") {
-                            System.out.println("right button released");
-                            model.characters.get(0).stopX();
-                            //model.characters.get(0).state=0;
-                            return true;
+                        System.out.println("right button released");
+                        model.right_release();
+                        return true;
                     }
                 }
 
