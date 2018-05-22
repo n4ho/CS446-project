@@ -94,19 +94,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
             //drawing current frame
             model.structures.get(model.cur_frame).draw(canvas);
 
-           /* for (int i = 0; i < 200; i++) {
-                ((ladder) model.structures.get(model.cur_frame).floors.get(1)).move();
-                try {
-                    wait(500);
-                }
-                catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                model.structures.get(model.cur_frame).floors.get(1).draw(canvas);
-            }*/
-
-            //((wraith) model.structures.get(model.cur_frame).floors.get(1)).whenBombed();
-
             model.optionalDraw(0, canvas);
             model.optionalDraw(1,canvas);
         }
@@ -170,15 +157,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2,float velocityX, float velocityY) {
         System.out.println("On Fling");
-        if (Math.abs(e1.getX() - e2.getX()) > SWIPE_MAX_OFF_PATH){
-                return false;
-        }
-        // swipe up
-        if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-            System.out.println("swipe up");
-            model.jump();
-            return true;
-        }
+//        if (Math.abs(e1.getX() - e2.getX()) > SWIPE_MAX_OFF_PATH){
+//                return false;
+//        }
+//        // swipe up
+//        if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+//            System.out.println("swipe up");
+//            model.jump();
+//            return true;
+//        }
         return false;
     }
 
