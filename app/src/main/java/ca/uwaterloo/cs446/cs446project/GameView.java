@@ -110,7 +110,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
                         ui.setSelected(true);
                         if(ui.name=="LeftButton"){
                             System.out.println("left button clicked");
-                            //model.characters.get(0).left-=10;
+                            // only thrust left/ right if character on ground
                             model.characters.get(0).thrustLeft();
                             model.characters.get(0).state=2;
                             return true;
@@ -132,6 +132,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
                         ui.setSelected(true);
                         if (ui.name == "LeftButton") {
                             System.out.println("left button released");
+                            // if character in air, dont stop
                             model.characters.get(0).stopX();
                             //model.characters.get(0).state=0;
                             return true;

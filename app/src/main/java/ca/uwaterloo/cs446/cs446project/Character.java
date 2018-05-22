@@ -46,9 +46,9 @@ public class Character {
         this.height=height;
 
         //double scale = 60.0 / model.fps;
-        this.scale = 1;
+        this.scale = 4;
         this.thrust = 5 * scale;
-        this.gravity = 0.1 * scale;
+        this.gravity = 0.7 * scale;
         this.velocityX = 0;
         this.velocityY = 0;
         this.maxVelocity = 15;
@@ -64,7 +64,7 @@ public class Character {
     // movement method
     public void thrustUp() {
         // TO DO: thrust up only when character is standing on something
-        velocityY -= thrust * 1.5;
+        velocityY -= thrust * 2.5;
     }
 
     public void thrustLeft() {
@@ -98,10 +98,22 @@ public class Character {
         // TO DO: if character is too far away from center of the screen, do transformation
 
         // these bounds is only for testing, should be updated later on
-        if (top > 800) top = 800;
-        if (top < 0) top = 0;
-        if (left > 1900) left = 1900;
-        if (left < 0) left = 0;
+        if (top > 800) {
+            top = 800;
+            velocityY = 0;
+        }
+        if (top < 0){
+            top = 0;
+            velocityY= 0;
+        }
+        if (left > 1900) {
+            left = 1900;
+            velocityX = 0;
+        }
+        if (left < 0){
+            left = 0;
+            velocityX = 0;
+        }
 
     }
 
