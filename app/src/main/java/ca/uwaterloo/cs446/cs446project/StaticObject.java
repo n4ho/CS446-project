@@ -4,8 +4,10 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.Random;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.graphics.Rect;
 
 
 /**
@@ -18,8 +20,8 @@ abstract public class StaticObject extends PhysicalModel {
 
 
 
-    public StaticObject(Context context){
-        super(context);
+    public StaticObject(Context context, Bitmap background, ArrayList<Rect> src, ArrayList<Rect> dest){
+        super(context, background, src, dest);
     }
 
 

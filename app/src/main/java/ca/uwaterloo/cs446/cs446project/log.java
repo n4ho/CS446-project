@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
+import java.util.ArrayList;
+
 /**
  * Created by julialiu on 2018-05-17.
  */
@@ -13,26 +15,43 @@ import android.graphics.Rect;
 public class log extends DynamicObject {
 
 
-    Bitmap log;
-    Rect src;
-    Rect dest;
-    public log (Context context, Rect src, Rect dest, Bitmap l) {
-        super(context);
-        this.src = src;
-        this.dest = dest;
-        log = l;
+    int right;
+    int left;
+    int max_right;
+
+    public log (Context context, Bitmap background, ArrayList<Rect> src, ArrayList<Rect> dest, int left, int right, int moving_velocity) {
+        super(context, background, src, dest, moving_velocity);
+        this.left = left;
+        this.right = right;
+        max_right = right + (right - left)/4 ;
+
+
     }
     @Override
     public void draw(Canvas c) {
+        super.draw(c);
 
-        c.drawBitmap(log, src,dest, null);
+        c.drawBitmap(this.background, src.get(0), dest.get(0), null);
+
 
     }
 
-    public void set_x (int i) {
-       // x = i;
+    @Override
+    public void move () {
+
+
+        if (right < max_right) {
+            right += moving_velocity;
+            left += moving_velocity;
+            dest.get(0).offset(moving_velocity,0);
+
+        }
+
     }
-    public void set_y (int i) {
-        //y = i;
+
+    public int getMovingVelocity () {
+        return moving_velocity;
     }
+
+
 }

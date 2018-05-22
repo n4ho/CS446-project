@@ -18,31 +18,26 @@ import java.util.ArrayList;
 
 public class Floor extends StaticObject {
 
-    Bitmap p;
-    int frame_num;
 
 
+    public Floor(Context context, Bitmap background, ArrayList<Rect> src, ArrayList<Rect> dest) {
+        super(context, background, src, dest);
 
-    public Floor(Context context, Bitmap pp, int n) {
-        super(context);
 
-        p = pp;
-        frame_num = n;
 
         }
 
         @Override
         public void draw (Canvas c) {
+                super.draw(c);
 
-                ArrayList<Rect> src = FloorConstant.srcs.get(frame_num);
-                ArrayList<Rect> dest = FloorConstant.dests.get(frame_num);
-
-                for (int i = 0; i < src.size(); i++) {
-                    c.drawBitmap(p, src.get(i), dest.get(i), null);
+               for (int i = 0; i < src.size(); i++) {
+                    c.drawBitmap(background, src.get(i), dest.get(i), null);
 
                 }
 
-           // }
+
+
 
         }
 
