@@ -22,7 +22,8 @@ public class GameModel {
     Point point;
     public ArrayList<UI> uis;
     public int cur_frame = 5;
-    int fps;
+    public int fps;
+    public int current_char = 0;
 
     public GameModel(Context context, Display d, int _fps){
 
@@ -84,5 +85,25 @@ public class GameModel {
             if(ui.name==name) return ui;
         }
         return null;
+    }
+
+    // left button clicked
+    public void left(){
+        // only thrust left/ right if character on ground
+        characters.get(current_char).thrustLeft();
+        characters.get(current_char).state=2;
+    }
+
+    // right button clicked
+    public void right(){
+        //model.characters.get(0).left+=10;
+        characters.get(current_char).thrustRight();
+        characters.get(current_char).state=1;
+    }
+
+    // slide up: jump
+    public void jump(){
+        characters.get(current_char).jump();
+        characters.get(current_char).state=0;
     }
 }

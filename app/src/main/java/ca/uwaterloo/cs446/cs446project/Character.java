@@ -61,9 +61,20 @@ public class Character {
     }
 
     // movement method
-    public void thrustUp() {
-        // TO DO: thrust up only when character is standing on something
+    public void jump(){
         velocityY -= thrust * 2.5;
+    }
+
+    public void thrustUp() {
+        velocityY -= thrust;
+        if(velocityY > maxVelocity) velocityY = maxVelocity;
+        if(velocityY < -maxVelocity) velocityY = -maxVelocity;
+    }
+
+    public void thrustDown() {
+        velocityY += thrust;
+        if(velocityY > maxVelocity) velocityY = maxVelocity;
+        if(velocityY < -maxVelocity) velocityY = -maxVelocity;
     }
 
     public void thrustLeft() {
@@ -82,6 +93,10 @@ public class Character {
         velocityX = 0;
     }
 
+    public void stopY(){
+        velocityY = 0;
+    }
+
     public void update(){
 
         // apply gravity
@@ -92,26 +107,26 @@ public class Character {
         left = left + (int) velocityX;
 
         // TO DO: if character is standing on a surface set velocityY to 0
-        if(top >= 800) velocityY = 0;
+        if(top >= 800) stopY();
 
         // TO DO: if character is too far away from center of the screen, do transformation
 
         // these bounds is only for testing, should be updated later on
         if (top > 800) {
             top = 800;
-            velocityY = 0;
+            stopY();
         }
         if (top < 0){
             top = 0;
-            velocityY= 0;
+            stopY();
         }
         if (left > 1900) {
             left = 1900;
-            velocityX = 0;
+            stopX();
         }
         if (left < 0){
             left = 0;
-            velocityX = 0;
+            stopX();
         }
 
     }
