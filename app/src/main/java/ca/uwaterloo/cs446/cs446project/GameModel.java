@@ -41,14 +41,32 @@ public class GameModel {
         uis.add(new UI("LeftButton",
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.left),
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.left),
-                30, 650,
-                280,260)
+                (int)(point.x*0.01), (int)(point.y*0.8),
+                point.x/20,point.y/15)
         );
         uis.add(new UI("RightButton",
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.right),
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.right),
-                1500,650,
-                280,260)
+                (int)(point.x*0.08),(int)(point.y*0.8),
+                point.x/20,point.y/15)
+        );
+        uis.add(new UI("UpButton",
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
+                (int)(point.x*0.05), (int)(point.y*0.735),
+                point.y/15,point.x/20)
+        );
+        uis.add(new UI("DownButton",
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.down),
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.down),
+                (int)(point.x*0.05), (int)(point.y*0.85),
+                point.y/15,point.x/20)
+        );
+        uis.add(new UI("JumpButton",
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
+                (int)(point.x*0.85), (int)(point.y*0.83),
+                point.y/15,point.x/20)
         );
         characters.add(new Protagonist(context,this,100,100));
 
