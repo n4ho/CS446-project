@@ -43,15 +43,15 @@ public class GameModel {
         uis.add(new UI("RightButton",
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.right),
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.right),
-                140,point.y-230,
-                75,150)
+                160,point.y-140,
+                75,100)
         );
 
         uis.add(new UI("LeftButton",
                 FlipBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.right)),
                 FlipBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.right)),
-                30, point.y-230,
-                75,150)
+                50, point.y-140,
+                75,100)
         );
 
         characters.add(new Protagonist(context,this,100,100));
