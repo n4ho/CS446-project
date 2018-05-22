@@ -40,18 +40,36 @@ public class GameModel {
 
         uis=new ArrayList<UI>();
 
+        uis.add(new UI("LeftButton",
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.left),
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.left),
+                (int)(point.x*0.02), (int)(point.y*0.8),
+                point.x/20,point.y/15)
+        );
         uis.add(new UI("RightButton",
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.right),
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.right),
-                160,point.y-140,
-                75,100)
+                (int)(point.x*0.09),(int)(point.y*0.8),
+                point.x/20,point.y/15)
         );
 
-        uis.add(new UI("LeftButton",
-                FlipBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.right)),
-                FlipBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.right)),
-                50, point.y-140,
-                75,100)
+        uis.add(new UI("UpButton",
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
+                (int)(point.x*0.06), (int)(point.y*0.735),
+                point.y/15,point.x/20)
+        );
+        uis.add(new UI("DownButton",
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.down),
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.down),
+                (int)(point.x*0.06), (int)(point.y*0.85),
+                point.y/15,point.x/20)
+        );
+        uis.add(new UI("JumpButton",
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
+                (int)(point.x*0.93), (int)(point.y*0.83),
+                point.y/15,point.x/20)
         );
 
         characters.add(new Protagonist(context,this,100,100));
@@ -60,12 +78,6 @@ public class GameModel {
             structures.add(new Frame(i, point, context));
         }
 
-    }
-
-    public static Bitmap FlipBitmap(Bitmap source) {
-        Matrix matrix = new Matrix();
-        matrix.postScale(-1, 1, source.getWidth()/2f, source.getHeight()/2f);
-        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 
     public void optionalDraw(int option, Canvas canvas){
@@ -123,6 +135,20 @@ public class GameModel {
         //characters.get(current_char).state=0;
         characters.get(current_char).stopX();
     }
+
+    // up button clicked
+    public void up(){
+        //characters.get(current_char).state=0;
+        characters.get(current_char).thrustUp();
+    }
+
+    // up button clicked
+    public void down(){
+        //characters.get(current_char).state=0;
+        characters.get(current_char).thrustDown();
+    }
+
+
 
     // slide up: jump
     public void jump(){
