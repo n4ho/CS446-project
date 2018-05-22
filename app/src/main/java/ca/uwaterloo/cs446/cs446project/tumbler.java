@@ -29,6 +29,7 @@ public class tumbler extends DynamicObject {
                    ArrayList<Bitmap> wabble, int x, int y) {
         super(context, background, src, dest, moving_velocity);
         this.wabble = wabble;
+        this.type = HitType.TUMBLER;
         this.x = x;
         this.y = y;
 

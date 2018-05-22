@@ -2,6 +2,7 @@ package ca.uwaterloo.cs446.cs446project;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.view.Display;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -9,11 +10,9 @@ import android.graphics.Canvas;
 
 import java.util.ArrayList;
 
-/**
- * Created by ethan on 2018-05-16.
- */
 
 public class GameModel {
+
     public ArrayList<Character> characters;
     public ArrayList<Frame> structures;
 
@@ -81,5 +80,9 @@ public class GameModel {
             if(ui.name==name) return ui;
         }
         return null;
+    }
+
+    public void hitTest(Rect rect) {
+        //add hitTest here.
     }
 }

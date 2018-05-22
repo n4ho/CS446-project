@@ -22,7 +22,7 @@ public class Floor extends StaticObject {
 
     public Floor(Context context, Bitmap background, ArrayList<Rect> src, ArrayList<Rect> dest) {
         super(context, background, src, dest);
-
+        type = HitType.FLOOR;
 
 
         }
@@ -41,5 +41,20 @@ public class Floor extends StaticObject {
 
         }
 
+    @Override
+    public HitType hitModel(Rect rect, HitType type) {
+        for (int i = 0; i < dest.size(); i++) {
+            Rect curDest = dest.get(i);
+            if (type == HitType.UP && curDest.bottom >= rect.top || type == HitType.DOWN && rect.bottom >= curDest.top
+        || type == HitType.LEFT && rect.left <= curDest.right || type == HitType.RIGHT && rect.right >= curDest.right) {
+                return type;
+            }
+        }
+        return HitType.NULL;
+    }
 
+    @Override
+    public HitType hitModel(Rect rect) {
+        return HitType.NULL;
+    }
 }

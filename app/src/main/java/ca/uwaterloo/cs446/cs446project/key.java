@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class key extends Tool {
     public key(Context context, Bitmap background, ArrayList<Rect> src, ArrayList<Rect> dest, int top, int left) {
         super(context, background, src, dest, top, left);
+        type = HitType.KEY;
     }
 
     @Override

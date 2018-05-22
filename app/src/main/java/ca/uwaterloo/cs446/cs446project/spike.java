@@ -14,6 +14,22 @@ import java.util.ArrayList;
 public class spike extends StaticObject {
     public spike(Context context, Bitmap background, ArrayList<Rect> src, ArrayList<Rect> dest) {
         super(context, background, src, dest);
+        this.type = HitType.SPIKE;
+    }
+
+    @Override
+    public HitType hitModel(Rect rect) {
+        for (int i = 0; i < dest.size(); i++) {
+            if (rect.intersect(dest.get(i))) {
+                return type;
+            }
+        }
+        return HitType.NULL;
+    }
+
+    @Override
+    public HitType hitModel(Rect rect, HitType type) {
+        return HitType.NULL;
     }
 
     @Override
