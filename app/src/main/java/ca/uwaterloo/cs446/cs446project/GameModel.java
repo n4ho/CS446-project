@@ -21,7 +21,7 @@ public class GameModel {
 
     Point point;
     public ArrayList<UI> uis;
-    public int cur_frame = 3;
+    public int cur_frame = 9;
 
     public GameModel(Context context, Display d){
         characters=new ArrayList<Character>();
@@ -48,7 +48,7 @@ public class GameModel {
         );
         characters.add(new Protagonist(context,this,100,100));
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 10; i++) {
             structures.add(new Frame(i, point, context));
         }
 

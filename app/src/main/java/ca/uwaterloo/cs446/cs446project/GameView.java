@@ -93,7 +93,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
             //drawing current frame
             model.structures.get(model.cur_frame).draw(canvas);
 
-            for (int i = 0; i < 200; i++) {
+           /* for (int i = 0; i < 200; i++) {
                 ((ladder) model.structures.get(model.cur_frame).floors.get(1)).move();
                 try {
                     wait(500);
@@ -102,7 +102,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
                     e.printStackTrace();
                 }
                 model.structures.get(model.cur_frame).floors.get(1).draw(canvas);
-            }
+            }*/
+
+            //((wraith) model.structures.get(model.cur_frame).floors.get(1)).whenBombed();
 
             model.optionalDraw(0, canvas);
             model.optionalDraw(1,canvas);

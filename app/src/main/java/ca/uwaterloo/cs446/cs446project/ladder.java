@@ -29,7 +29,7 @@ public class ladder extends DynamicObject {
 
     @Override
     public void draw(Canvas c) {
-
+        super.draw(c);
         c.drawBitmap(background, src.get(0), dest.get(0),  null);
 
     }

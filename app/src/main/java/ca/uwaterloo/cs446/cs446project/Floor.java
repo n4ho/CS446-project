@@ -29,7 +29,7 @@ public class Floor extends StaticObject {
 
         @Override
         public void draw (Canvas c) {
-
+                super.draw(c);
 
                for (int i = 0; i < src.size(); i++) {
                     c.drawBitmap(background, src.get(i), dest.get(i), null);
