@@ -28,6 +28,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
     public GameModel model;
     Display display;
     private GestureDetectorCompat mDetector;
+    int fps = 15;
 
 
     public GameView(Context context, Display d){
@@ -45,7 +46,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         thread.setRunning(true);
         thread.start();
-        model=new GameModel(this.getContext(), display);
+        model=new GameModel(this.getContext(), display,fps);
 
     }
 

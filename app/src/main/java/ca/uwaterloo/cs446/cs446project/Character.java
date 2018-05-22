@@ -45,10 +45,9 @@ public class Character {
         this.width=width;
         this.height=height;
 
-        //double scale = 60.0 / model.fps;
-        this.scale = 4;
-        this.thrust = 5 * scale;
-        this.gravity = 0.7 * scale;
+        this.scale = 60.0 / model.fps;
+        this.thrust = 10 * scale;
+        this.gravity = 2 * scale;
         this.velocityX = 0;
         this.velocityY = 0;
         this.maxVelocity = 15;

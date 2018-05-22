@@ -21,9 +21,12 @@ public class GameModel {
 
     Point point;
     public ArrayList<UI> uis;
-    public int cur_frame = 9;
+    public int cur_frame = 5;
+    int fps;
 
-    public GameModel(Context context, Display d){
+    public GameModel(Context context, Display d, int _fps){
+
+        this.fps = _fps;
         characters=new ArrayList<Character>();
         structures=new ArrayList<Frame>();
 
