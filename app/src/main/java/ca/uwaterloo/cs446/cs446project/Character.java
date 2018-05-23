@@ -15,8 +15,8 @@ public class Character {
     private Context context;
     protected GameModel model;
 
-    // Boundbox for physical collision
-    public int top=400;
+    // Bounding box for physical collision
+    public int top=600;
     public int left=800;
     public int width;
     public int height;
@@ -59,6 +59,8 @@ public class Character {
 
         return null;
     }
+
+    // return rectangle
 
     // movement method
     public void jump(){
@@ -112,8 +114,8 @@ public class Character {
         // TO DO: if character is too far away from center of the screen, do transformation
 
         // these bounds is only for testing, should be updated later on
-        if (top > 800) {
-            top = 800;
+        if (top > 730) {
+            top = 730;
             stopY();
         }
         if (top < 0){

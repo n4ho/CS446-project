@@ -129,6 +129,7 @@ public class GameModel {
     // right button clicked
     public void right(){
         characters.get(current_char).state=1;
+        //if(structures.get(cur_frame).hitFloor(characters.get(current_char).))
         characters.get(current_char).thrustRight();
     }
 
