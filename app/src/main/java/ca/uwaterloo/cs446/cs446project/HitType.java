@@ -5,7 +5,6 @@ public enum HitType {
     DOWN,
     LEFT,
     RIGHT,
-    TOOL,
     LADDER,
     BOMB,
     FLOOR,
@@ -15,5 +14,6 @@ public enum HitType {
     SPIKE,
     TUMBLER,
     WRAITH,
-    NULL
+    NULL,
+    DOOR
 }

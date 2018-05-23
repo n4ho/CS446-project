@@ -27,9 +27,4 @@ public class key extends Tool {
 
     }
 
-    @Override
-    public void draw (Canvas c) {
-        super.draw(c);
-        c.drawBitmap(background, src.get(0), dest.get(0), null);
-    }
 }

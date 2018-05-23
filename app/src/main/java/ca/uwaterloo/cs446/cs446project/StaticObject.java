@@ -24,18 +24,4 @@ abstract public class StaticObject extends PhysicalModel {
         super(context, background, src, dest);
     }
 
-
-    // random numbers
-    static Random rand = new Random();
-
-    int random(int min, int max) {
-        return rand.nextInt(max - min + 1) + min;
-    }
-
-    void addPoints(Integer x, Integer y) {
-
-        points.add(new Point(x, y));
-
-    }
-
 }

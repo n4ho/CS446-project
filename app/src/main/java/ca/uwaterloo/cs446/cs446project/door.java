@@ -16,6 +16,22 @@ import java.util.ArrayList;
 public class door extends StaticObject {
     public door(Context context, Bitmap background, ArrayList<Rect> src, ArrayList<Rect> dest) {
         super(context, background, src, dest);
+        type = HitType.DOOR;
+    }
+
+    @Override
+    public HitType hitModel(Rect rect) {
+        for (int i = 0; i < dest.size(); i++) {
+            if (rect.intersect(dest.get(i))) {
+                return type;
+            }
+        }
+        return HitType.NULL;
+    }
+
+    @Override
+    public HitType hitModel(Rect rect, HitType type) {
+        return HitType.NULL;
     }
 
     @Override
