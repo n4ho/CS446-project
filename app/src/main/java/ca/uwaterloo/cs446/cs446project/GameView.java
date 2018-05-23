@@ -21,13 +21,11 @@ import android.view.SurfaceHolder;
  * Created by ethan on 2018-05-15.
  */
 
-public class GameView extends SurfaceView implements SurfaceHolder.Callback, GestureDetector.OnGestureListener,
-        GestureDetector.OnDoubleTapListener{
+public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     public MainThread thread;
     public GameModel model;
     Display display;
-    private GestureDetectorCompat mDetector;
     int fps = 60;
 
 
@@ -38,8 +36,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
 
 
         thread=new MainThread(getHolder(), this);
-
-        mDetector = new GestureDetectorCompat(context,this);
     }
 
     @Override
@@ -74,7 +70,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
 
         Point p = new Point ();
         display.getSize(p);
-        canvas.scale((float)((float)p.x/(float)1600), (float)((float)p.y/(float)1000));
+        //canvas.scale((float)((float)p.x/(float)1600), (float)((float)p.y/(float)1000));
 
         Rect r = new Rect();
         r.set(0,0,p.x, p.y);
@@ -101,7 +97,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        mDetector.onTouchEvent(event);
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 System.out.println("action down");
@@ -117,6 +112,22 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
                             model.right();
                             return true;
                         }
+                        else if(ui.name == "UpButton"){
+                            System.out.println("up button clicked");
+                            model.up();
+                            return true;
+                        }
+                        else if(ui.name == "DownButton"){
+                            System.out.println("down button clicked");
+                            model.down();
+                            return true;
+                        }
+                        else if(ui.name == "JumpButton"){
+                            System.out.println("jump button clicked");
+                            model.jump();
+                            return true;
+                        }
+
                     }
                 }
                 break;
@@ -125,16 +136,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
                 System.out.println("action up");
                 for(UI ui: model.uis){
                     if (ui.name == "LeftButton") {
-                            System.out.println("left button released");
-                            // if character in air, dont stop
-                            model.characters.get(0).stopX();
-                            //model.characters.get(0).state=0;
-                            return true;
+                        System.out.println("left button released");
+                        model.left_release();
+                        return true;
                     } else if (ui.name == "RightButton") {
-                            System.out.println("right button released");
-                            model.characters.get(0).stopX();
-                            //model.characters.get(0).state=0;
-                            return true;
+                        System.out.println("right button released");
+                        model.right_release();
+                        return true;
                     }
                 }
 
@@ -143,74 +151,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ges
             default:
                 break;
         }
-        //return super.onTouchEvent(event);
-        return true;
-    }
-
-    @Override
-    public boolean onDown(MotionEvent event) {
-        System.out.println("On DOwn");
-        return false;
-    }
-
-    private static final int SWIPE_MIN_DISTANCE = 20;
-    private static final int SWIPE_MAX_OFF_PATH = 250;
-    private static final int SWIPE_THRESHOLD_VELOCITY = 20;
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2,float velocityX, float velocityY) {
-        System.out.println("On Fling");
-//        if (Math.abs(e1.getX() - e2.getX()) > SWIPE_MAX_OFF_PATH){
-//                return false;
-//        }
-//        // swipe up
-//        if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-//            System.out.println("swipe up");
-//            model.jump();
-//            return true;
-//        }
-        return false;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent event) {
-        //System.out.println("On Long Press");
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent event1, MotionEvent event2, float distanceX,
-                            float distanceY) {
-        //System.out.println("On Scroll");
-        return true;
-    }
-
-    @Override
-    public void onShowPress(MotionEvent event) {
-        //System.out.println("On Show Press");
-    }
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent event) {
-        //Log.d(DEBUG_TAG, "onSingleTapUp: " + event.toString());
-        return true;
-    }
-
-    @Override
-    public boolean onDoubleTap(MotionEvent event) {
-        //Log.d(DEBUG_TAG, "onDoubleTap: " + event.toString());
-        return true;
-    }
-
-    @Override
-    public boolean onDoubleTapEvent(MotionEvent event) {
-        //Log.d(DEBUG_TAG, "onDoubleTapEvent: " + event.toString());
-        return true;
-    }
-
-    @Override
-    public boolean onSingleTapConfirmed(MotionEvent event) {
-        //Log.d(DEBUG_TAG, "onSingleTapConfirmed: " + event.toString());
-        return true;
+        return super.onTouchEvent(event);
     }
 
     public void update(){

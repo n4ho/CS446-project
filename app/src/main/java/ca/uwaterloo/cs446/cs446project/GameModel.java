@@ -1,6 +1,8 @@
 package ca.uwaterloo.cs446.cs446project;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.Display;
@@ -40,33 +42,35 @@ public class GameModel {
         uis.add(new UI("LeftButton",
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.left),
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.left),
-                (int)(point.x*0.01), (int)(point.y*0.8),
+                (int)(point.x*0.02), (int)(point.y*0.8),
                 point.x/20,point.y/15)
         );
         uis.add(new UI("RightButton",
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.right),
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.right),
-                (int)(point.x*0.08),(int)(point.y*0.8),
+                (int)(point.x*0.09),(int)(point.y*0.8),
                 point.x/20,point.y/15)
         );
+
         uis.add(new UI("UpButton",
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
-                (int)(point.x*0.05), (int)(point.y*0.735),
+                (int)(point.x*0.06), (int)(point.y*0.735),
                 point.y/15,point.x/20)
         );
         uis.add(new UI("DownButton",
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.down),
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.down),
-                (int)(point.x*0.05), (int)(point.y*0.85),
+                (int)(point.x*0.06), (int)(point.y*0.85),
                 point.y/15,point.x/20)
         );
         uis.add(new UI("JumpButton",
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
-                (int)(point.x*0.85), (int)(point.y*0.83),
+                (int)(point.x*0.93), (int)(point.y*0.83),
                 point.y/15,point.x/20)
         );
+
         characters.add(new Protagonist(context,this,100,100));
 
         for (int i = 0; i < 10; i++) {
@@ -111,20 +115,47 @@ public class GameModel {
     // left button clicked
     public void left() {
         // only thrust left/ right if character on ground
-        characters.get(current_char).thrustLeft();
         characters.get(current_char).state=2;
+        characters.get(current_char).thrustLeft();
+    }
+
+    // left button released
+    public void left_release(){
+        // if character in air, velocity in X should not stop
+        //characters.get(current_char).state=0;
+        characters.get(current_char).stopX();
     }
 
     // right button clicked
     public void right(){
-        //model.characters.get(0).left+=10;
-        characters.get(current_char).thrustRight();
         characters.get(current_char).state=1;
+        characters.get(current_char).thrustRight();
     }
+
+    // right button released
+    public void right_release(){
+        // if character in air, velocity in X should not stop
+        //characters.get(current_char).state=0;
+        characters.get(current_char).stopX();
+    }
+
+    // up button clicked
+    public void up(){
+        //characters.get(current_char).state=0;
+        characters.get(current_char).thrustUp();
+    }
+
+    // up button clicked
+    public void down(){
+        //characters.get(current_char).state=0;
+        characters.get(current_char).thrustDown();
+    }
+
+
 
     // slide up: jump
     public void jump(){
+        //characters.get(current_char).state=0;
         characters.get(current_char).jump();
-        characters.get(current_char).state=0;
     }
 }
