@@ -18,14 +18,12 @@ import java.util.ArrayList;
  */
 
 public class Floor extends StaticObject {
-
+    int curground = -1;
 
 
     public Floor(Context context, Bitmap background, ArrayList<Rect> src, ArrayList<Rect> dest) {
         super(context, background, src, dest);
         type = HitType.FLOOR;
-
-
         }
 
         @Override
@@ -53,21 +51,27 @@ public class Floor extends StaticObject {
 
     @Override
     public HitType hitModel(Rect rect, HitType type) {
+
+
         for (int i = 0; i < dest.size(); i++) {
             Rect curDest = dest.get(i);
             if (Rect.intersects(rect, curDest)) {
 
                 if (type == HitType.UP && curDest.bottom >= rect.top)
                     return type;
-                if (type == HitType.DOWN && rect.bottom >= curDest.top)
+                if (type == HitType.DOWN && rect.bottom >= curDest.top) {
+                    if (curground == -1 || dest.get(curground).top > curDest.top) {
+                        curground = i;
+                    }
                     return type;
+                }
                 if (type == HitType.LEFT) {
-                    if (dest.get(i).left >= rect.right || rect.bottom >= curDest.top) {continue;}
+                    if (dest.get(i).left >= rect.right || rect.bottom >= curDest.top && curground == i) {continue;}
                     if (rect.left <= curDest.right)
                         return type;
                 }
                 if (type == HitType.RIGHT) {
-                    if (dest.get(i).right <= rect.left || rect.bottom >= curDest.top) {continue;}
+                    if (dest.get(i).right <= rect.left || rect.bottom >= curDest.top && curground == i) {continue;}
                     if (rect.right >= curDest.left)
                         return type;
 

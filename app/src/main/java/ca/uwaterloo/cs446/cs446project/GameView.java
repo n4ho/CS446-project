@@ -99,7 +99,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 || model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT)==HitType.RIGHT){
             model.getCharacter().stopX();
         }
-
+        
         if(canvas!=null){
             // draw all the components here
             for(Character c: model.characters){
@@ -136,6 +136,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                                 model.left();
                             }else{
                                 System.out.println("hit left wall");
+                                model.getCharacter().stopX();
                             }
                             return true;
                         }else if(ui.name=="RightButton"){
@@ -143,8 +144,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             ui.setSelected(true);
                             if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) == HitType.NULL) {
                                 model.right();
+
                             }else{
                                 System.out.println("hit right wall");
+                                model.getCharacter().stopX();
                             }
                             return true;
                         }else if(ui.name=="UpButton"){
@@ -158,6 +161,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             }
                             else{
                                 System.out.println("hit ceiling");
+                                model.getCharacter().stopY();
                             }
                             return true;
                         }else if(ui.name=="DownButton"){
@@ -168,6 +172,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                                 model.down();
                             }else{
                                 System.out.println("hit floor");
+                                model.getCharacter().stopY();
                             }
 
                             return true;
