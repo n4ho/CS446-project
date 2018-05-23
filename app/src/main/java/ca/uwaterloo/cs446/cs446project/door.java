@@ -22,7 +22,7 @@ public class door extends StaticObject {
     @Override
     public HitType hitModel(Rect rect) {
         for (int i = 0; i < dest.size(); i++) {
-            if (rect.intersect(dest.get(i))) {
+            if (Rect.intersects(dest.get(i),rect)) {
                 return type;
             }
         }
