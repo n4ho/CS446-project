@@ -25,6 +25,7 @@ public class Character {
     double scale;
     double thrust;
     double gravity;
+    double cur_gravity;
     double velocityX;
     double velocityY;
     double maxVelocity;
@@ -48,6 +49,7 @@ public class Character {
         this.scale = 180 / model.fps;
         this.thrust = 10 * scale;
         this.gravity = 2 * scale;
+        this.cur_gravity = gravity;
         this.velocityX = 0;
         this.velocityY = 0;
         this.maxVelocity = 15;
@@ -59,8 +61,6 @@ public class Character {
 
         return null;
     }
-
-    // return rectangle
 
     // movement method
     public void jump(){
@@ -99,37 +99,41 @@ public class Character {
         velocityY = 0;
     }
 
+    public void stopGravity(){ cur_gravity = 0;}
+
+    public void startGravity(){ cur_gravity = gravity;}
+
     public void update(){
 
         // apply gravity
-        velocityY += gravity;
+        velocityY += cur_gravity;
 
         // update position
         top = top + (int) velocityY;
         left = left + (int) velocityX;
 
-        // TO DO: if character is standing on a surface set velocityY to 0
-        if(top >= 800) stopY();
-
-        // TO DO: if character is too far away from center of the screen, do transformation
-
-        // these bounds is only for testing, should be updated later on
-        if (top > 730) {
-            top = 730;
+        // if character is standing on the bottom of the screen
+        if(top >= model.point.y - height) {
             stopY();
+            top = model.point.y - height;
         }
-        if (top < 0){
+
+        // if character is jumping too high
+        if(top < 0){
             top = 0;
             stopY();
         }
-        if (left > 1900) {
-            left = 1900;
+
+        // TO DO: if character is too far away from center of the screen, do transformation
+        if (left > model.point.x /5 * 4) {
+            left = model.point.x /5 * 4;
             stopX();
         }
-        if (left < 0){
-            left = 0;
+        if (left < model.point.x /5){
+            left = model.point.x/5;
             stopX();
         }
+
 
     }
 
