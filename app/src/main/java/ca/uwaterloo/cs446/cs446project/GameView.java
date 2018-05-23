@@ -232,7 +232,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         }
 
         if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT)==HitType.LEFT
-                &&model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT)==HitType.RIGHT){
+                ||model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT)==HitType.RIGHT){
             model.getCharacter().stopX();
         }
 
