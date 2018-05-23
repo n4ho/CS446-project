@@ -55,9 +55,22 @@ public class Floor extends StaticObject {
     public HitType hitModel(Rect rect, HitType type) {
         for (int i = 0; i < dest.size(); i++) {
             Rect curDest = dest.get(i);
-            if (type == HitType.UP && curDest.bottom >= rect.top || type == HitType.DOWN && rect.bottom >= curDest.top
-        || type == HitType.LEFT && rect.left <= curDest.right || type == HitType.RIGHT && rect.right >= curDest.left) {
-                return type;
+            if (curDest.intersect(rect)) {
+                if (type == HitType.UP && curDest.bottom >= rect.top)
+                    return type;
+                if (type == HitType.DOWN && rect.bottom >= curDest.top)
+                    return type;
+                if (type == HitType.LEFT) {
+                    if (dest.get(i).right <= rect.left || rect.bottom >= curDest.top) {continue;}
+                    if (rect.left <= curDest.right)
+                        return type;
+                }
+                if (type == HitType.RIGHT) {
+                    if (dest.get(i).left >= rect.right || rect.bottom >= curDest.top) {continue;}
+                    if (rect.right >= curDest.left)
+                        return type;
+
+                }
             }
         }
         return HitType.NULL;
