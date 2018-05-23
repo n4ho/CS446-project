@@ -90,6 +90,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             //drawing current frame
             model.structures.get(model.cur_frame).draw(canvas);
 
+
             model.optionalDraw(0, canvas);
             model.optionalDraw(1,canvas);
         }
@@ -103,13 +104,35 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 for(UI ui: model.uis){
                     if(ui.hitTest(event.getX(), event.getY())){
                         ui.setSelected(true);
+
+
                         if(ui.name=="LeftButton"){
                             System.out.println("left button clicked");
-                            model.left();
+                            if(true) {
+                                model.left();
+                            }
                             return true;
                         }else if(ui.name=="RightButton"){
                             System.out.println("right button clicked");
-                            model.right();
+                            if(true) {
+                                model.right();
+                            }
+                            return true;
+                        }else if(ui.name=="UpButton"){
+                            System.out.println("up button clicked");
+                            if(true) {
+                                model.up();
+                            }
+                            return true;
+                        }else if(ui.name=="DownButton"){
+                            System.out.println("down button clicked");
+                            if(true) {
+                                model.down();
+                            }
+                            return true;
+                        }else if(ui.name=="JumpButton"){
+                            System.out.println("jump button clicked");
+                            model.jump();
                             return true;
                         }
                         else if(ui.name == "UpButton"){
@@ -127,7 +150,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             model.jump();
                             return true;
                         }
-
                     }
                 }
                 break;
@@ -135,13 +157,31 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             case MotionEvent.ACTION_UP:
                 System.out.println("action up");
                 for(UI ui: model.uis){
+
                     if (ui.name == "LeftButton") {
                         System.out.println("left button released");
-                        model.left_release();
+                        ui.setSelected(false);
+                        // if character in air, dont stop
+                        model.characters.get(0).stopX();
+                        //model.characters.get(0).state=0;
                         return true;
                     } else if (ui.name == "RightButton") {
                         System.out.println("right button released");
-                        model.right_release();
+                        ui.setSelected(false);
+                        model.characters.get(0).stopX();
+                        //model.characters.get(0).state=0;
+                        return true;
+                    }else if (ui.name == "UpButton") {
+                        System.out.println("up button released");
+                        ui.setSelected(false);
+                        model.characters.get(0).stopY();
+                        //model.characters.get(0).state=0;
+                        return true;
+                    }else if (ui.name == "DownButton") {
+                        System.out.println("down button released");
+                        ui.setSelected(false);
+                        model.characters.get(0).stopY();
+                        //model.characters.get(0).state=0;
                         return true;
                     }
                 }

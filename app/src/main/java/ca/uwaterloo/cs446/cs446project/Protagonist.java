@@ -15,8 +15,9 @@ import java.util.ArrayList;
 
 public class Protagonist extends Character {
     ArrayList<Bitmap> idle;
-    ArrayList<Bitmap> run;
+    ArrayList<Bitmap> runRight;
     ArrayList<Bitmap> runLeft;
+    ArrayList<Bitmap> climb;
 
 
     private int drawIndex;
@@ -25,23 +26,30 @@ public class Protagonist extends Character {
     public Protagonist(Context context, GameModel model, int width, int height) {
         super(context, model, width, height);
         idle=new ArrayList<Bitmap>();
-        run=new ArrayList<Bitmap>();
+        runRight=new ArrayList<Bitmap>();
         runLeft=new ArrayList<Bitmap>();
+        climb=new ArrayList<>();
 
         idle.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.idle0));
         idle.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.idle1));
 
-        run.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00001));
-        run.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00002));
-        run.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00003));
-        run.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00004));
-        run.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00005));
+        runRight.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00001));
+        runRight.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00002));
+        runRight.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00003));
+        runRight.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00004));
+        runRight.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00005));
 
         runLeft.add(FlipBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00001)));
         runLeft.add(FlipBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00002)));
         runLeft.add(FlipBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00003)));
         runLeft.add(FlipBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00004)));
         runLeft.add(FlipBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00005)));
+
+        climb.add(FlipBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.climb00001)));
+        climb.add(FlipBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.climb00002)));
+        climb.add(FlipBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.climb00003)));
+        climb.add(FlipBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.climb00004)));
+        climb.add(FlipBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.climb00005)));
 
 
     }
@@ -73,11 +81,11 @@ public class Protagonist extends Character {
             }
                 break;
 
-            case 1: // run
+            case 1: // runRight
 
-                canvas.drawBitmap(run.get(drawIndex),left,top, null);
+                canvas.drawBitmap(runRight.get(drawIndex),left,top, null);
                 if(changeRate==0) {
-                    if (drawIndex >= run.size() - 1) {
+                    if (drawIndex >= runRight.size() - 1) {
                         drawIndex = 0;
                     } else {
                         drawIndex++;
@@ -104,10 +112,41 @@ public class Protagonist extends Character {
 
                 break;
 
-
             case 3: // jump
                 break;
 
+            case 4: //up
+                canvas.drawBitmap(climb.get(drawIndex),left,top,null);
+                if(changeRate==0) {
+                    if (drawIndex >= climb.size() - 1) {
+                        drawIndex = 0;
+                    } else {
+                        drawIndex++;
+                    }
+                    changeRate=15;
+                }else{
+                    changeRate--;
+                }
+
+                break;
+
+            case 5: //down
+                canvas.drawBitmap(climb.get(drawIndex),left,top,null);
+                if(changeRate==0) {
+                    if (drawIndex >= climb.size() - 1) {
+                        drawIndex = 0;
+                    } else {
+                        drawIndex++;
+                    }
+                    changeRate=15;
+                }else{
+                    changeRate--;
+                }
+
+                break;
+
+            default:
+                break;
         }
     }
 }

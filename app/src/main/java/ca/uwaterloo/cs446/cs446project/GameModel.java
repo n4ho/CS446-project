@@ -140,23 +140,23 @@ public class GameModel {
         characters.get(current_char).stopX();
     }
 
-    // up button clicked
-    public void up(){
-        //characters.get(current_char).state=0;
-        characters.get(current_char).thrustUp();
-    }
 
-    // up button clicked
-    public void down(){
-        //characters.get(current_char).state=0;
-        characters.get(current_char).thrustDown();
-    }
-
-
-
-    // slide up: jump
+    // jump button: jump
     public void jump(){
         //characters.get(current_char).state=0;
         characters.get(current_char).jump();
     }
+
+    // up button: move up(when there is a ladder)
+    public void up(){
+        characters.get(current_char).thrustUp();
+        characters.get(current_char).state=4;
+    }
+
+    // down button: move up(when there is a ladder)
+    public void down(){
+        characters.get(current_char).thrustDown();
+        characters.get(current_char).state=5;
+    }
+
 }
