@@ -80,6 +80,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         paint.setColor(Color.WHITE);
         canvas.drawRect(r, paint);
 
+        Rect hitBox=new Rect(model.getCharacter().left,
+                model.getCharacter().top,
+                model.getCharacter().left+model.getCharacter().width,
+                model.getCharacter().top+model.getCharacter().height);
+
+        // on ladder or floor, stop gravity
+        if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN
+                ||model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER){
+            model.gravitySwitch(false);
+        }else{
+            model.gravitySwitch(true);
+        }
 
         if(canvas!=null){
             // draw all the components here
@@ -105,56 +117,57 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                System.out.println("action down");
+                //System.out.println("action down");
                 for(UI ui: model.uis){
                     if(ui.hitTest(event.getX(), event.getY())){
                         ui.setSelected(true);
 
-
                         if(ui.name=="LeftButton"){
                             System.out.println("left button clicked");
-                            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) == HitType.NULL) {
+                            ui.setSelected(true);
+                            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.NULL) {
                                 model.left();
+                            }else{
+                                System.out.println("hit left wall");
                             }
                             return true;
                         }else if(ui.name=="RightButton"){
                             System.out.println("right button clicked");
-                            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.NULL) {
+                            ui.setSelected(true);
+                            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) == HitType.NULL) {
                                 model.right();
+                            }else{
+                                System.out.println("hit right wall");
                             }
                             return true;
                         }else if(ui.name=="UpButton"){
                             System.out.println("up button clicked");
+                            ui.setSelected(true);
                             if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.UP) == HitType.NULL
                                     &&model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER) {
                                 model.up();
                             }
+                            else{
+                                System.out.println("hit ceiling");
+                            }
                             return true;
                         }else if(ui.name=="DownButton"){
                             System.out.println("down button clicked");
+                            ui.setSelected(true);
                             if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.NULL
                                     &&model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER) {
                                 model.down();
+                            }else{
+                                System.out.println("hit floor");
                             }
+
                             return true;
                         }else if(ui.name=="JumpButton"){
                             System.out.println("jump button clicked");
+                            ui.setSelected(true);
+                            //model.gravitySwitch(true);
                             model.jump();
-                            return true;
-                        }
-                        else if(ui.name == "UpButton"){
-                            System.out.println("up button clicked");
-                            model.up();
-                            return true;
-                        }
-                        else if(ui.name == "DownButton"){
-                            System.out.println("down button clicked");
-                            model.down();
-                            return true;
-                        }
-                        else if(ui.name == "JumpButton"){
-                            System.out.println("jump button clicked");
-                            model.jump();
+                            //model.gravitySwitch(false);
                             return true;
                         }
                     }
@@ -163,38 +176,43 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
             case MotionEvent.ACTION_UP:
                 System.out.println("action up");
-                for(UI ui: model.uis){
+                for(UI ui: model.uis) {
+                    if (ui.selected) {
 
-                    if (ui.name == "LeftButton") {
-                        System.out.println("left button released");
-                        ui.setSelected(false);
-                        // if character in air, dont stop
-                        model.characters.get(0).stopX();
-                        //model.characters.get(0).state=0;
-                        return true;
-                    } else if (ui.name == "RightButton") {
-                        System.out.println("right button released");
-                        ui.setSelected(false);
-                        model.characters.get(0).stopX();
-                        //model.characters.get(0).state=0;
-                        return true;
-                    }else if (ui.name == "UpButton") {
-                        System.out.println("up button released");
-                        ui.setSelected(false);
-                        model.characters.get(0).stopY();
-                        //model.characters.get(0).state=0;
-                        return true;
-                    }else if (ui.name == "DownButton") {
-                        System.out.println("down button released");
-                        ui.setSelected(false);
-                        model.characters.get(0).stopY();
-                        //model.characters.get(0).state=0;
-                        return true;
+                        if (ui.name == "LeftButton") {
+                            System.out.println("left button released");
+                            ui.setSelected(false);
+                            // if character in air, dont stop
+                            model.characters.get(0).stopX();
+                            //model.characters.get(0).state=0;
+                            return true;
+                        } else if (ui.name == "RightButton") {
+                            System.out.println("right button released");
+                            ui.setSelected(false);
+                            model.characters.get(0).stopX();
+                            //model.characters.get(0).state=0;
+                            return true;
+                        } else if (ui.name == "UpButton") {
+                            System.out.println("up button released");
+                            ui.setSelected(false);
+                            model.characters.get(0).stopY();
+                            //model.characters.get(0).state=0;
+                            return true;
+                        } else if (ui.name == "DownButton") {
+                            System.out.println("down button released");
+                            ui.setSelected(false);
+                            model.characters.get(0).stopY();
+                            //model.characters.get(0).state=0;
+                            return true;
+                        } else if (ui.name == "JumpButton") {
+                            System.out.println("jump button released");
+                            ui.setSelected(false);
+                            return true;
+                        }
                     }
+
+                    break;
                 }
-
-                break;
-
             default:
                 break;
         }

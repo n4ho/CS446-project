@@ -12,7 +12,7 @@ import android.graphics.Point;
 public class UI {
     public String name;
 
-    private boolean selected;
+    public boolean selected;
 
     private int x;
     private int y;
@@ -46,9 +46,6 @@ public class UI {
     }
 
     public boolean hitTest(float x, float y){
-//        System.out.println("Mouse X: "+x+" Mouse Y: "+y);
-//        System.out.println("UI X: "+this.x+" UI Y: "+this.y);
-//        System.out.println("Width: "+this.width+" Height: "+this.height);
         return x<=this.x+width && x>=this.x
                 && y<=this.y+height && y>=this.y;
     }

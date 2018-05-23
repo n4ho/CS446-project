@@ -158,6 +158,14 @@ public class GameModel {
         characters.get(current_char).state=5;
     }
 
+    public void gravitySwitch(boolean b){
+        if(b){
+            characters.get(current_char).startGravity();
+        }else{
+            characters.get(current_char).stopGravity();
+        }
+    }
+
     public Character getCharacter(){
         return characters.get(current_char);
     }
