@@ -21,6 +21,7 @@ public class log extends DynamicObject {
 
     public log (Context context, Bitmap background, ArrayList<Rect> src, ArrayList<Rect> dest, int left, int right, int moving_velocity) {
         super(context, background, src, dest, moving_velocity);
+        type = HitType.LOG;
         this.left = left;
         this.right = right;
         max_right = right + (right - left)/4 ;

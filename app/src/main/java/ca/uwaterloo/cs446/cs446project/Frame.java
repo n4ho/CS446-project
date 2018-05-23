@@ -441,5 +441,24 @@ public class Frame {
 
     }
 
+    //for floor hit test, return LEFT, RIGHT, UP, DOWN
+    public HitType hitFloor(Rect rect, HitType type) {
+        for (int i = 0; i < floors.size(); i++) {
+            if (floors.get(i).hitModel(rect, type) != HitType.NULL) {
+                return type;
+            }
+        }
+        return HitType.NULL;
+    }
 
+    //for dynamic model or tools hit test (ladder, bomb, magnet, wraith, etc), returns the type of hit item
+    public HitType hitTools(Rect rect) {
+        for (int i = 0; i < floors.size(); i++) {
+            HitType result = floors.get(i).hitModel(rect);
+            if (result != HitType.NULL) {
+                return result;
+            }
+        }
+        return HitType.NULL;
+    }
 }

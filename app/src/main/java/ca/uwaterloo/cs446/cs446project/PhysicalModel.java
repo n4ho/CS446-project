@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.view.SurfaceView;
+import android.view.ViewStructure;
 
 import java.util.ArrayList;
 
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 abstract public class PhysicalModel extends SurfaceView{
     public Bitmap background;
     protected Context context;
+    public HitType type;
 
     public ArrayList<Rect> src = new ArrayList<>();
     public ArrayList <Rect> dest = new ArrayList<>();
@@ -28,7 +30,8 @@ abstract public class PhysicalModel extends SurfaceView{
         this.dest = dest;
     }
 
-
+    abstract public HitType hitModel (Rect rect);
+    abstract public HitType hitModel (Rect rect, HitType type);
    // abstract public void draw (Canvas c);
 
 }

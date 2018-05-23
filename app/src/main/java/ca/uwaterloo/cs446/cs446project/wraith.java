@@ -27,6 +27,7 @@ public class wraith extends DynamicObject {
     public wraith(Context context, Bitmap background, ArrayList<Rect> src, ArrayList<Rect> dest, int moving_velocity,
                   ArrayList<Bitmap> fly, int x) {
         super(context, background, src, dest, moving_velocity);
+        this.type = HitType.WRAITH;
         this.fly = fly;
         curpos = x;
         boundary_left = x - 300;

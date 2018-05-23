@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class magnet extends Tool {
     public magnet(Context context, Bitmap background, ArrayList<Rect> src, ArrayList<Rect> dest, int top, int left) {
         super(context, background, src, dest, top, left);
+        type = HitType.MAGNET;
     }
 
     @Override
@@ -23,13 +24,6 @@ public class magnet extends Tool {
 
     @Override
     void use() {
-
-    }
-
-    @Override
-    public void draw(Canvas c) {
-        super.draw(c);
-        c.drawBitmap(background, src.get(0), dest.get(0),  null);
 
     }
 }

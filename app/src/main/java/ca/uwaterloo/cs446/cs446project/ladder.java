@@ -21,6 +21,7 @@ public class ladder extends DynamicObject {
 
     public ladder(Context context, Bitmap background, ArrayList<Rect> src, ArrayList<Rect> dest, int move_velocity, int top, int bottom) {
         super(context,  background,src,dest, move_velocity);
+        type = HitType.LADDER;
         this.top = top;
         this.bottom = bottom;
         max_bottom = bottom + 350;
@@ -43,5 +44,4 @@ public class ladder extends DynamicObject {
         }
 
     }
-
 }

@@ -19,4 +19,21 @@ abstract public class DynamicObject extends PhysicalModel {
     }
 
     abstract public void move();
+
+    @Override
+    public HitType hitModel(Rect rect) {
+        for (int i = 0; i < dest.size(); i++) {
+            if (rect.intersect(dest.get(i))) {
+                return this.type;
+            }
+        }
+        return HitType.NULL;
+    }
+
+    @Override
+    public HitType hitModel (Rect rect, HitType type) {
+        return type.NULL;
+    }
+
+
 }

@@ -75,7 +75,7 @@ public class Protagonist extends Character {
                 } else {
                     drawIndex++;
                 }
-                changeRate=30;
+                changeRate=10;
             }else{
                 changeRate--;
             }
@@ -90,7 +90,7 @@ public class Protagonist extends Character {
                     } else {
                         drawIndex++;
                     }
-                    changeRate=15;
+                    changeRate=6;
                 }else{
                     changeRate--;
                 }
