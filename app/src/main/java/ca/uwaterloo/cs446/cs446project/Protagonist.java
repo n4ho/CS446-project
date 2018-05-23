@@ -30,26 +30,28 @@ public class Protagonist extends Character {
         runLeft=new ArrayList<Bitmap>();
         climb=new ArrayList<>();
 
-        idle.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.idle0));
-        idle.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.idle1));
+        idle.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.idle0),width,height,false));
+        idle.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.idle1),width,height,false));
 
-        runRight.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00001));
-        runRight.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00002));
-        runRight.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00003));
-        runRight.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00004));
-        runRight.add(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00005));
+        runRight.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00001),width,height,false));
+        runRight.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00002),width,height,false));
+        runRight.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00003),width,height,false));
+        runRight.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00004),width,height,false));
+        runRight.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00005),width,height,false));
+        runRight.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00006),width,height,false));
 
-        runLeft.add(FlipBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00001)));
-        runLeft.add(FlipBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00002)));
-        runLeft.add(FlipBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00003)));
-        runLeft.add(FlipBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00004)));
-        runLeft.add(FlipBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00005)));
+        runLeft.add(FlipBitmap(runRight.get(0)));
+        runLeft.add(FlipBitmap(runRight.get(1)));
+        runLeft.add(FlipBitmap(runRight.get(2)));
+        runLeft.add(FlipBitmap(runRight.get(3)));
+        runLeft.add(FlipBitmap(runRight.get(4)));
+        runLeft.add(FlipBitmap(runRight.get(5)));
 
-        climb.add(FlipBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.climb00001)));
-        climb.add(FlipBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.climb00002)));
-        climb.add(FlipBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.climb00003)));
-        climb.add(FlipBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.climb00004)));
-        climb.add(FlipBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.climb00005)));
+        climb.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.climb00001),width,height,false));
+        climb.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.climb00002),width,height,false));
+        climb.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.climb00003),width,height,false));
+        climb.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.climb00004),width,height,false));
+        climb.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.climb00005),width,height,false));
 
 
     }

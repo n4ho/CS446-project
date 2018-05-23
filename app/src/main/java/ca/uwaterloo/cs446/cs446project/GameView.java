@@ -89,8 +89,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN
                 ||model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER){
             model.gravitySwitch(false);
+            model.getCharacter().stopY();
         }else{
             model.gravitySwitch(true);
+            model.getCharacter().stopY();
+
         }
 
         if(canvas!=null){
