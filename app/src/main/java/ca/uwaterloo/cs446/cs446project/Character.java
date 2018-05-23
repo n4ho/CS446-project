@@ -29,6 +29,7 @@ public class Character {
     double velocityX;
     double velocityY;
     double maxVelocity;
+    boolean jump;
 
 
 
@@ -53,6 +54,7 @@ public class Character {
         this.velocityX = 0;
         this.velocityY = 0;
         this.maxVelocity = 15;
+        this.jump = false;
 
     }
 
@@ -65,6 +67,7 @@ public class Character {
     // movement method
     public void jump(){
         velocityY -= thrust * 2.5;
+        jump = true;
     }
 
     public void thrustUp() {
