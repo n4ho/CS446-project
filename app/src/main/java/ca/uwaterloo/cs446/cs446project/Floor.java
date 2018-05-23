@@ -56,7 +56,7 @@ public class Floor extends StaticObject {
         for (int i = 0; i < dest.size(); i++) {
             Rect curDest = dest.get(i);
             if (type == HitType.UP && curDest.bottom >= rect.top || type == HitType.DOWN && rect.bottom >= curDest.top
-        || type == HitType.LEFT && rect.left <= curDest.right || type == HitType.RIGHT && rect.right >= curDest.right) {
+        || type == HitType.LEFT && rect.left <= curDest.right || type == HitType.RIGHT && rect.right >= curDest.left) {
                 return type;
             }
         }

@@ -71,7 +71,7 @@ public class GameModel {
                 point.y/15,point.x/20)
         );
 
-        characters.add(new Protagonist(context,this,100,100));
+        characters.add(new Protagonist(context,this,80,90));
 
         for (int i = 0; i < 10; i++) {
             structures.add(new Frame(i, point, context));
