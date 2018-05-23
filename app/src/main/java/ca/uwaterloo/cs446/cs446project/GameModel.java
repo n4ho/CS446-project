@@ -159,4 +159,7 @@ public class GameModel {
         characters.get(current_char).state=5;
     }
 
+    public Character getCharacter(){
+        return characters.get(current_char);
+    }
 }

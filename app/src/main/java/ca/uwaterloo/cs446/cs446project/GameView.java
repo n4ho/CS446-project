@@ -98,6 +98,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        Rect hitBox=new Rect(model.getCharacter().left,
+                model.getCharacter().top,
+                model.getCharacter().left+model.getCharacter().width,
+                model.getCharacter().top+model.getCharacter().height);
+
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 System.out.println("action down");
@@ -108,25 +113,27 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
                         if(ui.name=="LeftButton"){
                             System.out.println("left button clicked");
-                            if(true) {
+                            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) == HitType.NULL) {
                                 model.left();
                             }
                             return true;
                         }else if(ui.name=="RightButton"){
                             System.out.println("right button clicked");
-                            if(true) {
+                            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.NULL) {
                                 model.right();
                             }
                             return true;
                         }else if(ui.name=="UpButton"){
                             System.out.println("up button clicked");
-                            if(true) {
+                            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.UP) == HitType.NULL
+                                    &&model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER) {
                                 model.up();
                             }
                             return true;
                         }else if(ui.name=="DownButton"){
                             System.out.println("down button clicked");
-                            if(true) {
+                            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.NULL
+                                    &&model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER) {
                                 model.down();
                             }
                             return true;
