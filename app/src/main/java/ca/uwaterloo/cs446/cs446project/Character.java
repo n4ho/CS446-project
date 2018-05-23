@@ -16,8 +16,8 @@ public class Character {
     protected GameModel model;
 
     // Bounding box for physical collision
-    public int top=600;
-    public int left=800;
+    public int top=100;
+    public int left=700;
     public int width;
     public int height;
 
