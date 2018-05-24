@@ -20,6 +20,7 @@ public class Frame {
     Point point;
     public static ArrayList <Bitmap> backgrounds = new ArrayList<>();
     public int frame_num;
+    int floorHeight;
 
     public Frame (int num, Point point, Context context) {
 
@@ -445,6 +446,9 @@ public class Frame {
     public HitType hitFloor(Rect rect, HitType type) {
         for (int i = 0; i < floors.size(); i++) {
             if (floors.get(i).hitModel(rect, type) != HitType.NULL) {
+                if (type == HitType.DOWN) {
+                    floorHeight = ((Floor) floors.get(i)).getFloorHeight();
+                }
                 return type;
             }
         }

@@ -98,6 +98,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT)==HitType.LEFT
                 || model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT)==HitType.RIGHT){
             model.getCharacter().stopX();
+            System.out.println("hit left");
         }
         
         if(canvas!=null){
@@ -182,6 +183,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN) {
                                 model.jump();
                             }
+
                             //}
                             //model.gravitySwitch(true);
                             //model.gravitySwitch(false);
@@ -269,7 +271,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 && !model.getCharacter().jump){
             model.gravitySwitch(false);
             model.getCharacter().stopY();
-            System.out.println("on floor");
+            //System.out.println("on floor");
         }else{
             model.gravitySwitch(true);
             //model.getCharacter().stopY();

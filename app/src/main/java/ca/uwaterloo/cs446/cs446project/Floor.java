@@ -56,8 +56,7 @@ public class Floor extends StaticObject {
         for (int i = 0; i < dest.size(); i++) {
             Rect curDest = dest.get(i);
             if (Rect.intersects(rect, curDest)) {
-
-                if (type == HitType.UP && curDest.bottom >= rect.top)
+                if (type == HitType.UP && rect.bottom > curDest.bottom)
                     return type;
                 if (type == HitType.DOWN && rect.bottom >= curDest.top) {
                     if (curground != -1 && dest.get(curground).top > curDest.top && Rect.intersects(dest.get(curground), rect)) {}
@@ -79,6 +78,10 @@ public class Floor extends StaticObject {
         }
 
         return HitType.NULL;
+    }
+
+    public int getFloorHeight() {
+        return dest.get(curground).top;
     }
 
     @Override

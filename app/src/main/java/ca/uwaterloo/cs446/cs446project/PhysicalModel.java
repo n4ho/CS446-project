@@ -32,6 +32,7 @@ abstract public class PhysicalModel extends SurfaceView{
 
     abstract public HitType hitModel (Rect rect);
     abstract public HitType hitModel (Rect rect, HitType type);
+
    // abstract public void draw (Canvas c);
 
 }
