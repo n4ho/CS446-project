@@ -60,24 +60,24 @@ public class Floor extends StaticObject {
                 if (type == HitType.UP && curDest.bottom >= rect.top)
                     return type;
                 if (type == HitType.DOWN && rect.bottom >= curDest.top) {
-                    if (curground == -1 || dest.get(curground).top > curDest.top) {
-                        curground = i;
-                    }
+                    if (curground != -1 && dest.get(curground).top > curDest.top && Rect.intersects(dest.get(curground), rect)) {}
+                    else {curground = i; }
                     return type;
                 }
                 if (type == HitType.LEFT) {
-                    if (dest.get(i).left >= rect.right || rect.bottom >= curDest.top && curground == i) {continue;}
+                    if (dest.get(i).left >= rect.left || curground == i) {continue;}
                     if (rect.left <= curDest.right)
                         return type;
                 }
                 if (type == HitType.RIGHT) {
-                    if (dest.get(i).right <= rect.left || rect.bottom >= curDest.top && curground == i) {continue;}
+                    if (dest.get(i).right <= rect.right || curground == i) {continue;}
                     if (rect.right >= curDest.left)
                         return type;
 
                 }
             }
         }
+
         return HitType.NULL;
     }
 
