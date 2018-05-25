@@ -40,12 +40,12 @@ public class Protagonist extends Character {
         runRight.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00005),width,height,false));
         runRight.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00006),width,height,false));
 
-        runLeft.add(FlipBitmap(runRight.get(0)));
-        runLeft.add(FlipBitmap(runRight.get(1)));
-        runLeft.add(FlipBitmap(runRight.get(2)));
-        runLeft.add(FlipBitmap(runRight.get(3)));
-        runLeft.add(FlipBitmap(runRight.get(4)));
-        runLeft.add(FlipBitmap(runRight.get(5)));
+        runLeft.add(FlipBitmap(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00001),width,height,false)));
+        runLeft.add(FlipBitmap(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00002),width,height,false)));
+        runLeft.add(FlipBitmap(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00003),width,height,false)));
+        runLeft.add(FlipBitmap(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00004),width,height,false)));
+        runLeft.add(FlipBitmap(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00005),width,height,false)));
+        runLeft.add(FlipBitmap(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.run00006),width,height,false)));
 
         climb.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.climb00001),width,height,false));
         climb.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.climb00002),width,height,false));
