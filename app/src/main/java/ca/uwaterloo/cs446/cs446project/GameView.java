@@ -98,8 +98,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT)==HitType.LEFT
                 || model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT)==HitType.RIGHT){
             model.getCharacter().stopX();
+            System.out.println("hit left");
         }
-
+        
         if(canvas!=null){
             // draw all the components here
             for(Character c: model.characters){
@@ -136,6 +137,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                                 model.left();
                             }else{
                                 System.out.println("hit left wall");
+                                model.getCharacter().stopX();
                             }
                             return true;
                         }else if(ui.name=="RightButton"){
@@ -143,8 +145,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             ui.setSelected(true);
                             if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) == HitType.NULL) {
                                 model.right();
+
                             }else{
                                 System.out.println("hit right wall");
+                                model.getCharacter().stopX();
                             }
                             return true;
                         }else if(ui.name=="UpButton"){
@@ -158,6 +162,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             }
                             else{
                                 System.out.println("hit ceiling");
+                                model.getCharacter().stopY();
                             }
                             return true;
                         }else if(ui.name=="DownButton"){
@@ -168,6 +173,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                                 model.down();
                             }else{
                                 System.out.println("hit floor");
+                                model.getCharacter().stopY();
                             }
 
                             return true;
@@ -177,6 +183,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN) {
                                 model.jump();
                             }
+
                             //}
                             //model.gravitySwitch(true);
                             //model.gravitySwitch(false);
@@ -264,7 +271,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 && !model.getCharacter().jump){
             model.gravitySwitch(false);
             model.getCharacter().stopY();
-            System.out.println("on floor");
+            //System.out.println("on floor");
         }else{
             model.gravitySwitch(true);
             //model.getCharacter().stopY();
