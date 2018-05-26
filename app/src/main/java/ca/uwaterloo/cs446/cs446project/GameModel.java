@@ -117,7 +117,7 @@ public class GameModel {
     // left button clicked
     public void left() {
         // only thrust left/ right if character on ground
-        characters.get(current_char).state=2;
+        characters.get(current_char).state=MoveType.LEFT;
         characters.get(current_char).thrustLeft();
     }
 
@@ -130,7 +130,7 @@ public class GameModel {
 
     // right button clicked
     public void right(){
-        characters.get(current_char).state=1;
+        characters.get(current_char).state=MoveType.RIGHT;
         characters.get(current_char).thrustRight();
     }
 
@@ -144,20 +144,20 @@ public class GameModel {
 
     // jump button: jump
     public void jump(){
-        //characters.get(current_char).state=0;
+        //characters.get(current_char).state=MoveType.JUMP;
         characters.get(current_char).jump();
     }
 
     // up button: move up(when there is a ladder)
     public void up(){
         characters.get(current_char).thrustUp();
-        characters.get(current_char).state=4;
+        characters.get(current_char).state=MoveType.UP;
     }
 
     // down button: move up(when there is a ladder)
     public void down(){
         characters.get(current_char).thrustDown();
-        characters.get(current_char).state=5;
+        characters.get(current_char).state=MoveType.DOWN;
     }
 
     public void gravitySwitch(boolean b){

@@ -33,7 +33,7 @@ public class Character {
 
 
 
-    public int state=0;
+    public MoveType state=MoveType.RIGHT;
     // 0: idle
     // 1: run
     // 2: run left

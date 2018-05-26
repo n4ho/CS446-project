@@ -69,7 +69,7 @@ public class Protagonist extends Character {
         super.draw(canvas);
 
         switch (this.state){
-            case 0: // idle
+            case IDLE: // idle
                 canvas.drawBitmap(idle.get(drawIndex),left,top, null);
             if(changeRate==0) {
                 if (drawIndex >= idle.size() - 1) {
@@ -83,7 +83,7 @@ public class Protagonist extends Character {
             }
                 break;
 
-            case 1: // runRight
+            case RIGHT: // runRight
 
                 canvas.drawBitmap(runRight.get(drawIndex),left,top, null);
                 if(changeRate==0) {
@@ -99,7 +99,7 @@ public class Protagonist extends Character {
 
                 break;
 
-            case 2: //run left
+            case LEFT: //run left
                 canvas.drawBitmap(runLeft.get(drawIndex),left,top,null);
                 if(changeRate==0) {
                     if (drawIndex >= runLeft.size() - 1) {
@@ -114,10 +114,10 @@ public class Protagonist extends Character {
 
                 break;
 
-            case 3: // jump
+            case JUMP: // jump
                 break;
 
-            case 4: //up
+            case UP: //up
                 canvas.drawBitmap(climb.get(drawIndex),left,top,null);
                 if(changeRate==0) {
                     if (drawIndex >= climb.size() - 1) {
@@ -132,7 +132,7 @@ public class Protagonist extends Character {
 
                 break;
 
-            case 5: //down
+            case DOWN: //down
                 canvas.drawBitmap(climb.get(drawIndex),left,top,null);
                 if(changeRate==0) {
                     if (drawIndex >= climb.size() - 1) {
