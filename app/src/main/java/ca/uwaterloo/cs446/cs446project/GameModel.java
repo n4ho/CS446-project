@@ -23,7 +23,7 @@ public class GameModel {
     Point point;
     public ArrayList<UI> uis;
 
-    public int cur_frame = 4;
+    public int cur_frame = 5;
 
     public int fps;
     public int current_char = 0;
@@ -73,7 +73,7 @@ public class GameModel {
                 point.y/15,point.x/20)
         );
 
-        characters.add(new Protagonist(context,this,80,90));
+        characters.add(new Protagonist(context,this,60,70));
 
         for (int i = 0; i < 10; i++) {
             structures.add(new Frame(i, point, context));
@@ -95,6 +95,11 @@ public class GameModel {
                 // add draw method
             }
         }
+    }
+
+    public void characterReborn(int x, int y){
+        this.getCharacter().top=y;
+        this.getCharacter().left=x;
     }
 
     public void update(){

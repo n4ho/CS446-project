@@ -31,15 +31,7 @@ public class Character {
     double maxVelocity;
     boolean jump;
 
-
-
     public MoveType state=MoveType.RIGHT;
-    // 0: idle
-    // 1: run
-    // 2: run left
-    // 3: jump
-
-    // drawable
 
     public Character(Context context, GameModel model, int width, int height){
         this.context=context;
@@ -102,6 +94,10 @@ public class Character {
         velocityY = 0;
     }
 
+    public void setY(int floorHeight){
+        top=floorHeight;
+    }
+
     public void stopGravity(){ cur_gravity = 0;}
 
     public void startGravity(){ cur_gravity = gravity;}
@@ -128,12 +124,12 @@ public class Character {
         }
 
         // TO DO: if character is too far away from center of the screen, do transformation
-        if (left > model.point.x /5 * 4) {
-            left = model.point.x /5 * 4;
+        if (left > model.point.x /7 * 6) {
+            left = model.point.x /7 * 6;
             stopX();
         }
-        if (left < model.point.x /5){
-            left = model.point.x/5;
+        if (left < model.point.x /7){
+            left = model.point.x/7;
             stopX();
         }
 

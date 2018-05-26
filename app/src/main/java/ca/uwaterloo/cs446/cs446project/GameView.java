@@ -224,12 +224,26 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 model.getCharacter().left+model.getCharacter().width,
                 model.getCharacter().top+model.getCharacter().height);
 
+        if(model.getCharacter().top==model.point.y - model.getCharacter().height){
+            model.characterReborn(100,50);
+        }
+
+        // hit floor
         if((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN
                 ||model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER)
                 && !model.getCharacter().jump){
             model.gravitySwitch(false);
             model.getCharacter().stopY();
-            //System.out.println("on floor");
+            // in such case, height will be left/right floor
+            if(!(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.LEFT
+                    ||model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) == HitType.RIGHT)){
+                model.getCharacter().setY(model.structures.get(model.cur_frame).floorHeight);
+            }
+
+            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN)
+                System.out.println("on floor");
+            if(model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER)
+                System.out.println("on ladder");
         }else{
             model.gravitySwitch(true);
             //model.getCharacter().stopY();
@@ -253,7 +267,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 &&model.getCharacter().state==MoveType.RIGHT){
             model.getCharacter().stopX();
         }
-        System.out.println("Gravity Status: "+model.getCharacter().cur_gravity);
+        //System.out.println("Gravity Status: "+model.getCharacter().cur_gravity);
 
         model.update();
     }
