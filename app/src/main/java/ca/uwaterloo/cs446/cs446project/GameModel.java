@@ -28,6 +28,9 @@ public class GameModel {
     public int fps;
     public int current_char = 0;
 
+    // just for test purpose! move it into frame
+    public Bitmap backgroud;
+
     public GameModel(Context context, Display d, int _fps){
 
         this.fps = _fps;
@@ -78,6 +81,9 @@ public class GameModel {
         for (int i = 0; i < 10; i++) {
             structures.add(new Frame(i, point, context));
         }
+
+        backgroud=BitmapFactory.decodeResource(context.getResources(), R.drawable.backgroud00003);
+        backgroud=Bitmap.createScaledBitmap(backgroud,point.x,point.y,false);
 
     }
 

@@ -75,10 +75,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         Rect r = new Rect();
         r.set(0,0,p.x, p.y);
 
-        Paint paint = new Paint();
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.WHITE);
-        canvas.drawRect(r, paint);
+//        Paint paint = new Paint();
+//        paint.setStyle(Paint.Style.FILL);
+//        paint.setColor(Color.WHITE);
+//        canvas.drawRect(r, paint);
+        canvas.drawBitmap(model.backgroud,0,0,null);
         
         if(canvas!=null){
             // draw all the components here
@@ -237,6 +238,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             // in such case, height will be left/right floor
             if(!(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.LEFT
                     ||model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) == HitType.RIGHT)){
+                System.out.println("On floor: Set Y");
                 model.getCharacter().setY(model.structures.get(model.cur_frame).floorHeight);
             }
 
