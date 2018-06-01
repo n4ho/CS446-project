@@ -58,7 +58,7 @@ public class Floor extends StaticObject {
             if (Rect.intersects(rect, curDest)) {
                 if (type == HitType.UP && rect.bottom > curDest.bottom)
                     return type;
-                if (type == HitType.DOWN && rect.bottom >= curDest.top) {
+                if (type == HitType.DOWN && rect.bottom >= curDest.top && rect.top < curDest.top) {
                     if (curground != -1 && dest.get(curground).top > curDest.top && Rect.intersects(dest.get(curground), rect)) {}
                     else {curground = i; }
                     return type;
