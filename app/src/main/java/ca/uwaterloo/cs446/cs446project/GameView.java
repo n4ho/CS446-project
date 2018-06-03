@@ -229,23 +229,43 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             model.characterReborn(100,50);
         }
 
+
+        if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.LEFT)
+            System.out.println("hit left");
+
+        if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) == HitType.RIGHT)
+            System.out.println("hit right");
+
+        if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN)
+            System.out.println("on floor");
+        if(model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER)
+            System.out.println("on ladder");
+
         // hit floor
         if((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN
                 ||model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER)
-                && !model.getCharacter().jump){
+                && !model.getCharacter().jump) {
             model.gravitySwitch(false);
             model.getCharacter().stopY();
             // in such case, height will be left/right floor
-            if(!(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.LEFT
-                    ||model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) == HitType.RIGHT)){
-                System.out.println("On floor: Set Y");
-                model.getCharacter().setY(model.structures.get(model.cur_frame).floorHeight);
-            }
+//          if(!(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.LEFT
+//                    ||model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) == HitType.RIGHT)){
+//                System.out.println("On floor: Set Y");
+//                model.getCharacter().setY(model.structures.get(model.cur_frame).floorHeight);
+//            }
 
-            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN)
-                System.out.println("on floor");
-            if(model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER)
-                System.out.println("on ladder");
+           // if(model.getCharacter().getBottom() != )
+
+//            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.LEFT)
+//                System.out.println("hit left");
+//
+//            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) == HitType.RIGHT)
+//                System.out.println("hit right");
+//
+//            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN)
+//                System.out.println("on floor");
+//            if(model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER)
+//                System.out.println("on ladder");
         }else{
             model.gravitySwitch(true);
             //model.getCharacter().stopY();
