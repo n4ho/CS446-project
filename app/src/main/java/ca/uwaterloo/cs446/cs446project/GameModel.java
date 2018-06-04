@@ -23,10 +23,13 @@ public class GameModel {
     Point point;
     public ArrayList<UI> uis;
 
-    public int cur_frame = 4;
+    public int cur_frame = 0;
 
     public int fps;
     public int current_char = 0;
+
+    public int trans_x = 0;
+    public int trans_y = 0;
 
     // just for test purpose! move it into frame
     public Bitmap backgroud;
@@ -106,11 +109,16 @@ public class GameModel {
     public void characterReborn(int x, int y){
         this.getCharacter().top=y;
         this.getCharacter().left=x;
+        trans_x = 0;
+        trans_y = 0;
     }
 
     public void update(){
         for (Character c: characters) {
             c.update();
+        }
+        for(UI u: uis){
+            u.update(trans_x,trans_y);
         }
     }
 

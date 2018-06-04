@@ -28,7 +28,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     Display display;
     int fps = 60;
 
-
     public GameView(Context context, Display d){
         super(context);
         getHolder().addCallback(this);
@@ -66,6 +65,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public void draw(Canvas canvas){
+        canvas.translate(model.trans_x,model.trans_y);
         super.draw(canvas);
 
         Point p = new Point ();

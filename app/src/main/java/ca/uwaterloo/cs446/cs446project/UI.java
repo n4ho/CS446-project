@@ -20,6 +20,8 @@ public class UI {
     private int height;
     private Bitmap OnImage;
     private Bitmap OffImage;
+    int trans_x = 0;
+    int trans_y = 0;
 
     public UI(String name, Bitmap OnImage, Bitmap OffImage, int x, int y, int width, int height){
         this.name=name;
@@ -39,15 +41,27 @@ public class UI {
 
     public void draw(Canvas canvas){
         if(selected){
-            canvas.drawBitmap(OnImage, x,y,null);
+            canvas.drawBitmap(OnImage, x+trans_x,y+trans_y,null);
         }else{
-            canvas.drawBitmap(OffImage, x,y,null);
+            canvas.drawBitmap(OffImage, x+trans_x,y+trans_y,null);
         }
     }
 
     public boolean hitTest(float x, float y){
         return x<=this.x+width && x>=this.x
                 && y<=this.y+height && y>=this.y;
+    }
+
+    public  void update(int trans_x,int trans_y){
+        if (this.name == "LeftButton" ||
+                this.name == "RightButton" ||
+                this.name == "UpButton" ||
+                this.name == "DownButton" ||
+                this.name == "JumpButton"){
+            this.trans_x =  -trans_x;
+            this.trans_y = -trans_y;
+        }
+
     }
 
 }
