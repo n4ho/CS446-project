@@ -75,10 +75,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         Rect r = new Rect();
         r.set(0,0,p.x, p.y);
 
-//        Paint paint = new Paint();
-//        paint.setStyle(Paint.Style.FILL);
-//        paint.setColor(Color.WHITE);
-//        canvas.drawRect(r, paint);
+
         canvas.drawBitmap(model.backgroud,0,0,null);
         
         if(canvas!=null){
