@@ -14,12 +14,12 @@ public class UI {
 
     public boolean selected;
 
-    private int x;
-    private int y;
-    private int width;
-    private int height;
-    private Bitmap OnImage;
-    private Bitmap OffImage;
+    int x;
+    int y;
+    int width;
+    int height;
+    Bitmap OnImage;
+    Bitmap OffImage;
     int trans_x = 0;
     int trans_y = 0;
 
@@ -31,7 +31,6 @@ public class UI {
         this.y=y;
         this.width=width;
         this.height=height;
-
         this.selected=false;
     }
 
@@ -39,11 +38,11 @@ public class UI {
         this.selected=selected;
     }
 
-    public void draw(Canvas canvas){
-        if(selected){
-            canvas.drawBitmap(OnImage, x+trans_x,y+trans_y,null);
-        }else{
-            canvas.drawBitmap(OffImage, x+trans_x,y+trans_y,null);
+    public void draw(Canvas canvas) {
+        if (selected) {
+            canvas.drawBitmap(OnImage, x + trans_x, y + trans_y, null);
+        } else {
+            canvas.drawBitmap(OffImage, x + trans_x, y + trans_y, null);
         }
     }
 
@@ -52,15 +51,17 @@ public class UI {
                 && y<=this.y+height && y>=this.y;
     }
 
-    public  void update(int trans_x,int trans_y){
-        if (this.name == "LeftButton" ||
-                this.name == "RightButton" ||
-                this.name == "UpButton" ||
-                this.name == "DownButton" ||
-                this.name == "JumpButton"){
-            this.trans_x =  -trans_x;
-            this.trans_y = -trans_y;
-        }
+    public  void translate(int trans_x,int trans_y){
+//        if (this.name == "LeftButton" ||
+//                this.name == "RightButton" ||
+//                this.name == "UpButton" ||
+//                this.name == "DownButton" ||
+//                this.name == "JumpButton"){
+//            this.trans_x =  -trans_x;
+//            this.trans_y = -trans_y;
+//        }
+        this.trans_x =  -trans_x;
+        this.trans_y = -trans_y;
 
     }
 

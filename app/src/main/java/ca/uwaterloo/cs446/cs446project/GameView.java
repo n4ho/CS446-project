@@ -80,16 +80,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         
         if(canvas!=null){
             // draw all the components here
-            for(Character c: model.characters){
-                c.draw(canvas);
-            }
 
             //drawing current frame
             model.structures.get(model.cur_frame).draw(canvas);
 
+            for(Character c: model.characters){
+                c.draw(canvas);
+            }
 
-            model.optionalDraw(0, canvas);
-            model.optionalDraw(1,canvas);
+            for(UI ui: model.uis){
+                ui.draw(canvas);
+            }
+            //model.optionalDraw(0, canvas); draw ui
+            //model.optionalDraw(1,canvas); draw characters
         }
     }
 
@@ -163,6 +166,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             }
 
                             return true;
+                        }else if(ui.name == "Backpack"){
+                            System.out.println("backpack clicked");
+                            ui.setSelected(true);
+                            model.inventory.animation();
+                            return true;
+
+                        }else if(ui.name == "Inventory"){
+                            model.inventory.clicked(event.getX());
+
                         }
                     }
                 }
@@ -204,6 +216,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             ui.setSelected(false);
                             model.getCharacter().jump = false;
 
+                            return true;
+                        }else if(ui.name == "Backpack"){
+                            System.out.println("backpack released");
+                            ui.setSelected(false);
+                            // do something
                             return true;
                         }
                     }
