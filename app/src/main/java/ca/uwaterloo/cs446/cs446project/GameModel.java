@@ -23,7 +23,7 @@ public class GameModel {
     Point point;
     public ArrayList<UI> uis;
 
-    public int cur_frame = 0;
+    public int cur_frame = 2;
 
     public int fps;
     public int current_char = 0;

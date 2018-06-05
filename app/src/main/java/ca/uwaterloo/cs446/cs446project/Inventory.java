@@ -30,45 +30,42 @@ public class Inventory extends UI{
     public void draw(Canvas canvas) {
         if (display) {
 
-            int parent_x = 0;
-            int parent_y = 0;
-
             if(!animation) {
                 canvas.drawBitmap(OnImage, x + trans_x, y + trans_y, null);
-                parent_x = x + trans_x;
-                parent_y = y + trans_y;
+                for(int i = 1; i <= n;i++) {
+                    int temp_x = x + trans_x + width / n * (i - 1) + width / n / 4;
+                    int temp_y = y + trans_y + height / 4;
+                    canvas.drawBitmap(bomb,temp_x,temp_y,null);
+                }
 
             }
             // turn on
             else if (animation && OpenClose){
                 Bitmap b=Bitmap.createBitmap(OnImage, 0,0,width/fps * index, height);
                 canvas.drawBitmap(b,x+trans_x+width-width/fps*index,y+trans_y,null);
-                parent_x = x+trans_x+width-width/fps*index;
-                parent_y = y+trans_y;
+                for(int i = 1; i <= n;i++) {
+                    int temp_x = x + trans_x + width - width / fps * index + + width/n*(i-1) + width/n/4;
+                    int temp_y = y + trans_y + + height/4;
+                    if (i < (float)index/(float)fps * (float)n) canvas.drawBitmap(bomb,temp_x,temp_y,null);
+                }
             }
             // turn off
             else if(animation && !OpenClose){
                 Bitmap b=Bitmap.createBitmap(OnImage, 0,0,width - width/fps * index, height);
                 canvas.drawBitmap(b,x+trans_x+width/fps*index,y+trans_y,null);
-                parent_x = x+trans_x+width/fps*index;
-                parent_y = y+trans_y;
+                for(int i = 1; i <= n;i++) {
+                    int temp_x = x + trans_x + width / fps * index + width/n*(i-1) + width/n/4;
+                    int temp_y = y + trans_y + height/4;
+                    if (i < (float)n - (float)index/(float)fps*(float)n) canvas.drawBitmap(bomb,temp_x,temp_y,null);
+                }
             }
 
-            for(int i = 1; i <= n;i++){
-                // draw item
-                int temp_x = parent_x + width/n*(i-1) + width/n/4;
-                int temp_y = parent_y + height/4;
-                //have some problem, will solve later on
-                //canvas.drawBitmap(bomb,temp_x,temp_y,null);
-                // testing
-                if (!animation && i <= 4) canvas.drawBitmap(bomb,temp_x,temp_y,null);
-            }
         }
 
     }
 
     public void clicked(float x){
-        if(display) {
+        if(display && !animation) {
             for (int i = 1; i <= n; i++) {
                 if (x < this.x + i * this.width / n) {
                     System.out.println("item number " + i + " clicked");
@@ -102,7 +99,7 @@ public class Inventory extends UI{
             if (OpenClose == false) display = false; // close
         }
         else if(index < fps){
-            index += 5;
+            index += 3;
         }
     }
 
