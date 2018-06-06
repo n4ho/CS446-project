@@ -85,7 +85,7 @@ public class GameModel extends Observable{
             //ourInstance.backgroud = Bitmap.createScaledBitmap(ourInstance.backgroud, point.x*3, point.y, false);
 
             ourInstance.backgroud = compress(context,R.drawable.backgroud00003);
-            ourInstance.backgroud = Bitmap.createScaledBitmap(ourInstance.backgroud, point.x*10, point.y, false);
+            ourInstance.backgroud = Bitmap.createScaledBitmap(ourInstance.backgroud, point.x, point.y, false);
 
         }
     }
@@ -114,13 +114,9 @@ public class GameModel extends Observable{
     public ArrayList<Character> characters;
     public ArrayList<Frame> structures;
     public ArrayList<UI> uis;
-<<<<<<< HEAD
     
-    public int cur_frame = 1;
-=======
-
     public int cur_frame = 0;
->>>>>>> d908695b73ba49b725365c485e9adc7ff9323343
+
     public int current_char = 0;
 
     public int trans_x = 0;
