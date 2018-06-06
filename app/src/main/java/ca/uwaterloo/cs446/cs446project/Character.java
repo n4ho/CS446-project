@@ -124,13 +124,17 @@ public class Character {
         }
 
         // TO DO: if character is too far away from center of the screen, do transformation
-        if (left > model.point.x /7 * 6) {
-            left = model.point.x /7 * 6;
-            stopX();
+        if (left > model.point.x /7 * 6 - model.trans_x) {
+            //left = model.point.x /7 * 6 - model.trans_x;
+            //stopX();
+            model.trans_x -= velocityX;
         }
-        if (left < model.point.x /7){
-            left = model.point.x/7;
-            stopX();
+        if (left < model.point.x /7 - model.trans_x){
+            if(model.trans_x >= 0){
+                left = model.point.x/7 - model.trans_x;
+                stopX();
+            }
+            else if(model.trans_x <= 0) model.trans_x -= velocityX;
         }
 
 

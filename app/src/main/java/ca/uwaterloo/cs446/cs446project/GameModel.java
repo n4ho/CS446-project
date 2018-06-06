@@ -22,11 +22,15 @@ public class GameModel {
 
     Point point;
     public ArrayList<UI> uis;
-
+    
     public int cur_frame = 7;
 
     public int fps;
     public int current_char = 0;
+
+    public int trans_x = 0;
+    public int trans_y = 0;
+    public Inventory inventory;
 
     // just for test purpose! move it into frame
     public Bitmap backgroud;
@@ -75,6 +79,21 @@ public class GameModel {
                 (int)(point.x*0.93), (int)(point.y*0.83),
                 point.y/15,point.x/20)
         );
+        uis.add(new UI("Backpack",
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.backpack),
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.backpack),
+                (int)(point.x*0.91), (int)(point.y*0.1),
+                point.y/10,point.x/15)
+        );
+
+        inventory = new Inventory("Inventory",
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.inventory),
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.inventory),
+                (int)(point.x*0.4), (int)(point.y*0.1),
+                (int)(point.x*0.51),point.x/12,
+                fps,context);
+
+        uis.add(inventory);
 
         characters.add(new Protagonist(context,this,60,70));
 
@@ -106,11 +125,19 @@ public class GameModel {
     public void characterReborn(int x, int y){
         this.getCharacter().top=y;
         this.getCharacter().left=x;
+        trans_x = 0;
+        trans_y = 0;
     }
 
     public void update(){
         for (Character c: characters) {
             c.update();
+        }
+        for(UI u: uis){
+            u.translate(trans_x,trans_y);
+        }
+        if (inventory.animation){
+            inventory.update();
         }
     }
 
