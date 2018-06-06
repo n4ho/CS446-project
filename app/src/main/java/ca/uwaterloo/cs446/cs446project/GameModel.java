@@ -28,46 +28,46 @@ public class GameModel extends Observable{
 
         if(isGameView) {
             ourInstance.uis.add(new UI("LeftButton",
-                    BitmapFactory.decodeResource(context.getResources(), R.drawable.left),
-                    BitmapFactory.decodeResource(context.getResources(), R.drawable.left),
+                    compress(context,R.drawable.left),
+                    compress(context,R.drawable.left),
                     (int) (point.x * 0.02), (int) (point.y * 0.8),
                     point.x / 20, point.y / 15)
             );
             ourInstance.uis.add(new UI("RightButton",
-                    BitmapFactory.decodeResource(context.getResources(), R.drawable.right),
-                    BitmapFactory.decodeResource(context.getResources(), R.drawable.right),
+                    compress(context,R.drawable.right),
+                    compress(context,R.drawable.right),
                     (int) (point.x * 0.09), (int) (point.y * 0.8),
                     point.x / 20, point.y / 15)
             );
 
             ourInstance.uis.add(new UI("UpButton",
-                    BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
-                    BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
+                    compress(context,R.drawable.up),
+                    compress(context,R.drawable.up),
                     (int) (point.x * 0.06), (int) (point.y * 0.735),
                     point.y / 15, point.x / 20)
             );
             ourInstance.uis.add(new UI("DownButton",
-                    BitmapFactory.decodeResource(context.getResources(), R.drawable.down),
-                    BitmapFactory.decodeResource(context.getResources(), R.drawable.down),
+                    compress(context,R.drawable.down),
+                    compress(context,R.drawable.down),
                     (int) (point.x * 0.06), (int) (point.y * 0.85),
                     point.y / 15, point.x / 20)
             );
             ourInstance.uis.add(new UI("JumpButton",
-                    BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
-                    BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
+                    compress(context,R.drawable.up),
+                    compress(context,R.drawable.up),
                     (int) (point.x * 0.93), (int) (point.y * 0.83),
                     point.y / 15, point.x / 20)
             );
             ourInstance.uis.add(new UI("Backpack",
-                    BitmapFactory.decodeResource(context.getResources(), R.drawable.backpack),
-                    BitmapFactory.decodeResource(context.getResources(), R.drawable.backpack),
+                    compress(context,R.drawable.backpack),
+                    compress(context,R.drawable.backpack),
                     (int) (point.x * 0.91), (int) (point.y * 0.1),
                     point.y / 10, point.x / 15)
             );
 
             ourInstance.inventory = new Inventory("Inventory",
-                    BitmapFactory.decodeResource(context.getResources(), R.drawable.inventory),
-                    BitmapFactory.decodeResource(context.getResources(), R.drawable.inventory),
+                    compress(context,R.drawable.inventory),
+                    compress(context,R.drawable.inventory),
                     (int) (point.x * 0.4), (int) (point.y * 0.1),
                     (int) (point.x * 0.51), point.x / 12,
                     ourInstance.fps, context);
@@ -80,14 +80,27 @@ public class GameModel extends Observable{
                 ourInstance.structures.add(new Frame(i, point, context));
             }
 
-            ourInstance.backgroud = BitmapFactory.decodeResource(context.getResources(), R.drawable.backgroud00003);
-            ourInstance.backgroud = Bitmap.createScaledBitmap(ourInstance.backgroud, point.x, point.y, false);
+            //ourInstance.backgroud = BitmapFactory.decodeResource(context.getResources(), R.drawable.backgroud00003);
+            //ourInstance.backgroud = Bitmap.createScaledBitmap(ourInstance.backgroud, point.x*3, point.y, false);
+
+            ourInstance.backgroud = compress(context,R.drawable.backgroud00003);
+            ourInstance.backgroud = Bitmap.createScaledBitmap(ourInstance.backgroud, point.x*3, point.y, false);
+
         }
     }
 
     static GameModel getInstance()
     {
         return ourInstance;
+    }
+
+    static public Bitmap compress(Context context, int image){
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(context.getResources(), image, options);
+        options.inSampleSize = 15;
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(context.getResources(), image, options);
     }
 
     // for scale purpose
@@ -101,7 +114,7 @@ public class GameModel extends Observable{
     public ArrayList<Frame> structures;
     public ArrayList<UI> uis;
     
-    public int cur_frame = 7;
+    public int cur_frame = 1;
     public int current_char = 0;
 
     public int trans_x = 0;

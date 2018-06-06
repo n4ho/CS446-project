@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,6 +31,16 @@ public class Frame {
     Context context;
 
 
+    public Bitmap compress(Context context, int image){
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(context.getResources(), image, options);
+        options.inSampleSize = 20;
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(context.getResources(), image, options);
+    }
+
+
     public Frame (int num, Point point, Context context) {
 
         this.context = context;
@@ -37,22 +48,39 @@ public class Frame {
         this.point = point;
         ArrayList <Rect> src = new ArrayList<>();
         ArrayList <Rect> dest = new ArrayList<>();
-        Bitmap ground = BitmapFactory.decodeResource(context.getResources(),R.drawable.ground);
-        Bitmap log = BitmapFactory.decodeResource(context.getResources(),R.drawable.log);
-        Bitmap ladder = BitmapFactory.decodeResource(context.getResources(),R.drawable.ladder);
-        bomb = BitmapFactory.decodeResource(context.getResources(),R.drawable.bomb);
-        magnet = BitmapFactory.decodeResource(context.getResources(),R.drawable.magnet);
-        cage = BitmapFactory.decodeResource(context.getResources(),R.drawable.cage);
-        water = BitmapFactory.decodeResource(context.getResources(),R.drawable.water);
-        fallingSpike = BitmapFactory.decodeResource(context.getResources(),R.drawable.fallingspike);
-        branch = BitmapFactory.decodeResource(context.getResources(),R.drawable.treebranch);
+//        Bitmap ground = BitmapFactory.decodeResource(context.getResources(),R.drawable.ground);
+//        Bitmap log = BitmapFactory.decodeResource(context.getResources(),R.drawable.log);
+//        Bitmap ladder = BitmapFactory.decodeResource(context.getResources(),R.drawable.ladder);
+//        bomb = BitmapFactory.decodeResource(context.getResources(),R.drawable.bomb);
+//        magnet = BitmapFactory.decodeResource(context.getResources(),R.drawable.magnet);
+//        cage = BitmapFactory.decodeResource(context.getResources(),R.drawable.cage);
+//        water = BitmapFactory.decodeResource(context.getResources(),R.drawable.water);
+//        fallingSpike = BitmapFactory.decodeResource(context.getResources(),R.drawable.fallingspike);
+//        branch = BitmapFactory.decodeResource(context.getResources(),R.drawable.treebranch);
+
+
+        Bitmap ground = compress(context,R.drawable.ground);
+        Bitmap log = compress(context,R.drawable.log);
+        Bitmap ladder = compress(context,R.drawable.ladder);
+        bomb = compress(context,R.drawable.bomb);
+        magnet = compress(context,R.drawable.magnet);
+        cage = compress(context,R.drawable.cage);
+        water = compress(context,R.drawable.water);
+        fallingSpike = compress(context,R.drawable.fallingspike);
+        branch = compress(context,R.drawable.treebranch);
 
         //tumbler
-        Bitmap tumbler = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler);
-        Bitmap tumbler_left10 = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler_left10);
-        Bitmap tumbler_right10 = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler_right10);
-        Bitmap tumbler_left5 = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler_left5);
-        Bitmap tumbler_right5 = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler_right5);
+//        Bitmap tumbler = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler);
+//        Bitmap tumbler_left10 = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler_left10);
+//        Bitmap tumbler_right10 = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler_right10);
+//        Bitmap tumbler_left5 = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler_left5);
+//        Bitmap tumbler_right5 = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler_right5);
+
+        Bitmap tumbler = compress(context,R.drawable.tumbler);
+        Bitmap tumbler_left10 = compress(context,R.drawable.tumbler_left10);
+        Bitmap tumbler_right10 = compress(context,R.drawable.tumbler_right10);
+        Bitmap tumbler_left5 = compress(context,R.drawable.tumbler_left5);
+        Bitmap tumbler_right5 = compress(context,R.drawable.tumbler_right5);
 
         ArrayList <Bitmap> wabble = new ArrayList<>();
         wabble.add(tumbler);
@@ -65,24 +93,43 @@ public class Frame {
         wabble.add(tumbler_left5);
 
         //wraith
-        Bitmap wraith1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith1);
-        Bitmap wraith2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith2);
-        Bitmap wraith3 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith3);
-        Bitmap wraith4 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith4);
-        Bitmap wraith5 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith5);
-        Bitmap wraith6 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith6);
-        Bitmap wraith7 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith7);
-        Bitmap wraith8 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith8);
-        Bitmap wraith9 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith9);
-        Bitmap wraith10 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith10);
-        Bitmap wraith11 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith11);
-        Bitmap wraith12 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith12);
-        Bitmap wraith15 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith15);
-        Bitmap wraith16 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith16);
-        Bitmap wraith17 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith17);
-        Bitmap wraith18 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith18);
-        Bitmap wraith19 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith19);
-        Bitmap wraith20 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith20);
+//        Bitmap wraith1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith1);
+//        Bitmap wraith2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith2);
+//        Bitmap wraith3 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith3);
+//        Bitmap wraith4 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith4);
+//        Bitmap wraith5 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith5);
+//        Bitmap wraith6 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith6);
+//        Bitmap wraith7 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith7);
+//        Bitmap wraith8 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith8);
+//        Bitmap wraith9 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith9);
+//        Bitmap wraith10 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith10);
+//        Bitmap wraith11 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith11);
+//        Bitmap wraith12 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith12);
+//        Bitmap wraith15 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith15);
+//        Bitmap wraith16 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith16);
+//        Bitmap wraith17 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith17);
+//        Bitmap wraith18 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith18);
+//        Bitmap wraith19 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith19);
+//        Bitmap wraith20 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith20);
+
+        Bitmap wraith1 = compress(context,R.drawable.wraith1);
+        Bitmap wraith2 = compress(context,R.drawable.wraith2);
+        Bitmap wraith3 = compress(context,R.drawable.wraith3);
+        Bitmap wraith4 = compress(context,R.drawable.wraith4);
+        Bitmap wraith5 = compress(context,R.drawable.wraith5);
+        Bitmap wraith6 = compress(context,R.drawable.wraith6);
+        Bitmap wraith7 = compress(context,R.drawable.wraith7);
+        Bitmap wraith8 = compress(context,R.drawable.wraith8);
+        Bitmap wraith9 = compress(context,R.drawable.wraith9);
+        Bitmap wraith10 = compress(context,R.drawable.wraith10);
+        Bitmap wraith11 = compress(context,R.drawable.wraith11);
+        Bitmap wraith12 = compress(context,R.drawable.wraith12);
+        Bitmap wraith15 = compress(context,R.drawable.wraith15);
+        Bitmap wraith16 = compress(context,R.drawable.wraith16);
+        Bitmap wraith17 = compress(context,R.drawable.wraith17);
+        Bitmap wraith18 = compress(context,R.drawable.wraith18);
+        Bitmap wraith19 = compress(context,R.drawable.wraith19);
+        Bitmap wraith20 = compress(context,R.drawable.wraith20);
 
         ArrayList <Bitmap> wraith = new ArrayList<>();
         wraith.add(wraith1);
