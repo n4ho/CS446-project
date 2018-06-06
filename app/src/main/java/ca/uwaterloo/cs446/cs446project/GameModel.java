@@ -23,7 +23,7 @@ public class GameModel {
     Point point;
     public ArrayList<UI> uis;
     
-    public int cur_frame = 7;
+    public int cur_frame = 0;
 
     public int fps;
     public int current_char = 0;
@@ -102,7 +102,7 @@ public class GameModel {
         }
 
         backgroud=BitmapFactory.decodeResource(context.getResources(), R.drawable.backgroud00003);
-        backgroud=Bitmap.createScaledBitmap(backgroud,point.x,point.y,false);
+        backgroud=Bitmap.createScaledBitmap(backgroud,point.x*10,point.y,false);
 
     }
 
