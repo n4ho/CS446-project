@@ -12,11 +12,16 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
-public class MainActivity extends Activity {
+import java.util.Observable;
+import java.util.Observer;
+
+public class MainActivity extends Activity implements Observer{
 
     Button startButton;
     Button creditButton;
     Button optionButton;
+
+    GameModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +35,20 @@ public class MainActivity extends Activity {
         optionButton=(Button)findViewById(R.id.option);
         creditButton=(Button)findViewById(R.id.credit);
 
+        model= GameModel.getInstance();
+        GameModel.setInstance(this, getWindowManager().getDefaultDisplay(), 60, false);
+
         startButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, SelectionActivity.class));
             }
         });
+
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
 
     }
 }
