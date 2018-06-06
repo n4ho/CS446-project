@@ -6,7 +6,12 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class GameActivity extends Activity {
+import java.util.Observable;
+import java.util.Observer;
+
+public class GameActivity extends Activity implements Observer{
+
+    GameModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,7 +19,15 @@ public class GameActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(new GameView(this, getWindowManager().getDefaultDisplay()));
+
+        model= GameModel.getInstance();
+        GameModel.setInstance(this, getWindowManager().getDefaultDisplay(), 60, true);
+        setContentView(new GameView(this, getWindowManager().getDefaultDisplay(), model));
+
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
 
     }
 }

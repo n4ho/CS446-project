@@ -11,21 +11,97 @@ import android.graphics.Canvas;
 
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 
-public class GameModel {
+public class GameModel extends Observable{
 
+    private static final GameModel ourInstance = new GameModel();
+
+    static void setInstance(Context context, Display d, int _fps, boolean isGameView){
+        ourInstance.fps=_fps;
+        ourInstance.display=d;
+        ourInstance.context=context;
+
+        Point point=ourInstance.point;
+        ourInstance.display.getSize(point);
+
+        if(isGameView) {
+            ourInstance.uis.add(new UI("LeftButton",
+                    BitmapFactory.decodeResource(context.getResources(), R.drawable.left),
+                    BitmapFactory.decodeResource(context.getResources(), R.drawable.left),
+                    (int) (point.x * 0.02), (int) (point.y * 0.8),
+                    point.x / 20, point.y / 15)
+            );
+            ourInstance.uis.add(new UI("RightButton",
+                    BitmapFactory.decodeResource(context.getResources(), R.drawable.right),
+                    BitmapFactory.decodeResource(context.getResources(), R.drawable.right),
+                    (int) (point.x * 0.09), (int) (point.y * 0.8),
+                    point.x / 20, point.y / 15)
+            );
+
+            ourInstance.uis.add(new UI("UpButton",
+                    BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
+                    BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
+                    (int) (point.x * 0.06), (int) (point.y * 0.735),
+                    point.y / 15, point.x / 20)
+            );
+            ourInstance.uis.add(new UI("DownButton",
+                    BitmapFactory.decodeResource(context.getResources(), R.drawable.down),
+                    BitmapFactory.decodeResource(context.getResources(), R.drawable.down),
+                    (int) (point.x * 0.06), (int) (point.y * 0.85),
+                    point.y / 15, point.x / 20)
+            );
+            ourInstance.uis.add(new UI("JumpButton",
+                    BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
+                    BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
+                    (int) (point.x * 0.93), (int) (point.y * 0.83),
+                    point.y / 15, point.x / 20)
+            );
+            ourInstance.uis.add(new UI("Backpack",
+                    BitmapFactory.decodeResource(context.getResources(), R.drawable.backpack),
+                    BitmapFactory.decodeResource(context.getResources(), R.drawable.backpack),
+                    (int) (point.x * 0.91), (int) (point.y * 0.1),
+                    point.y / 10, point.x / 15)
+            );
+
+            ourInstance.inventory = new Inventory("Inventory",
+                    BitmapFactory.decodeResource(context.getResources(), R.drawable.inventory),
+                    BitmapFactory.decodeResource(context.getResources(), R.drawable.inventory),
+                    (int) (point.x * 0.4), (int) (point.y * 0.1),
+                    (int) (point.x * 0.51), point.x / 12,
+                    ourInstance.fps, context);
+
+            ourInstance.uis.add(ourInstance.inventory);
+
+            ourInstance.characters.add(new Protagonist(context, ourInstance, 60, 70));
+
+            for (int i = 0; i < 10; i++) {
+                ourInstance.structures.add(new Frame(i, point, context));
+            }
+
+            ourInstance.backgroud = BitmapFactory.decodeResource(context.getResources(), R.drawable.backgroud00003);
+            ourInstance.backgroud = Bitmap.createScaledBitmap(ourInstance.backgroud, point.x, point.y, false);
+        }
+    }
+
+    static GameModel getInstance()
+    {
+        return ourInstance;
+    }
+
+    // for scale purpose
+    Display display;
+    Context context;
+    Point point;
+    int fps;
+
+    // game objs
     public ArrayList<Character> characters;
     public ArrayList<Frame> structures;
-
-    Display display;
-
-    Point point;
     public ArrayList<UI> uis;
     
     public int cur_frame = 7;
-
-    public int fps;
     public int current_char = 0;
 
     public int trans_x = 0;
@@ -35,75 +111,13 @@ public class GameModel {
     // just for test purpose! move it into frame
     public Bitmap backgroud;
 
-    public GameModel(Context context, Display d, int _fps){
+    public GameModel(){
 
-        this.fps = _fps;
         characters=new ArrayList<Character>();
         structures=new ArrayList<Frame>();
-
-        display = d;
-        point = new Point();
-        display.getSize(point);
-
-
         uis=new ArrayList<UI>();
 
-        uis.add(new UI("LeftButton",
-                BitmapFactory.decodeResource(context.getResources(), R.drawable.left),
-                BitmapFactory.decodeResource(context.getResources(), R.drawable.left),
-                (int)(point.x*0.02), (int)(point.y*0.8),
-                point.x/20,point.y/15)
-        );
-        uis.add(new UI("RightButton",
-                BitmapFactory.decodeResource(context.getResources(), R.drawable.right),
-                BitmapFactory.decodeResource(context.getResources(), R.drawable.right),
-                (int)(point.x*0.09),(int)(point.y*0.8),
-                point.x/20,point.y/15)
-        );
-
-        uis.add(new UI("UpButton",
-                BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
-                BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
-                (int)(point.x*0.06), (int)(point.y*0.735),
-                point.y/15,point.x/20)
-        );
-        uis.add(new UI("DownButton",
-                BitmapFactory.decodeResource(context.getResources(), R.drawable.down),
-                BitmapFactory.decodeResource(context.getResources(), R.drawable.down),
-                (int)(point.x*0.06), (int)(point.y*0.85),
-                point.y/15,point.x/20)
-        );
-        uis.add(new UI("JumpButton",
-                BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
-                BitmapFactory.decodeResource(context.getResources(), R.drawable.up),
-                (int)(point.x*0.93), (int)(point.y*0.83),
-                point.y/15,point.x/20)
-        );
-        uis.add(new UI("Backpack",
-                BitmapFactory.decodeResource(context.getResources(), R.drawable.backpack),
-                BitmapFactory.decodeResource(context.getResources(), R.drawable.backpack),
-                (int)(point.x*0.91), (int)(point.y*0.1),
-                point.y/10,point.x/15)
-        );
-
-        inventory = new Inventory("Inventory",
-                BitmapFactory.decodeResource(context.getResources(), R.drawable.inventory),
-                BitmapFactory.decodeResource(context.getResources(), R.drawable.inventory),
-                (int)(point.x*0.4), (int)(point.y*0.1),
-                (int)(point.x*0.51),point.x/12,
-                fps,context);
-
-        uis.add(inventory);
-
-        characters.add(new Protagonist(context,this,60,70));
-
-        for (int i = 0; i < 10; i++) {
-            structures.add(new Frame(i, point, context));
-        }
-
-        backgroud=BitmapFactory.decodeResource(context.getResources(), R.drawable.backgroud00003);
-        backgroud=Bitmap.createScaledBitmap(backgroud,point.x,point.y,false);
-
+        point = new Point();
     }
 
     public void optionalDraw(int option, Canvas canvas){
@@ -146,10 +160,6 @@ public class GameModel {
             if(ui.name==name) return ui;
         }
         return null;
-    }
-
-    public void hitTest(Rect rect) {
-        //add hitTest here.
     }
 
     // left button clicked

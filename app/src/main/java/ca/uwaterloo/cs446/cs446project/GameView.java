@@ -29,11 +29,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     int fps = 60;
     boolean temp = true;
 
-    public GameView(Context context, Display d){
+    public GameView(Context context, Display d, GameModel model){
         super(context);
         getHolder().addCallback(this);
         display = d;
-
+        this.model=model;
 
         thread=new MainThread(getHolder(), this);
     }
@@ -42,7 +42,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         thread.setRunning(true);
         thread.start();
-        model=new GameModel(this.getContext(), display,fps);
+        //model=new GameModel(this.getContext(), display,fps);
 
     }
 

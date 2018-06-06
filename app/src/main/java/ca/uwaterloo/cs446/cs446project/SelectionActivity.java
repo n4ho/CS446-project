@@ -10,11 +10,15 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-public class SelectionActivity extends Activity {
+public class SelectionActivity extends Activity implements Observer{
 
     ArrayList<Button> levels;
     Button backButton;
+
+    GameModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,9 @@ public class SelectionActivity extends Activity {
         levels.add((Button)findViewById(R.id.level2));
         levels.add((Button)findViewById(R.id.level3));
 
+        model= GameModel.getInstance();
+        GameModel.setInstance(this, getWindowManager().getDefaultDisplay(), 60, false);
+
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,5 +54,10 @@ public class SelectionActivity extends Activity {
                 }
             });
         }
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+
     }
 }
