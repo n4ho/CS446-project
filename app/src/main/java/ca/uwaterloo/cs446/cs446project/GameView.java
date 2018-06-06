@@ -27,6 +27,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public GameModel model;
     Display display;
     int fps = 60;
+    boolean temp = true;
 
 
     public GameView(Context context, Display d){
@@ -89,8 +90,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
             //drawing current frame
             model.structures.get(model.cur_frame).draw(canvas);
-
-
+            if (temp) {
+                temp = false;
+                model.structures.get(model.cur_frame).useMagnet(1300, p.y - 450);
+            }
             model.optionalDraw(0, canvas);
             model.optionalDraw(1,canvas);
         }

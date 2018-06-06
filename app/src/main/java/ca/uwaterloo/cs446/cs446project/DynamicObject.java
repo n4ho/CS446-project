@@ -22,10 +22,18 @@ abstract public class DynamicObject extends PhysicalModel {
 
     @Override
     public HitType hitModel(Rect rect) {
+
         for (int i = 0; i < dest.size(); i++) {
             if (rect.intersect(dest.get(i))) {
+                if (this instanceof island) {
+                    ((island)this).hit = true;
+                }
                 return this.type;
             }
+        }
+
+        if (this instanceof island) {
+            ((island)this).hit = false;
         }
         return HitType.NULL;
     }

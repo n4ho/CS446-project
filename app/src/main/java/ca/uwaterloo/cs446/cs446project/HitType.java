@@ -15,5 +15,9 @@ public enum HitType {
     TUMBLER,
     WRAITH,
     NULL,
-    DOOR
+    DOOR,
+    CAGE,
+    WATER,
+    FALLING_SPIKE,
+    ISLAND
 }
