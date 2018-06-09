@@ -192,6 +192,40 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 }
                 break;
 
+            case MotionEvent.ACTION_POINTER_DOWN:
+                //System.out.println("action down");
+                for(UI ui: model.uis){
+                    if(ui.hitTest(event.getX(), event.getY())){
+                        ui.setSelected(true);
+
+                        if(ui.name=="JumpButton"){
+                            System.out.println("jump button clicked");
+                            ui.setSelected(true);
+                            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN) {
+                                model.jump();
+                                model.getCharacter().jump=true;
+                            }
+
+                            return true;
+                        }
+                    }
+                }
+                break;
+
+            case MotionEvent.ACTION_POINTER_UP:
+                System.out.println("action up");
+                for(UI ui: model.uis) {
+                    if (ui.selected) {
+                        if (ui.name == "JumpButton") {
+                            System.out.println("jump button released");
+                            ui.setSelected(false);
+                            model.getCharacter().jump = false;
+                            return true;
+                        }
+                    }
+                }
+                break;
+
             case MotionEvent.ACTION_UP:
                 System.out.println("action up");
                 for(UI ui: model.uis) {
