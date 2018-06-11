@@ -61,7 +61,6 @@ public class Inventory extends UI{
             }
 
         }
-
     }
 
     public void clicked(float x){
