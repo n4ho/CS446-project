@@ -121,18 +121,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                         ui.setSelected(true);
 
                         if(ui.name=="LeftButton"){
-                            System.out.println("left button clicked");
+                            //System.out.println("left button clicked");
                             ui.setSelected(true);
                             if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.NULL &&
                                     model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN ) {
                                 model.left();
                             }else{
-                                System.out.println("hit left wall");
+                                //System.out.println("hit left wall");
                                 model.getCharacter().stopX();
                             }
                             return true;
                         }else if(ui.name=="RightButton"){
-                            System.out.println("right button clicked");
+                            //System.out.println("right button clicked");
                             ui.setSelected(true);
                             if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) == HitType.NULL &&
                                     model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN) {

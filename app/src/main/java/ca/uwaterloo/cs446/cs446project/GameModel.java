@@ -15,6 +15,27 @@ import java.util.Observable;
 
 
 public class GameModel extends Observable{
+    // for scale purpose
+    Display display;
+    Context context;
+    Point point;
+    int fps;
+
+    // game objs
+    public ArrayList<Character> characters;
+    public ArrayList<Frame> structures;
+    public ArrayList<UI> uis;
+
+    public int cur_frame = 7;
+    public int current_char = 0;
+
+    public int trans_x = 0;
+    public int trans_y = 0;
+    public Inventory inventory;
+
+    // just for test purpose! move it into frame
+    public Bitmap backgroud;
+
 
     private static final GameModel ourInstance = new GameModel();
 
@@ -27,6 +48,7 @@ public class GameModel extends Observable{
         ourInstance.display.getSize(point);
 
         if(isGameView) {
+            System.out.println("LOAD MODEL BITMAP!");
             ourInstance.uis.add(new UI("LeftButton",
                     BitmapFactory.decodeResource(context.getResources(), R.drawable.left),
                     BitmapFactory.decodeResource(context.getResources(), R.drawable.left),
@@ -90,26 +112,6 @@ public class GameModel extends Observable{
         return ourInstance;
     }
 
-    // for scale purpose
-    Display display;
-    Context context;
-    Point point;
-    int fps;
-
-    // game objs
-    public ArrayList<Character> characters;
-    public ArrayList<Frame> structures;
-    public ArrayList<UI> uis;
-    
-    public int cur_frame = 7;
-    public int current_char = 0;
-
-    public int trans_x = 0;
-    public int trans_y = 0;
-    public Inventory inventory;
-
-    // just for test purpose! move it into frame
-    public Bitmap backgroud;
 
     public GameModel(){
 
