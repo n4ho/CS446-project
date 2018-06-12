@@ -86,7 +86,7 @@ public class GameModel extends Observable{
             //ourInstance.backgroud = Bitmap.createScaledBitmap(ourInstance.backgroud, point.x*3, point.y, false);
 
             ourInstance.backgroud = compress(context,R.drawable.backgroud00003);
-            ourInstance.backgroud = Bitmap.createScaledBitmap(ourInstance.backgroud, point.x, point.y, false);
+            ourInstance.backgroud = Bitmap.createScaledBitmap(ourInstance.backgroud, point.x*10, point.y, false);
 
         }
     }
