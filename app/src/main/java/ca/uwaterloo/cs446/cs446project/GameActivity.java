@@ -24,10 +24,9 @@ public class GameActivity extends Activity implements Observer{
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         model= GameModel.getInstance();
-        GameModel.setInstance(this, getWindowManager().getDefaultDisplay(), 60, true);
         setContentView(new GameView(this, getWindowManager().getDefaultDisplay(), model));
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
+        GameModel.setInstance(this, getWindowManager().getDefaultDisplay(), 60, true);
     }
 
     @Override

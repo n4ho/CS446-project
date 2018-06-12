@@ -32,7 +32,7 @@ public class GameModel extends Observable{
                     compress(context,R.drawable.left),
                     compress(context,R.drawable.left),
                     (int) (point.x * 0.02), (int) (point.y * 0.8),
-                    point.x / 20, point.y / 15)
+                    point.x / 20 , point.y / 15)
             );
             ourInstance.uis.add(new UI("RightButton",
                     compress(context,R.drawable.right),
@@ -83,10 +83,8 @@ public class GameModel extends Observable{
 
 
             //ourInstance.backgroud = BitmapFactory.decodeResource(context.getResources(), R.drawable.backgroud00003);
-            //ourInstance.backgroud = Bitmap.createScaledBitmap(ourInstance.backgroud, point.x*3, point.y, false);
-
             ourInstance.backgroud = compress(context,R.drawable.backgroud00003);
-            ourInstance.backgroud = Bitmap.createScaledBitmap(ourInstance.backgroud, point.x*10, point.y, false);
+            ourInstance.backgroud = Bitmap.createScaledBitmap(ourInstance.backgroud, point.x, point.y, false);
 
         }
     }

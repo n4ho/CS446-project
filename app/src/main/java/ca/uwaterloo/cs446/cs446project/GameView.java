@@ -75,12 +75,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
         Rect r = new Rect();
         r.set(0,0,p.x, p.y);
-
-
-        canvas.drawBitmap(model.backgroud,0,0,null);
         
         if(canvas!=null){
             // draw all the components here
+
+            canvas.drawBitmap(model.backgroud,0,0,null);
 
             //drawing current frame
             model.structures.get(model.cur_frame).draw(canvas);
@@ -89,9 +88,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 temp = false;
                 model.structures.get(model.cur_frame).useMagnet(1300, p.y - 450);
             }
-            model.optionalDraw(0, canvas);
-            model.optionalDraw(1,canvas);
-
 
             for(Character c: model.characters){
                 c.draw(canvas);
@@ -108,12 +104,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        int pointerIndex = 0;
         Rect hitBox=new Rect(model.getCharacter().left,
                 model.getCharacter().top,
                 model.getCharacter().left+model.getCharacter().width,
                 model.getCharacter().top+model.getCharacter().height);
 
-        switch (event.getAction()){
+        switch (event.getAction() & MotionEvent.ACTION_MASK){
             case MotionEvent.ACTION_DOWN:
                 //System.out.println("action down");
                 for(UI ui: model.uis){
@@ -193,13 +190,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 break;
 
             case MotionEvent.ACTION_POINTER_DOWN:
-                //System.out.println("action down");
-                for(UI ui: model.uis){
-                    if(ui.hitTest(event.getX(), event.getY())){
-                        ui.setSelected(true);
+                pointerIndex ++;
+                System.out.println("multi touch, index = " + pointerIndex);
+                System.out.println("Event (X,Y) = " + event.getX(pointerIndex) + ", " + event.getY(pointerIndex));
+                System.out.println("Jump  (X,Y) = " + model.getUI("JumpButton").x + ", " + model.getUI("JumpButton").y);
 
+                for(UI ui: model.uis){
+                    if(ui.hitTest(event.getX(pointerIndex), event.getY(pointerIndex))){
+                        ui.setSelected(true);
                         if(ui.name=="JumpButton"){
-                            System.out.println("jump button clicked");
+                            System.out.println("jump button clicked in multi touch");
                             ui.setSelected(true);
                             if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN) {
                                 model.jump();
@@ -213,7 +213,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 break;
 
             case MotionEvent.ACTION_POINTER_UP:
-                System.out.println("action up");
+                //System.out.println("multi touch release");
                 for(UI ui: model.uis) {
                     if (ui.selected) {
                         if (ui.name == "JumpButton") {
@@ -296,17 +296,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) == HitType.RIGHT)
             System.out.println("hit right");
 
-//        if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN)
-//            System.out.println("on floor");
         if(model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER)
             System.out.println("on ladder");
-
-//        if(model.getCharacter().jump) {
-//            System.out.println("char jump");
-//        }
-//        else{
-//            System.out.println("char not jump");
-//        }
 
         // hit floor
         if((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN
