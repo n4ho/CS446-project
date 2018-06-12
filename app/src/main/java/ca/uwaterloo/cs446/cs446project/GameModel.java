@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -96,12 +97,18 @@ public class GameModel extends Observable{
     }
 
     static public Bitmap compress(Context context, int image){
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(context.getResources(), image, options);
-        options.inSampleSize = 15;
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeResource(context.getResources(), image, options);
+//        BitmapFactory.Options options = new BitmapFactory.Options();
+//        options.inJustDecodeBounds = true;
+//        BitmapFactory.decodeResource(context.getResources(), image, options);
+//        options.inSampleSize = 15;
+//        options.inJustDecodeBounds = false;
+//        return BitmapFactory.decodeResource(context.getResources(), image, options);
+        InputStream is = context.getResources().openRawResource(+ image);
+        BitmapFactory.Options opt = new BitmapFactory.Options();
+        opt.inJustDecodeBounds = false;
+        opt.inSampleSize = 4;
+        return BitmapFactory.decodeStream(is,null,opt);
+
     }
 
     // for scale purpose

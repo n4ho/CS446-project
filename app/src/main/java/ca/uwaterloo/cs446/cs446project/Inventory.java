@@ -98,7 +98,7 @@ public class Inventory extends UI{
             if (OpenClose == false) display = false; // close
         }
         else if(index < fps){
-            index += 3;
+            index += 5;
         }
     }
 
