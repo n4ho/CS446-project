@@ -77,7 +77,7 @@ public class GameModel extends Observable{
 
             ourInstance.uis.add(ourInstance.inventory);
 
-            ourInstance.characters.add(new Protagonist(context, ourInstance, 90, 100));
+            ourInstance.characters.add(new Protagonist(context, ourInstance, 70, 100));
 
             for (int i = 0; i < 4; i++) {
                 ourInstance.structures.add(new Frame(i, point, context));
@@ -216,6 +216,7 @@ public class GameModel extends Observable{
     public void up(){
         characters.get(current_char).thrustUp();
         characters.get(current_char).state=MoveType.UP;
+        System.out.println("ladder up");
     }
 
     // down button: move up(when there is a ladder)
