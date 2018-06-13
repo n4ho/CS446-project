@@ -1,8 +1,11 @@
 package ca.uwaterloo.cs446.cs446project;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
+import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -21,9 +24,9 @@ public class GameActivity extends Activity implements Observer{
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         model= GameModel.getInstance();
-        GameModel.setInstance(this, getWindowManager().getDefaultDisplay(), 60, true);
         setContentView(new GameView(this, getWindowManager().getDefaultDisplay(), model));
-
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        GameModel.setInstance(this, getWindowManager().getDefaultDisplay(), 60, true);
     }
 
     @Override

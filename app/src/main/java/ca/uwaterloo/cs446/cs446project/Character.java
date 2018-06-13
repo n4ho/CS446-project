@@ -124,18 +124,35 @@ public class Character {
         }
 
         // TO DO: if character is too far away from center of the screen, do transformation
-        if (left > model.point.x /3 * 2 - model.trans_x) {
+
+        if (left > model.structures.get(model.cur_frame).length - 100) {
+            if (model.cur_frame < 9) {
+                model.cur_frame++;
+                model.characterReborn(100, 50);
+            } else {
+                stopX();
+            }
+        } else if (left < 50 && velocityX < 0) {
+            if (model.cur_frame > 0) {
+                model.cur_frame--;
+                model.characterReborn(100, 50);
+            } else {
+                stopX();
+            }
+        } else if (left > model.point.x /3 * 2 - model.trans_x) {
             //left = model.point.x /7 * 6 - model.trans_x;
             //stopX();
-            model.trans_x -= velocityX;
-        }
-        if (left < model.point.x /7 - model.trans_x){
+            if (left >= model.structures.get(model.cur_frame).length - model.point.x /3 && velocityX > 0){}
+            else {
+                model.trans_x -= velocityX;
+            }
+        } /*else if (left < model.point.x /7 - model.trans_x) {
             if(model.trans_x >= 0){
                 left = model.point.x/7 - model.trans_x;
                 stopX();
             }
             else if(model.trans_x <= 0) model.trans_x -= velocityX;
-        }
+        }*/
 
 
     }

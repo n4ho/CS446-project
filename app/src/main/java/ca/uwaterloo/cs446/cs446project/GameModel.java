@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -53,7 +54,7 @@ public class GameModel extends Observable{
                     compress(context,R.drawable.left),
                     compress(context,R.drawable.left),
                     (int) (point.x * 0.02), (int) (point.y * 0.8),
-                    point.x / 20, point.y / 15)
+                    point.x / 20 , point.y / 15)
             );
             ourInstance.uis.add(new UI("RightButton",
                     compress(context,R.drawable.right),
@@ -98,16 +99,14 @@ public class GameModel extends Observable{
 
             ourInstance.characters.add(new Protagonist(context, ourInstance, 60, 70));
 
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 4; i++) {
                 ourInstance.structures.add(new Frame(i, point, context));
             }
 
 
             //ourInstance.backgroud = BitmapFactory.decodeResource(context.getResources(), R.drawable.backgroud00003);
-            //ourInstance.backgroud = Bitmap.createScaledBitmap(ourInstance.backgroud, point.x*3, point.y, false);
-
             ourInstance.backgroud = compress(context,R.drawable.backgroud00003);
-            ourInstance.backgroud = Bitmap.createScaledBitmap(ourInstance.backgroud, point.x, point.y, false);
+            ourInstance.backgroud = Bitmap.createScaledBitmap(ourInstance.backgroud, ourInstance.structures.get(ourInstance.cur_frame).length, point.y, false);
 
         }
     }
@@ -118,12 +117,18 @@ public class GameModel extends Observable{
     }
 
     static public Bitmap compress(Context context, int image){
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(context.getResources(), image, options);
-        options.inSampleSize = 15;
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeResource(context.getResources(), image, options);
+//        BitmapFactory.Options options = new BitmapFactory.Options();
+//        options.inJustDecodeBounds = true;
+//        BitmapFactory.decodeResource(context.getResources(), image, options);
+//        options.inSampleSize = 15;
+//        options.inJustDecodeBounds = false;
+//        return BitmapFactory.decodeResource(context.getResources(), image, options);
+        InputStream is = context.getResources().openRawResource(+ image);
+        BitmapFactory.Options opt = new BitmapFactory.Options();
+        opt.inJustDecodeBounds = false;
+        opt.inSampleSize = 4;
+        return BitmapFactory.decodeStream(is,null,opt);
+
     }
 
     // for scale purpose

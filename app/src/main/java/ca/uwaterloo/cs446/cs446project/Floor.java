@@ -28,7 +28,6 @@ public class Floor extends StaticObject {
 
         @Override
         public void draw (Canvas c) {
-                super.draw(c);
                 Paint p = new Paint();
                 p.setStyle(Paint.Style.FILL);
                 p.setColor(Color.BLACK);
