@@ -30,6 +30,7 @@ public class Character {
     double velocityY;
     double maxVelocity;
     boolean jump;
+    boolean climb;
 
     public MoveType state=MoveType.RIGHT;
 
@@ -47,6 +48,7 @@ public class Character {
         this.velocityY = 0;
         this.maxVelocity = 15;
         this.jump = false;
+        this.climb = false;
 
     }
 
@@ -58,7 +60,7 @@ public class Character {
 
     // movement method
     public void jump(){
-        velocityY -= thrust * 3;
+        velocityY -= thrust * 4;
         jump = true;
     }
 
