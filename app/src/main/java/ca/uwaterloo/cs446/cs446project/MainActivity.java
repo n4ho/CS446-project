@@ -30,8 +30,9 @@ public class MainActivity extends Activity implements Observer{
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        setContentView(R.layout.activity_main);
+
 
         startButton=(Button)findViewById(R.id.start);
         optionButton=(Button)findViewById(R.id.option);
