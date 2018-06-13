@@ -287,6 +287,24 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             model.characterReborn(100,50);
         }
 
+        HitType hittool  = model.structures.get(model.cur_frame).hitTools(hitBox);
+        if (hittool == HitType.MAGNET) {
+            model.magnet ++;
+        }
+        if (hittool == HitType.KEY) {
+            model.key ++;
+        }
+        if (hittool == HitType.BOMB) {
+            model.bomb ++;
+        }
+        if (hittool == HitType.SPIKE || hittool == HitType.WRAITH) {
+            model.characterReborn(100, 50);
+        }
+
+        if (hittool == HitType.DOOR) {
+            if (model.curlevel < 0)  model.curlevel ++;
+        }
+
 
         if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.LEFT)
             //System.out.println("hit left");

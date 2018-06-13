@@ -32,6 +32,10 @@ public class Frame {
     Bitmap branch;
     Context context;
     public int length;
+    public int startx;
+    public int starty;
+    public int endx;
+    public int endy;
 
 
     public Bitmap compress(Context context, int image, int compressRate){
@@ -125,6 +129,10 @@ public class Frame {
 
         if (num == 0) {
             length = point.x*3;
+            startx = 70;
+            starty = point.y - 200;
+            endx = length - 70;
+            endy = point.y - 200;
             //first frame
             backgrounds.add(ground);
             src.add(new Rect (0, 0, point.x, ground.getHeight()));
@@ -161,6 +169,10 @@ public class Frame {
 
         else if (num == 1) {
             length = point.x*3;
+            startx = 70;
+            starty = point.y - 250;
+            endx = length - 70;
+            endy = point.y - 220;
             //forth frame
             backgrounds.add(ground);
             src.add(new Rect (0, 0, 400, ground.getHeight()));
@@ -280,6 +292,10 @@ public class Frame {
 
         else if (num == 2) {
             length = point.x*3;
+            startx = 70;
+            starty = point.y - 150;
+            endx = length - 70;
+            endy = point.y - 150;
             //forth frame
             backgrounds.add(ground);
             src.add(new Rect (0, 0, point.x, ground.getHeight()));
@@ -345,6 +361,10 @@ public class Frame {
 
         else if (num == 3) {
             length = point.x;
+            startx = 70;
+            starty = point.y - 550;
+            endx = length - 70;
+            endy = point.y - 830;
             backgrounds.add(ground);
             src.add(new Rect (0, 0, 700, ground.getHeight()));
             dest.add( new Rect (0, point.y - 550, 200, point.y));

@@ -20,6 +20,7 @@ public class GameModel extends Observable{
 
     private static final GameModel ourInstance = new GameModel();
 
+
     static void setInstance(Context context, Display d, int _fps, boolean isGameView){
         ourInstance.fps=_fps;
         ourInstance.display=d;
@@ -119,12 +120,15 @@ public class GameModel extends Observable{
     public ArrayList<UI> uis;
 
     public int cur_frame = 0;
-
+    public int curlevel = 0;
     public int current_char = 0;
 
     public int trans_x = 0;
     public int trans_y = 0;
     public Inventory inventory;
+    public int bomb = 0;
+    public int magnet = 0;
+    public int key = 0;
 
 
     public GameModel(){

@@ -127,15 +127,16 @@ public class Character {
 
         if (left > model.structures.get(model.cur_frame).length - 100) {
             if (model.cur_frame < 9) {
-                model.cur_frame++;
-                model.characterReborn(100, 50);
+                ++model.cur_frame;
+                model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty);
             } else {
                 stopX();
             }
-        } else if (left < 50 && velocityX < 0) {
+        } else if (left < 100 && velocityX <= 0) {
             if (model.cur_frame > 0) {
                 model.cur_frame--;
-                model.characterReborn(100, 50);
+
+                model.characterReborn(model.structures.get(model.cur_frame).endx, model.structures.get(model.cur_frame).endy);
             } else {
                 stopX();
             }
@@ -146,7 +147,15 @@ public class Character {
             else {
                 model.trans_x -= velocityX;
             }
-        } /*else if (left < model.point.x /7 - model.trans_x) {
+        } else if (left < model.point.x /3 - model.trans_x) {
+            //left = model.point.x /7 * 6 - model.trans_x;
+            //stopX();
+            if (left <=  model.point.x /3 && velocityX < 0){}
+            else if (velocityX < 0) {
+                model.trans_x -= velocityX;
+            }
+        }
+        /*else if (left < model.point.x /7 - model.trans_x) {
             if(model.trans_x >= 0){
                 left = model.point.x/7 - model.trans_x;
                 stopX();
