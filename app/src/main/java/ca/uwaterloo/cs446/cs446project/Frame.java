@@ -57,7 +57,7 @@ public class Frame {
         this.point = point;
         ArrayList <Rect> src = new ArrayList<>();
         ArrayList <Rect> dest = new ArrayList<>();
-        
+
 
         Bitmap ground = BitmapFactory.decodeResource(context.getResources(),R.drawable.ground);
         Bitmap log = compress(context,R.drawable.log, 10);
@@ -273,6 +273,9 @@ public class Frame {
             floors.add(new wraith(context, wraith1, wraith_src, wraith_dest, 20, wraith, 2*point.x+1300, point.y-450));
             floors.add (new ladder(context, ladder, ladder_src1, ladder_dest1, 10, 0, point.y-550));
             floors.add(new Floor(context, ground, src, dest));
+
+            background = compress(context, R.drawable.backgrond001, 1);
+            background=Bitmap.createScaledBitmap(background, length, point.y, false);
         }
 
         else if (num == 2) {
@@ -335,7 +338,8 @@ public class Frame {
             floors.add(new Floor(context, ground, src, dest));
             floors.add(new wraith(context, wraith1, wraith_src, wraith_dest, 20, wraith, 2*point.x+point.x/2, point.y-400));
 
-
+            background = compress(context, R.drawable.backgrond001, 1);
+            background=Bitmap.createScaledBitmap(background, length, point.y, false);
 
         }
 
@@ -388,6 +392,9 @@ public class Frame {
             floors.add(new spike(context, spike_down, spike_src, spike_dest));
             floors.add(new door(context, door, door_src, door_dest));
             floors.add(new Floor(context, ground, src, dest));
+
+            background = compress(context, R.drawable.backgrond001, 1);
+            background=Bitmap.createScaledBitmap(background, length, point.y, false);
 
         }
 
