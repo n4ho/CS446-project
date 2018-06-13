@@ -16,26 +16,6 @@ import java.util.Observable;
 
 
 public class GameModel extends Observable{
-//    // for scale purpose
-//    Display display;
-//    Context context;
-//    Point point;
-//    int fps;
-//
-//    // game objs
-//    public ArrayList<Character> characters;
-//    public ArrayList<Frame> structures;
-//    public ArrayList<UI> uis;
-//
-//    public int cur_frame = 7;
-//    public int current_char = 0;
-//
-//    public int trans_x = 0;
-//    public int trans_y = 0;
-//    public Inventory inventory;
-//
-//    // just for test purpose! move it into frame
-//    public Bitmap backgroud;
 
 
     private static final GameModel ourInstance = new GameModel();
@@ -104,10 +84,6 @@ public class GameModel extends Observable{
             }
 
 
-            //ourInstance.backgroud = BitmapFactory.decodeResource(context.getResources(), R.drawable.backgroud00003);
-            ourInstance.backgroud = compress(context,R.drawable.backgroud00003);
-            ourInstance.backgroud = Bitmap.createScaledBitmap(ourInstance.backgroud, ourInstance.structures.get(ourInstance.cur_frame).length, point.y, false);
-
         }
     }
 
@@ -150,8 +126,6 @@ public class GameModel extends Observable{
     public int trans_y = 0;
     public Inventory inventory;
 
-    // just for test purpose! move it into frame
-    public Bitmap backgroud;
 
     public GameModel(){
 
