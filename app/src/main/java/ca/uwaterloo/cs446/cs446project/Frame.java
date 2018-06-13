@@ -161,7 +161,7 @@ public class Frame {
 
 
         //door
-        Bitmap door = BitmapFactory.decodeResource(context.getResources(),R.drawable.door);
+        Bitmap door = compress(context,R.drawable.wraith1);
 
         //key
         Bitmap key = BitmapFactory.decodeResource(context.getResources(),R.drawable.key);
