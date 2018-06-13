@@ -112,7 +112,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             case MotionEvent.ACTION_DOWN:
                 //System.out.println("action down");
                 for(UI ui: model.uis){
-                    if(ui.hitTest(event.getX(), event.getY())){
+                    if(ui.hitTest(event.getX(), event.getY(),0)){
                         ui.setSelected(true);
 
                         if(ui.name=="LeftButton"){
@@ -194,7 +194,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 System.out.println("Jump  (X,Y) = " + model.getUI("JumpButton").x + ", " + model.getUI("JumpButton").y);
 */
                 for(UI ui: model.uis){
-                    if(ui.hitTest(event.getX(pointerIndex), event.getY(pointerIndex))){
+                    if(ui.hitTest(event.getX(pointerIndex), event.getY(pointerIndex),40)){
                         ui.setSelected(true);
                         if(ui.name=="JumpButton"){
                             System.out.println("jump button clicked in multi touch");

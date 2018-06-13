@@ -75,7 +75,7 @@ public class GameModel extends Observable{
 
             ourInstance.uis.add(ourInstance.inventory);
 
-            ourInstance.characters.add(new Protagonist(context, ourInstance, 60, 70));
+            ourInstance.characters.add(new Protagonist(context, ourInstance, 90, 100));
 
             for (int i = 0; i < 4; i++) {
                 ourInstance.structures.add(new Frame(i, point, context));

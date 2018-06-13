@@ -39,7 +39,7 @@ public class Character {
         this.width=width;
         this.height=height;
 
-        this.scale = 180 / model.fps;
+        this.scale = 60 / model.fps;
         this.thrust = 10 * scale;
         this.gravity = 2 * scale;
         this.cur_gravity = gravity;
@@ -58,7 +58,7 @@ public class Character {
 
     // movement method
     public void jump(){
-        velocityY -= thrust * 2.5;
+        velocityY -= thrust * 3.5;
         jump = true;
     }
 
