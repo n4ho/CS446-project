@@ -10,7 +10,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -28,6 +34,8 @@ public class GameModel extends Observable{
         Point point=ourInstance.point;
         ourInstance.display.getSize(point);
 
+        // read max_frame from file
+        readModel();
         if(isGameView) {
             System.out.println("LOAD MODEL BITMAP!");
             ourInstance.uis.add(new UI("LeftButton",
@@ -92,6 +100,64 @@ public class GameModel extends Observable{
         return ourInstance;
     }
 
+    static void saveModel(){
+        String filename="ferrymangame.log";
+        File list[]=ourInstance.context.getFilesDir().listFiles();
+        File log=list[0];
+        boolean exist=false;
+        for(File f: list){
+            if(f.getName()==filename){
+                exist=true;
+                log=f;
+            }
+        }
+        if(!exist){
+            log=new File(ourInstance.context.getFilesDir(), filename);
+
+        }
+
+        try {
+            // clear log data
+            PrintWriter writer = new PrintWriter(log);
+            writer.println(ourInstance.max_frame);
+            writer.close();
+        }catch(Exception e){
+
+        }
+    }
+
+    static void readModel(){
+        String filename="ferrymangame.log";
+        File list[]=ourInstance.context.getFilesDir().listFiles();
+        File log=ourInstance.context.getFilesDir();
+        boolean exist=false;
+        for(File f: list){
+            if(f.getName()==filename){
+                exist=true;
+                log=f;
+            }
+        }
+        if(!exist){
+            ourInstance.max_frame=0;
+        }else{
+            //StringBuilder text = new StringBuilder();
+
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(log));
+                String line=br.readLine();
+                ourInstance.max_frame = Integer.parseInt(line);
+//                while ((line = br.readLine()) != null) {
+//                    text.append(line);
+//                    text.append('\n');
+//                }
+                br.close();
+            }
+            catch (IOException e) {
+                //You'll need to add proper error handling here
+            }
+        }
+    }
+
     static public Bitmap compress(Context context, int image){
 //        BitmapFactory.Options options = new BitmapFactory.Options();
 //        options.inJustDecodeBounds = true;
@@ -119,6 +185,7 @@ public class GameModel extends Observable{
     public ArrayList<UI> uis;
 
     public int cur_frame = 0;
+    public int max_frame=0;
 
     public int current_char = 0;
 
