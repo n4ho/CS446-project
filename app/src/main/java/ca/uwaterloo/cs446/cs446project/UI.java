@@ -46,9 +46,9 @@ public class UI {
         }
     }
 
-    public boolean hitTest(float x, float y){
-        return x<=this.x+width && x>=this.x
-                && y<=this.y+height && y>=this.y;
+    public boolean hitTest(float x, float y, float tolerance){
+        return x<=this.x+width+tolerance && x>=this.x-tolerance
+                && y<=this.y+height+tolerance && y>=this.y-tolerance;
     }
 
     public  void translate(int trans_x,int trans_y){

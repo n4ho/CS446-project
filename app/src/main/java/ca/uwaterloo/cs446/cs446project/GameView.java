@@ -112,16 +112,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             case MotionEvent.ACTION_DOWN:
                 //System.out.println("action down");
                 for(UI ui: model.uis){
-                    if(ui.hitTest(event.getX(), event.getY())){
+                    if(ui.hitTest(event.getX(), event.getY(),0)){
                         ui.setSelected(true);
 
                         if(ui.name=="LeftButton"){
                             //System.out.println("left button clicked");
                             ui.setSelected(true);
-                            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.NULL &&
-                                    model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN ) {
+                            if((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.NULL &&
+                                    model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN) ||
+                                    model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER) {
                                 model.left();
-                            }else{
+                            } else {
                                 //System.out.println("hit left wall");
                                 model.getCharacter().stopX();
                             }
@@ -129,8 +130,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                         }else if(ui.name=="RightButton"){
                             //System.out.println("right button clicked");
                             ui.setSelected(true);
-                            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) == HitType.NULL &&
-                                    model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN) {
+                            if((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) == HitType.NULL &&
+                                    model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN) ||
+                                    model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER) {
                                 model.right();
 
                             }else{
@@ -194,7 +196,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 System.out.println("Jump  (X,Y) = " + model.getUI("JumpButton").x + ", " + model.getUI("JumpButton").y);
 */
                 for(UI ui: model.uis){
-                    if(ui.hitTest(event.getX(pointerIndex), event.getY(pointerIndex))){
+                    if(ui.hitTest(event.getX(pointerIndex), event.getY(pointerIndex),40)){
                         ui.setSelected(true);
                         if(ui.name=="JumpButton"){
                             System.out.println("jump button clicked in multi touch");
@@ -287,7 +289,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             model.characterReborn(100,50);
         }
 
-
         if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.LEFT)
             //System.out.println("hit left");
 
@@ -297,10 +298,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         if(model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER)
             System.out.println("on ladder");
 
-        // hit floor
-        if((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN
-                ||model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER)
-                && !model.getCharacter().jump) {
+        // floor, not jump, not ladder
+        if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN
+                && !model.getCharacter().jump
+                && !(model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER)) {
             model.gravitySwitch(false);
             model.getCharacter().stopY();
             //System.out.println("on floor");
@@ -311,19 +312,38 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 //                System.out.println("On floor: Set Y");
 //                model.getCharacter().setY(model.structures.get(model.cur_frame).floorHeight);
 //            }
-
         }else{
             model.gravitySwitch(true);
             //model.getCharacter().stopY();
             //System.out.println("in air");
         }
 
-        //hit ceiling, stop Y
-        if((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.UP) == HitType.UP)){
+        // ladder && floor
+        if (model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER &&
+                model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN ){
+            model.gravitySwitch(false);
+            if(model.getCharacter().velocityY > 0) model.getCharacter().stopY();
+        }
+
+        // ladder , not on floor, not jump, not ceiling
+        else if(model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER
+                && !(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.UP) == HitType.UP)
+                && !(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN)
+                && !model.getCharacter().jump) {
+            model.gravitySwitch(false);
+        }
+
+        // ladder, ceiling
+        if ((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.UP) == HitType.UP) &&
+                model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER ){
+            System.out.println("hit ceiling and on ladder");
+            model.gravitySwitch(true);
+        }
+        // ceiling
+        else if((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.UP) == HitType.UP)){
             model.getCharacter().stopY();
             System.out.println("hit ceiling");
             model.gravitySwitch(true);
-
         }
 
         if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT)==HitType.LEFT
