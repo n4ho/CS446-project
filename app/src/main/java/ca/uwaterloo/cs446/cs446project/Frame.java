@@ -1,3 +1,4 @@
+
 package ca.uwaterloo.cs446.cs446project;
 
 import android.content.Context;
@@ -7,8 +8,8 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
 
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * Created by julialiu on 2018-05-20.
@@ -28,6 +29,23 @@ public class Frame {
     Bitmap fallingSpike;
     Bitmap branch;
     Context context;
+    public int length;
+
+
+    public Bitmap compress(Context context, int image){
+//        BitmapFactory.Options options = new BitmapFactory.Options();
+//        options.inJustDecodeBounds = true;
+//        BitmapFactory.decodeResource(context.getResources(), image, options);
+//        options.inSampleSize = 20;
+//        options.inJustDecodeBounds = false;
+//        return BitmapFactory.decodeResource(context.getResources(), image, options);
+
+        InputStream is = context.getResources().openRawResource(+ image);
+        BitmapFactory.Options opt = new BitmapFactory.Options();
+        opt.inJustDecodeBounds = false;
+        opt.inSampleSize = 10;
+        return BitmapFactory.decodeStream(is,null,opt);
+    }
 
 
     public Frame (int num, Point point, Context context) {
@@ -37,52 +55,36 @@ public class Frame {
         this.point = point;
         ArrayList <Rect> src = new ArrayList<>();
         ArrayList <Rect> dest = new ArrayList<>();
+
+
         Bitmap ground = BitmapFactory.decodeResource(context.getResources(),R.drawable.ground);
-        Bitmap log = BitmapFactory.decodeResource(context.getResources(),R.drawable.log);
-        Bitmap ladder = BitmapFactory.decodeResource(context.getResources(),R.drawable.ladder);
-        bomb = BitmapFactory.decodeResource(context.getResources(),R.drawable.bomb);
-        magnet = BitmapFactory.decodeResource(context.getResources(),R.drawable.magnet);
-        cage = BitmapFactory.decodeResource(context.getResources(),R.drawable.cage);
-        water = BitmapFactory.decodeResource(context.getResources(),R.drawable.water);
-        fallingSpike = BitmapFactory.decodeResource(context.getResources(),R.drawable.fallingspike);
-        branch = BitmapFactory.decodeResource(context.getResources(),R.drawable.treebranch);
+        Bitmap log = compress(context,R.drawable.log);
+        Bitmap ladder = compress(context,R.drawable.ladder);
+        bomb = compress(context,R.drawable.bomb);
+        magnet = compress(context,R.drawable.magnet);
+        cage = compress(context,R.drawable.cage);
+        water = compress(context,R.drawable.water);
+        fallingSpike = compress(context,R.drawable.fallingspike);
+        branch = compress(context,R.drawable.treebranch);
 
-        //tumbler
-        Bitmap tumbler = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler);
-        Bitmap tumbler_left10 = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler_left10);
-        Bitmap tumbler_right10 = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler_right10);
-        Bitmap tumbler_left5 = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler_left5);
-        Bitmap tumbler_right5 = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler_right5);
-
-        ArrayList <Bitmap> wabble = new ArrayList<>();
-        wabble.add(tumbler);
-        wabble.add(tumbler_right5);
-        wabble.add(tumbler_right10);
-        wabble.add(tumbler_right5);
-        wabble.add(tumbler);
-        wabble.add(tumbler_left5);
-        wabble.add(tumbler_left10);
-        wabble.add(tumbler_left5);
-
-        //wraith
-        Bitmap wraith1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith1);
-        Bitmap wraith2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith2);
-        Bitmap wraith3 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith3);
-        Bitmap wraith4 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith4);
-        Bitmap wraith5 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith5);
-        Bitmap wraith6 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith6);
-        Bitmap wraith7 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith7);
-        Bitmap wraith8 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith8);
-        Bitmap wraith9 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith9);
-        Bitmap wraith10 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith10);
-        Bitmap wraith11 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith11);
-        Bitmap wraith12 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith12);
-        Bitmap wraith15 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith15);
-        Bitmap wraith16 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith16);
-        Bitmap wraith17 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith17);
-        Bitmap wraith18 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith18);
-        Bitmap wraith19 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith19);
-        Bitmap wraith20 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith20);
+        Bitmap wraith1 = compress(context,R.drawable.wraith1);
+        Bitmap wraith2 = compress(context,R.drawable.wraith2);
+        Bitmap wraith3 = compress(context,R.drawable.wraith3);
+        Bitmap wraith4 = compress(context,R.drawable.wraith4);
+        Bitmap wraith5 = compress(context,R.drawable.wraith5);
+        Bitmap wraith6 = compress(context,R.drawable.wraith6);
+        Bitmap wraith7 = compress(context,R.drawable.wraith7);
+        Bitmap wraith8 = compress(context,R.drawable.wraith8);
+        Bitmap wraith9 = compress(context,R.drawable.wraith9);
+        Bitmap wraith10 = compress(context,R.drawable.wraith10);
+        Bitmap wraith11 = compress(context,R.drawable.wraith11);
+        Bitmap wraith12 = compress(context,R.drawable.wraith12);
+        Bitmap wraith15 = compress(context,R.drawable.wraith15);
+        Bitmap wraith16 = compress(context,R.drawable.wraith16);
+        Bitmap wraith17 = compress(context,R.drawable.wraith17);
+        Bitmap wraith18 = compress(context,R.drawable.wraith18);
+        Bitmap wraith19 = compress(context,R.drawable.wraith19);
+        Bitmap wraith20 = compress(context,R.drawable.wraith20);
 
         ArrayList <Bitmap> wraith = new ArrayList<>();
         wraith.add(wraith1);
@@ -119,16 +121,14 @@ public class Frame {
         //key
         Bitmap key = BitmapFactory.decodeResource(context.getResources(),R.drawable.key);
 
-
         if (num == 0) {
+            length = point.x*3;
             //first frame
             backgrounds.add(ground);
             src.add(new Rect (0, 0, point.x, ground.getHeight()));
-            dest.add( new Rect (0, point.y - 200, point.x, point.y));
+            dest.add( new Rect (0, point.y - 200, point.x+250, point.y));
 
             //second frame
-            src.add(new Rect (0, 0, 300, ground.getHeight()));
-            dest.add( new Rect (point.x, point.y-200, point.x+250, point.y));
 
             src.add(new Rect (0, 0, 200, ground.getHeight()));
             dest.add(new Rect (point.x+350, point.y - 350, point.x+550, point.y - 250));
@@ -137,15 +137,12 @@ public class Frame {
             dest.add(new Rect (point.x+600, point.y-200, point.x+1050, point.y));
 
             src.add(new Rect (400, 0, 800, ground.getHeight()));
-            dest.add(new Rect (point.x+1300, point.y-370, 2*point.x, point.y));
+            dest.add(new Rect (point.x+1300, point.y-370, 2*point.x+750, point.y));
 
             //third frame
 
-            src.add(new Rect (0, 0, 800, ground.getHeight()));
-            dest.add( new Rect (point.x*2, point.y - 370, 2*point.x+750, point.y));
-
             src.add(new Rect (200, 0, 1000, ground.getHeight()));
-            dest.add(new Rect (2*point.x+1200, point.y - 200, 3*point.x, point.y));
+            dest.add(new Rect (2*point.x+1000, point.y - 200, 3*point.x, point.y));
 
             ArrayList<Rect> log_src = new ArrayList<>();
             ArrayList<Rect> log_dest = new ArrayList<>();
@@ -158,6 +155,7 @@ public class Frame {
         }
 
         else if (num == 1) {
+            length = point.x*3;
             //forth frame
             backgrounds.add(ground);
             src.add(new Rect (0, 0, 400, ground.getHeight()));
@@ -179,7 +177,7 @@ public class Frame {
             dest.add( new Rect (400, point.y - 850, 970, point.y -800));
 
             src.add(new Rect (0, 0, point.x - 625, ground.getHeight()));
-            dest.add( new Rect (625, point.y - 200, point.x, point.y ));
+            dest.add( new Rect (625, point.y - 200, point.x+300, point.y ));
 
             src.add(new Rect (0, 0, 75, ground.getHeight()));
             dest.add( new Rect (1150, point.y - 400, 1225, point.y ));
@@ -204,8 +202,6 @@ public class Frame {
             floors.add(new spike(context, spike_left, spike_src_left, spike_dest_left));
 
             //fifth frame
-            src.add(new Rect (0, 0, 300, ground.getHeight()));
-            dest.add( new Rect (point.x, point.y - 200, point.x+300, point.y));
 
             src.add(new Rect (500, 0, 1030, ground.getHeight()));
             dest.add( new Rect (point.x+430, point.y - 270, point.x+900, point.y));
@@ -214,7 +210,7 @@ public class Frame {
             dest.add( new Rect (point.x+1000, point.y - 200, point.x+1400, point.y));
 
             src.add(new Rect (1000, 0, 1400, ground.getHeight()));
-            dest.add( new Rect (point.x+1300, point.y - 350, 2*point.x, point.y));
+            dest.add( new Rect (point.x+1300, point.y - 350, 2*point.x+300, point.y));
 
             src.add(new Rect (200, 0, 400, ground.getHeight()));
             dest.add( new Rect (point.x+200, point.y - 650, point.x+400, point.y-600));
@@ -237,8 +233,6 @@ public class Frame {
             floors.add (new ladder(context, ladder, ladder_src, ladder_dest, 10, 0, point.y-550));
 
             //sixth frame
-            src.add(new Rect (0, 0, 500, ground.getHeight()));
-            dest.add( new Rect (2*point.x, point.y-350, 2*point.x+300, point.y));
 
             src.add(new Rect (0, 0, 700, ground.getHeight()));
             dest.add( new Rect (2*point.x+400, point.y - 400, 2*point.x+850, point.y));
@@ -277,10 +271,11 @@ public class Frame {
         }
 
         else if (num == 2) {
+            length = point.x*3;
             //forth frame
             backgrounds.add(ground);
             src.add(new Rect (0, 0, point.x, ground.getHeight()));
-            dest.add( new Rect (point.x-800, point.y - 150, point.x, point.y));
+            dest.add( new Rect (point.x-800, point.y - 150, point.x*3, point.y));
 
             src.add(new Rect (0, 0, point.x, ground.getHeight()));
             dest.add( new Rect (0, point.y - 420, point.x, point.y-350));
@@ -299,15 +294,11 @@ public class Frame {
 
 
             floors.add(new magnet(context, magnet, magnet_src, magnet_dest, point.y-200, point.x-500));
-            floors.add(new tumbler(context, rock, tumbler_src, tumbler_dest, 15, wabble, 550, point.y - 750));
 
 
             //fifth frame
             src.add(new Rect (0, 0, 300, ground.getHeight()));
             dest.add( new Rect (point.x, point.y - 420, point.x+300, point.y-350));
-
-            src.add(new Rect (0, 0, point.x, ground.getHeight()));
-            dest.add( new Rect (point.x, point.y - 150, 2*point.x, point.y));
 
             src.add(new Rect (0,0, 800, ground.getHeight()));
             dest.add( new Rect (2*point.x - 800, point.y - 650, 2*point.x, point.y-600));
@@ -330,8 +321,6 @@ public class Frame {
             floors.add (new ladder(context, ladder, ladder_src, ladder_dest, 10, 0, point.y-550));
 
             //sixth frame
-            src.add(new Rect (0, 0, point.x, ground.getHeight()));
-            dest.add( new Rect (2*point.x, point.y - 150, 3*point.x, point.y));
 
             ArrayList<Rect> wraith_src = new ArrayList<>();
             ArrayList<Rect> wraith_dest = new ArrayList<>();
@@ -346,7 +335,7 @@ public class Frame {
         }
 
         else if (num == 3) {
-
+            length = point.x;
             backgrounds.add(ground);
             src.add(new Rect (0, 0, 700, ground.getHeight()));
             dest.add( new Rect (0, point.y - 550, 200, point.y));
@@ -397,9 +386,12 @@ public class Frame {
 
         }
 
+
+
+
         //level two
         else if (num == 4) {
-
+            length = point.x;
             //frame one
             backgrounds.add(ground);
             src.add(new Rect (0, 0, point.x, ground.getHeight()));
