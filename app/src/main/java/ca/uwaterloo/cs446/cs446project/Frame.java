@@ -10,6 +10,7 @@ import android.graphics.Rect;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.BitSet;
 
 /**
  * Created by julialiu on 2018-05-20.
@@ -22,6 +23,7 @@ public class Frame {
     public static ArrayList <Bitmap> backgrounds = new ArrayList<>();
     public int frame_num;
     int floorHeight;
+    Bitmap background;
     Bitmap bomb;
     Bitmap magnet;
     Bitmap cage;
@@ -32,7 +34,7 @@ public class Frame {
     public int length;
 
 
-    public Bitmap compress(Context context, int image){
+    public Bitmap compress(Context context, int image, int compressRate){
 //        BitmapFactory.Options options = new BitmapFactory.Options();
 //        options.inJustDecodeBounds = true;
 //        BitmapFactory.decodeResource(context.getResources(), image, options);
@@ -43,7 +45,7 @@ public class Frame {
         InputStream is = context.getResources().openRawResource(+ image);
         BitmapFactory.Options opt = new BitmapFactory.Options();
         opt.inJustDecodeBounds = false;
-        opt.inSampleSize = 10;
+        opt.inSampleSize = compressRate;
         return BitmapFactory.decodeStream(is,null,opt);
     }
 
@@ -55,36 +57,36 @@ public class Frame {
         this.point = point;
         ArrayList <Rect> src = new ArrayList<>();
         ArrayList <Rect> dest = new ArrayList<>();
-
+        
 
         Bitmap ground = BitmapFactory.decodeResource(context.getResources(),R.drawable.ground);
-        Bitmap log = compress(context,R.drawable.log);
-        Bitmap ladder = compress(context,R.drawable.ladder);
-        bomb = compress(context,R.drawable.bomb);
-        magnet = compress(context,R.drawable.magnet);
-        cage = compress(context,R.drawable.cage);
-        water = compress(context,R.drawable.water);
-        fallingSpike = compress(context,R.drawable.fallingspike);
-        branch = compress(context,R.drawable.treebranch);
+        Bitmap log = compress(context,R.drawable.log, 10);
+        Bitmap ladder = compress(context,R.drawable.ladder, 10);
+        bomb = compress(context,R.drawable.bomb, 10);
+        magnet = compress(context,R.drawable.magnet, 10);
+        cage = compress(context,R.drawable.cage, 10);
+        water = compress(context,R.drawable.water, 10);
+        fallingSpike = compress(context,R.drawable.fallingspike, 10);
+        branch = compress(context,R.drawable.treebranch, 10);
 
-        Bitmap wraith1 = compress(context,R.drawable.wraith1);
-        Bitmap wraith2 = compress(context,R.drawable.wraith2);
-        Bitmap wraith3 = compress(context,R.drawable.wraith3);
-        Bitmap wraith4 = compress(context,R.drawable.wraith4);
-        Bitmap wraith5 = compress(context,R.drawable.wraith5);
-        Bitmap wraith6 = compress(context,R.drawable.wraith6);
-        Bitmap wraith7 = compress(context,R.drawable.wraith7);
-        Bitmap wraith8 = compress(context,R.drawable.wraith8);
-        Bitmap wraith9 = compress(context,R.drawable.wraith9);
-        Bitmap wraith10 = compress(context,R.drawable.wraith10);
-        Bitmap wraith11 = compress(context,R.drawable.wraith11);
-        Bitmap wraith12 = compress(context,R.drawable.wraith12);
-        Bitmap wraith15 = compress(context,R.drawable.wraith15);
-        Bitmap wraith16 = compress(context,R.drawable.wraith16);
-        Bitmap wraith17 = compress(context,R.drawable.wraith17);
-        Bitmap wraith18 = compress(context,R.drawable.wraith18);
-        Bitmap wraith19 = compress(context,R.drawable.wraith19);
-        Bitmap wraith20 = compress(context,R.drawable.wraith20);
+        Bitmap wraith1 = compress(context,R.drawable.wraith1, 1);
+        Bitmap wraith2 = compress(context,R.drawable.wraith2, 1);
+        Bitmap wraith3 = compress(context,R.drawable.wraith3, 1);
+        Bitmap wraith4 = compress(context,R.drawable.wraith4,1);
+        Bitmap wraith5 = compress(context,R.drawable.wraith5,1);
+        Bitmap wraith6 = compress(context,R.drawable.wraith6,1);
+        Bitmap wraith7 = compress(context,R.drawable.wraith7,1);
+        Bitmap wraith8 = compress(context,R.drawable.wraith8,1);
+        Bitmap wraith9 = compress(context,R.drawable.wraith9,1);
+        Bitmap wraith10 = compress(context,R.drawable.wraith10,1);
+        Bitmap wraith11 = compress(context,R.drawable.wraith11,1);
+        Bitmap wraith12 = compress(context,R.drawable.wraith12,1);
+        Bitmap wraith15 = compress(context,R.drawable.wraith15,1);
+        Bitmap wraith16 = compress(context,R.drawable.wraith16,1);
+        Bitmap wraith17 = compress(context,R.drawable.wraith17,1);
+        Bitmap wraith18 = compress(context,R.drawable.wraith18,1);
+        Bitmap wraith19 = compress(context,R.drawable.wraith19,1);
+        Bitmap wraith20 = compress(context,R.drawable.wraith20,1);
 
         ArrayList <Bitmap> wraith = new ArrayList<>();
         wraith.add(wraith1);
@@ -116,10 +118,10 @@ public class Frame {
 
 
         //door
-        Bitmap door = BitmapFactory.decodeResource(context.getResources(),R.drawable.door);
+        Bitmap door = compress(context,R.drawable.door, 1);
 
         //key
-        Bitmap key = BitmapFactory.decodeResource(context.getResources(),R.drawable.key);
+        Bitmap key = compress(context,R.drawable.key, 1);
 
         if (num == 0) {
             length = point.x*3;
@@ -151,6 +153,9 @@ public class Frame {
                     point.y/11*6+log.getHeight()/3));
             floors.add(new log(context, log, log_src, log_dest, 2*point.x+250, 300+log.getWidth()/2, 3));
             floors.add(new Floor(context, ground, src, dest));
+
+            background = compress(context, R.drawable.backgrond001, 1);
+            background=Bitmap.createScaledBitmap(background, length, point.y, false);
 
         }
 

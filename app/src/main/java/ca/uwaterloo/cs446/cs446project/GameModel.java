@@ -17,6 +17,7 @@ import java.util.Observable;
 
 public class GameModel extends Observable{
 
+
     private static final GameModel ourInstance = new GameModel();
 
     static void setInstance(Context context, Display d, int _fps, boolean isGameView){
@@ -28,6 +29,7 @@ public class GameModel extends Observable{
         ourInstance.display.getSize(point);
 
         if(isGameView) {
+            System.out.println("LOAD MODEL BITMAP!");
             ourInstance.uis.add(new UI("LeftButton",
                     compress(context,R.drawable.left),
                     compress(context,R.drawable.left),
@@ -82,10 +84,6 @@ public class GameModel extends Observable{
             }
 
 
-            //ourInstance.backgroud = BitmapFactory.decodeResource(context.getResources(), R.drawable.backgroud00003);
-            ourInstance.backgroud = compress(context,R.drawable.backgroud00003);
-            ourInstance.backgroud = Bitmap.createScaledBitmap(ourInstance.backgroud, ourInstance.structures.get(ourInstance.cur_frame).length, point.y, false);
-
         }
     }
 
@@ -119,7 +117,7 @@ public class GameModel extends Observable{
     public ArrayList<Character> characters;
     public ArrayList<Frame> structures;
     public ArrayList<UI> uis;
-    
+
     public int cur_frame = 0;
 
     public int current_char = 0;
@@ -128,8 +126,6 @@ public class GameModel extends Observable{
     public int trans_y = 0;
     public Inventory inventory;
 
-    // just for test purpose! move it into frame
-    public Bitmap backgroud;
 
     public GameModel(){
 
