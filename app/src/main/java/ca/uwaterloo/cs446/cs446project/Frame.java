@@ -6,9 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -32,22 +30,6 @@ public class Frame {
     Context context;
 
 
-    public Bitmap compress(Context context, int image){
-//        BitmapFactory.Options options = new BitmapFactory.Options();
-//        options.inJustDecodeBounds = true;
-//        BitmapFactory.decodeResource(context.getResources(), image, options);
-//        options.inSampleSize = 20;
-//        options.inJustDecodeBounds = false;
-//        return BitmapFactory.decodeResource(context.getResources(), image, options);
-
-        InputStream is = context.getResources().openRawResource(+ image);
-        BitmapFactory.Options opt = new BitmapFactory.Options();
-        opt.inJustDecodeBounds = false;
-        opt.inSampleSize = 10;
-        return BitmapFactory.decodeStream(is,null,opt);
-    }
-
-
     public Frame (int num, Point point, Context context) {
 
         this.context = context;
@@ -55,39 +37,22 @@ public class Frame {
         this.point = point;
         ArrayList <Rect> src = new ArrayList<>();
         ArrayList <Rect> dest = new ArrayList<>();
-//        Bitmap ground = BitmapFactory.decodeResource(context.getResources(),R.drawable.ground);
-//        Bitmap log = BitmapFactory.decodeResource(context.getResources(),R.drawable.log);
-//        Bitmap ladder = BitmapFactory.decodeResource(context.getResources(),R.drawable.ladder);
-//        bomb = BitmapFactory.decodeResource(context.getResources(),R.drawable.bomb);
-//        magnet = BitmapFactory.decodeResource(context.getResources(),R.drawable.magnet);
-//        cage = BitmapFactory.decodeResource(context.getResources(),R.drawable.cage);
-//        water = BitmapFactory.decodeResource(context.getResources(),R.drawable.water);
-//        fallingSpike = BitmapFactory.decodeResource(context.getResources(),R.drawable.fallingspike);
-//        branch = BitmapFactory.decodeResource(context.getResources(),R.drawable.treebranch);
-
-
-        Bitmap ground = compress(context,R.drawable.ground);
-        Bitmap log = compress(context,R.drawable.log);
-        Bitmap ladder = compress(context,R.drawable.ladder);
-        bomb = compress(context,R.drawable.bomb);
-        magnet = compress(context,R.drawable.magnet);
-        cage = compress(context,R.drawable.cage);
-        water = compress(context,R.drawable.water);
-        fallingSpike = compress(context,R.drawable.fallingspike);
-        branch = compress(context,R.drawable.treebranch);
+        Bitmap ground = BitmapFactory.decodeResource(context.getResources(),R.drawable.ground);
+        Bitmap log = BitmapFactory.decodeResource(context.getResources(),R.drawable.log);
+        Bitmap ladder = BitmapFactory.decodeResource(context.getResources(),R.drawable.ladder);
+        bomb = BitmapFactory.decodeResource(context.getResources(),R.drawable.bomb);
+        magnet = BitmapFactory.decodeResource(context.getResources(),R.drawable.magnet);
+        cage = BitmapFactory.decodeResource(context.getResources(),R.drawable.cage);
+        water = BitmapFactory.decodeResource(context.getResources(),R.drawable.water);
+        fallingSpike = BitmapFactory.decodeResource(context.getResources(),R.drawable.fallingspike);
+        branch = BitmapFactory.decodeResource(context.getResources(),R.drawable.treebranch);
 
         //tumbler
-//        Bitmap tumbler = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler);
-//        Bitmap tumbler_left10 = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler_left10);
-//        Bitmap tumbler_right10 = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler_right10);
-//        Bitmap tumbler_left5 = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler_left5);
-//        Bitmap tumbler_right5 = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler_right5);
-
-        Bitmap tumbler = compress(context,R.drawable.tumbler);
-        Bitmap tumbler_left10 = compress(context,R.drawable.tumbler_left10);
-        Bitmap tumbler_right10 = compress(context,R.drawable.tumbler_right10);
-        Bitmap tumbler_left5 = compress(context,R.drawable.tumbler_left5);
-        Bitmap tumbler_right5 = compress(context,R.drawable.tumbler_right5);
+        Bitmap tumbler = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler);
+        Bitmap tumbler_left10 = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler_left10);
+        Bitmap tumbler_right10 = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler_right10);
+        Bitmap tumbler_left5 = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler_left5);
+        Bitmap tumbler_right5 = BitmapFactory.decodeResource(context.getResources(),R.drawable.tumbler_right5);
 
         ArrayList <Bitmap> wabble = new ArrayList<>();
         wabble.add(tumbler);
@@ -100,43 +65,24 @@ public class Frame {
         wabble.add(tumbler_left5);
 
         //wraith
-//        Bitmap wraith1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith1);
-//        Bitmap wraith2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith2);
-//        Bitmap wraith3 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith3);
-//        Bitmap wraith4 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith4);
-//        Bitmap wraith5 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith5);
-//        Bitmap wraith6 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith6);
-//        Bitmap wraith7 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith7);
-//        Bitmap wraith8 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith8);
-//        Bitmap wraith9 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith9);
-//        Bitmap wraith10 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith10);
-//        Bitmap wraith11 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith11);
-//        Bitmap wraith12 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith12);
-//        Bitmap wraith15 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith15);
-//        Bitmap wraith16 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith16);
-//        Bitmap wraith17 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith17);
-//        Bitmap wraith18 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith18);
-//        Bitmap wraith19 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith19);
-//        Bitmap wraith20 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith20);
-
-        Bitmap wraith1 = compress(context,R.drawable.wraith1);
-        Bitmap wraith2 = compress(context,R.drawable.wraith2);
-        Bitmap wraith3 = compress(context,R.drawable.wraith3);
-        Bitmap wraith4 = compress(context,R.drawable.wraith4);
-        Bitmap wraith5 = compress(context,R.drawable.wraith5);
-        Bitmap wraith6 = compress(context,R.drawable.wraith6);
-        Bitmap wraith7 = compress(context,R.drawable.wraith7);
-        Bitmap wraith8 = compress(context,R.drawable.wraith8);
-        Bitmap wraith9 = compress(context,R.drawable.wraith9);
-        Bitmap wraith10 = compress(context,R.drawable.wraith10);
-        Bitmap wraith11 = compress(context,R.drawable.wraith11);
-        Bitmap wraith12 = compress(context,R.drawable.wraith12);
-        Bitmap wraith15 = compress(context,R.drawable.wraith15);
-        Bitmap wraith16 = compress(context,R.drawable.wraith16);
-        Bitmap wraith17 = compress(context,R.drawable.wraith17);
-        Bitmap wraith18 = compress(context,R.drawable.wraith18);
-        Bitmap wraith19 = compress(context,R.drawable.wraith19);
-        Bitmap wraith20 = compress(context,R.drawable.wraith20);
+        Bitmap wraith1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith1);
+        Bitmap wraith2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith2);
+        Bitmap wraith3 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith3);
+        Bitmap wraith4 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith4);
+        Bitmap wraith5 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith5);
+        Bitmap wraith6 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith6);
+        Bitmap wraith7 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith7);
+        Bitmap wraith8 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith8);
+        Bitmap wraith9 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith9);
+        Bitmap wraith10 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith10);
+        Bitmap wraith11 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith11);
+        Bitmap wraith12 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith12);
+        Bitmap wraith15 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith15);
+        Bitmap wraith16 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith16);
+        Bitmap wraith17 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith17);
+        Bitmap wraith18 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith18);
+        Bitmap wraith19 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith19);
+        Bitmap wraith20 = BitmapFactory.decodeResource(context.getResources(),R.drawable.wraith20);
 
         ArrayList <Bitmap> wraith = new ArrayList<>();
         wraith.add(wraith1);
@@ -178,7 +124,11 @@ public class Frame {
             //first frame
             backgrounds.add(ground);
             src.add(new Rect (0, 0, point.x, ground.getHeight()));
-            dest.add( new Rect (0, point.y - 200, point.x+250, point.y));
+            dest.add( new Rect (0, point.y - 200, point.x, point.y));
+
+            //second frame
+            src.add(new Rect (0, 0, 300, ground.getHeight()));
+            dest.add( new Rect (point.x, point.y-200, point.x+250, point.y));
 
             src.add(new Rect (0, 0, 200, ground.getHeight()));
             dest.add(new Rect (point.x+350, point.y - 350, point.x+550, point.y - 250));
@@ -187,13 +137,15 @@ public class Frame {
             dest.add(new Rect (point.x+600, point.y-200, point.x+1050, point.y));
 
             src.add(new Rect (400, 0, 800, ground.getHeight()));
-            dest.add(new Rect (point.x+1300, point.y-370, 2*point.x + 750, point.y));
+            dest.add(new Rect (point.x+1300, point.y-370, 2*point.x, point.y));
 
             //third frame
 
+            src.add(new Rect (0, 0, 800, ground.getHeight()));
+            dest.add( new Rect (point.x*2, point.y - 370, 2*point.x+750, point.y));
 
             src.add(new Rect (200, 0, 1000, ground.getHeight()));
-            dest.add(new Rect (2*point.x+1200, point.y - 200, 3*point.x+400, point.y));
+            dest.add(new Rect (2*point.x+1200, point.y - 200, 3*point.x, point.y));
 
             ArrayList<Rect> log_src = new ArrayList<>();
             ArrayList<Rect> log_dest = new ArrayList<>();
@@ -201,224 +153,252 @@ public class Frame {
             log_dest.add(new Rect(2*point.x+250, point.y/11*6, 2*point.x+300+log.getWidth()/2,
                     point.y/11*6+log.getHeight()/3));
             floors.add(new log(context, log, log_src, log_dest, 2*point.x+250, 300+log.getWidth()/2, 3));
+            floors.add(new Floor(context, ground, src, dest));
 
+        }
+
+        else if (num == 1) {
             //forth frame
+            backgrounds.add(ground);
+            src.add(new Rect (0, 0, 400, ground.getHeight()));
+            dest.add( new Rect (0, point.y-250, 400, point.y));
 
             src.add(new Rect (800, 0, 950, ground.getHeight()));
-            dest.add( new Rect (point.x*3+475, point.y-350, point.x*3+625, point.y));
+            dest.add( new Rect (475, point.y-350, 625, point.y));
 
             src.add(new Rect (500, 0, 800, ground.getHeight()));
-            dest.add( new Rect (point.x*3+675, point.y - 350, point.x*3+975, point.y - 300));
+            dest.add( new Rect (675, point.y - 350, 975, point.y - 300));
 
             src.add(new Rect (0, 0, 250, ground.getHeight()));
-            dest.add( new Rect (point.x*3+440, point.y - 550, point.x*3+690, point.y - 500));
+            dest.add( new Rect (440, point.y - 550, 690, point.y - 500));
 
             src.add(new Rect (0, 0, 300, ground.getHeight()));
-            dest.add( new Rect (point.x*3+50, point.y - 700, point.x*3+350, point.y -650));
+            dest.add( new Rect (50, point.y - 700, 350, point.y -650));
 
             src.add(new Rect (100, 0, 670, ground.getHeight()));
-            dest.add( new Rect (point.x*3+400, point.y - 850, point.x*3+970, point.y -800));
+            dest.add( new Rect (400, point.y - 850, 970, point.y -800));
 
             src.add(new Rect (0, 0, point.x - 625, ground.getHeight()));
-            dest.add( new Rect (point.x*3+625, point.y - 200, point.x*4+300, point.y ));
+            dest.add( new Rect (625, point.y - 200, point.x, point.y ));
 
             src.add(new Rect (0, 0, 75, ground.getHeight()));
-            dest.add( new Rect (point.x*3+1150, point.y - 400, point.x*3+1225, point.y ));
+            dest.add( new Rect (1150, point.y - 400, 1225, point.y ));
 
             src.add(new Rect (1400, 0, point.x, ground.getHeight()));
-            dest.add( new Rect (point.x*3+1400, point.y - 500, point.x*4, point.y - 450 ));
+            dest.add( new Rect (1400, point.y - 500, point.x, point.y - 450 ));
 
             ArrayList<Rect> spike_src = new ArrayList<>();
             ArrayList<Rect> spike_dest = new ArrayList<>();
             spike_src.add(new Rect(0, 0, spike_up.getWidth(), spike_up.getHeight()));
-            spike_dest.add(new Rect(point.x*3+500, point.y - 950, point.x*3+700,point.y-850));
+            spike_dest.add(new Rect(500, point.y - 950, 700,point.y-850));
             spike_src.add(new Rect(0, 0, spike_up.getWidth(), spike_up.getHeight()));
-            spike_dest.add(new Rect(point.x*3+1225, point.y - 280, point.x*3+1600,point.y-130));
+            spike_dest.add(new Rect(1225, point.y - 280, 1600,point.y-130));
 
             ArrayList<Rect> spike_src_left = new ArrayList<>();
             ArrayList<Rect> spike_dest_left = new ArrayList<>();
             spike_src_left.add(new Rect(0, 0, spike_left.getWidth(), spike_left.getHeight()));
-            spike_dest_left.add(new Rect(point.x*3+1100, point.y - 400, point.x*3+1170,point.y - 100));
+            spike_dest_left.add(new Rect(1100, point.y - 400, 1170,point.y - 100));
 
 
             floors.add(new spike(context, spike_up, spike_src, spike_dest));
             floors.add(new spike(context, spike_left, spike_src_left, spike_dest_left));
 
             //fifth frame
+            src.add(new Rect (0, 0, 300, ground.getHeight()));
+            dest.add( new Rect (point.x, point.y - 200, point.x+300, point.y));
 
             src.add(new Rect (500, 0, 1030, ground.getHeight()));
-            dest.add( new Rect (point.x*4+430, point.y - 270, point.x*4+900, point.y));
+            dest.add( new Rect (point.x+430, point.y - 270, point.x+900, point.y));
 
             src.add(new Rect (1000, 0, 1400, ground.getHeight()));
-            dest.add( new Rect (point.x*4+1000, point.y - 200, point.x*4+1400, point.y));
+            dest.add( new Rect (point.x+1000, point.y - 200, point.x+1400, point.y));
 
             src.add(new Rect (1000, 0, 1400, ground.getHeight()));
-            dest.add( new Rect (point.x*4+1300, point.y - 350, point.x*5+300, point.y));
+            dest.add( new Rect (point.x+1300, point.y - 350, 2*point.x, point.y));
 
             src.add(new Rect (200, 0, 400, ground.getHeight()));
-            dest.add( new Rect (point.x*4+200, point.y - 650, point.x*4+400, point.y-600));
+            dest.add( new Rect (point.x+200, point.y - 650, point.x+400, point.y-600));
 
             src.add(new Rect (550, 0, 700, ground.getHeight()));
-            dest.add( new Rect (point.x*4+550, point.y - 750, point.x*4+700, point.y-700));
+            dest.add( new Rect (point.x+550, point.y - 750, point.x+700, point.y-700));
 
             src.add(new Rect (850, 0, 1200, ground.getHeight()));
-            dest.add( new Rect (point.x*4+850, point.y - 800, point.x*4+1200, point.y-750));
+            dest.add( new Rect (point.x+850, point.y - 800, point.x+1200, point.y-750));
 
             src.add(new Rect (200, 0, 400, ground.getHeight()));
-            dest.add( new Rect (point.x*4+1350, point.y - 650, point.x*4+1550, point.y-600));
+            dest.add( new Rect (point.x+1350, point.y - 650, point.x+1550, point.y-600));
 
             //ladder
             ArrayList<Rect> ladder_src = new ArrayList<>();
             ArrayList<Rect> ladder_dest = new ArrayList<>();
             ladder_src.add(new Rect (0, 0, ladder.getWidth(), ladder.getHeight() ));
-            ladder_dest.add(new Rect (point.x*4+1400, point.y-950, point.x*4+1500, point.y - 600 ));
+            ladder_dest.add(new Rect (point.x+1400, point.y-950, point.x+1500, point.y - 600 ));
 
             floors.add (new ladder(context, ladder, ladder_src, ladder_dest, 10, 0, point.y-550));
 
             //sixth frame
+            src.add(new Rect (0, 0, 500, ground.getHeight()));
+            dest.add( new Rect (2*point.x, point.y-350, 2*point.x+300, point.y));
 
             src.add(new Rect (0, 0, 700, ground.getHeight()));
-            dest.add( new Rect (point.x*5+400, point.y - 400, point.x*5+850, point.y));
+            dest.add( new Rect (2*point.x+400, point.y - 400, 2*point.x+850, point.y));
 
             src.add(new Rect (0, 0, 600, ground.getHeight()));
-            dest.add( new Rect (point.x*5+1000, point.y - 220, point.x*6, point.y));
+            dest.add( new Rect (2*point.x+1000, point.y - 220, 3*point.x, point.y));
 
             src.add(new Rect (150, 0, 400, ground.getHeight()));
-            dest.add( new Rect (point.x*5+150, point.y - 650, point.x*5+400, point.y-600));
+            dest.add( new Rect (2*point.x+150, point.y - 650, 2*point.x+400, point.y-600));
 
             src.add(new Rect (500, 0, 600, ground.getHeight()));
-            dest.add( new Rect (point.x*5+500, point.y - 700, point.x*5+600, point.y-650));
+            dest.add( new Rect (2*point.x+500, point.y - 700, 2*point.x+600, point.y-650));
 
             src.add(new Rect (300, 0, 700, ground.getHeight()));
-            dest.add( new Rect (point.x*5+800, point.y - 750, point.x*5+1100, point.y-700));
+            dest.add( new Rect (2*point.x+800, point.y - 750, 2*point.x+1100, point.y-700));
 
             src.add(new Rect (0, 0, point.x-1350, ground.getHeight()));
-            dest.add( new Rect (point.x*5+1200, point.y - 600, 6*point.x, point.y-550));
+            dest.add( new Rect (2*point.x+1200, point.y - 600, 3*point.x, point.y-550));
 
 
             //ladder
             ArrayList<Rect> ladder_src1 = new ArrayList<>();
             ArrayList<Rect> ladder_dest1 = new ArrayList<>();
             ladder_src1.add(new Rect (0, 0, ladder.getWidth(), ladder.getHeight() ));
-            ladder_dest1.add(new Rect (point.x*5+1250, point.y - 950, point.x*5+1350, point.y - 550 ));
+            ladder_dest1.add(new Rect (2*point.x+1250, point.y - 950, 2*point.x+1350, point.y - 550 ));
 
             //wraith
             ArrayList<Rect> wraith_src = new ArrayList<>();
             ArrayList<Rect> wraith_dest = new ArrayList<>();
             wraith_src.add(new Rect (0, 0, wraith1.getWidth(), wraith1.getHeight() ));
-            wraith_dest.add(new Rect (point.x*5+1300, point.y - 450, point.x*5+1500, point.y - 200 ));
+            wraith_dest.add(new Rect (2*point.x+1300, point.y - 450, 2*point.x+1500, point.y - 200 ));
 
-            floors.add(new wraith(context, wraith1, wraith_src, wraith_dest, 20, wraith, point.x*5+1300, point.y-450));
+            floors.add(new wraith(context, wraith1, wraith_src, wraith_dest, 20, wraith, 2*point.x+1300, point.y-450));
             floors.add (new ladder(context, ladder, ladder_src1, ladder_dest1, 10, 0, point.y-550));
+            floors.add(new Floor(context, ground, src, dest));
+        }
 
-            //7 frame
+        else if (num == 2) {
+            //forth frame
+            backgrounds.add(ground);
             src.add(new Rect (0, 0, point.x, ground.getHeight()));
-            dest.add( new Rect (point.x*7-800, point.y - 150, point.x*9 - 100, point.y));
+            dest.add( new Rect (point.x-800, point.y - 150, point.x, point.y));
 
             src.add(new Rect (0, 0, point.x, ground.getHeight()));
-            dest.add( new Rect (point.x*6 + 150, point.y - 420, point.x*7+300, point.y-350));
+            dest.add( new Rect (0, point.y - 420, point.x, point.y-350));
 
             //magnet
             ArrayList<Rect> magnet_src = new ArrayList<>();
             ArrayList<Rect> magnet_dest = new ArrayList<>();
             magnet_src.add(new Rect (0, 0, magnet.getWidth(), magnet.getHeight() ));
-            magnet_dest.add(new Rect (point.x*7-700, point.y-350 ,  point.x*7 - 500, point.y - 150 ));
+            magnet_dest.add(new Rect (point.x-700, point.y-350 ,  point.x - 500, point.y - 150 ));
 
             //tumbler
             ArrayList<Rect> tumbler_src = new ArrayList<>();
             ArrayList<Rect> tumbler_dest = new ArrayList<>();
             tumbler_src.add(new Rect (0, 0, rock.getHeight()+500, rock.getHeight()+300));
-            tumbler_dest.add(new Rect (point.x*6+550, point.y-750 ,  point.x*6+900, point.y*7 - 370 ));
+            tumbler_dest.add(new Rect (550, point.y-750 ,  900, point.y - 370 ));
 
 
-            floors.add(new magnet(context, magnet, magnet_src, magnet_dest, point.y-200, point.x*7 - 700));
-            floors.add(new tumbler(context, rock, tumbler_src, tumbler_dest, 15, wabble, point.x*6+550, point.y - 750));
+            floors.add(new magnet(context, magnet, magnet_src, magnet_dest, point.y-200, point.x-500));
+            floors.add(new tumbler(context, rock, tumbler_src, tumbler_dest, 15, wabble, 550, point.y - 750));
 
 
-            //8 frame
+            //fifth frame
+            src.add(new Rect (0, 0, 300, ground.getHeight()));
+            dest.add( new Rect (point.x, point.y - 420, point.x+300, point.y-350));
+
+            src.add(new Rect (0, 0, point.x, ground.getHeight()));
+            dest.add( new Rect (point.x, point.y - 150, 2*point.x, point.y));
 
             src.add(new Rect (0,0, 800, ground.getHeight()));
-            dest.add( new Rect (8*point.x - 800, point.y - 650, 8*point.x, point.y-600));
+            dest.add( new Rect (2*point.x - 800, point.y - 650, 2*point.x, point.y-600));
 
             src.add(new Rect (0, 0, 400, ground.getHeight()));
-            dest.add( new Rect (8*point.x - 500, point.y-850, 8*point.x, point.y-800));
+            dest.add( new Rect (2*point.x - 500, point.y-850, 2*point.x, point.y-800));
 
             //ladder
-            ArrayList<Rect> ladder_src2 = new ArrayList<>();
-            ArrayList<Rect> ladder_dest2 = new ArrayList<>();
-            ladder_src2.add(new Rect (0, 0, ladder.getWidth(), ladder.getHeight() ));
-            ladder_dest2.add(new Rect (8*point.x-750, 0, 8*point.x - 600, point.y - 550 ));
+            ArrayList<Rect> ladder_src = new ArrayList<>();
+            ArrayList<Rect> ladder_dest = new ArrayList<>();
+            ladder_src.add(new Rect (0, 0, ladder.getWidth(), ladder.getHeight() ));
+            ladder_dest.add(new Rect (2*point.x-750, 0, 2*point.x - 600, point.y - 550 ));
 
             //bomb
             ArrayList<Rect> bomb_src = new ArrayList<>();
             ArrayList<Rect> bomb_dest = new ArrayList<>();
             bomb_src.add(new Rect (0, 0, bomb.getWidth(), bomb.getHeight() ));
-            bomb_dest.add(new Rect (8*point.x-300, 120, 8*point.x-200, 220 ));
+            bomb_dest.add(new Rect (2*point.x-300, 120, 2*point.x-200, 220 ));
 
-            floors.add (new ladder(context, ladder, ladder_src2, ladder_dest2, 10, 0, point.y-550));
+            floors.add (new ladder(context, ladder, ladder_src, ladder_dest, 10, 0, point.y-550));
 
-            //9 frame
+            //sixth frame
+            src.add(new Rect (0, 0, point.x, ground.getHeight()));
+            dest.add( new Rect (2*point.x, point.y - 150, 3*point.x, point.y));
 
-            ArrayList<Rect> wraith_src1 = new ArrayList<>();
-            ArrayList<Rect> wraith_dest1 = new ArrayList<>();
-            wraith_src1.add(new Rect (0, 0, wraith1.getWidth(), wraith1.getHeight() ));
-            wraith_dest1.add(new Rect (8*point.x+point.x/2, point.y - 400, 8*point.x+point.x/2 + 200, point.y - 150 ));
+            ArrayList<Rect> wraith_src = new ArrayList<>();
+            ArrayList<Rect> wraith_dest = new ArrayList<>();
+            wraith_src.add(new Rect (0, 0, wraith1.getWidth(), wraith1.getHeight() ));
+            wraith_dest.add(new Rect (2*point.x+point.x/2, point.y - 400, 2*point.x+point.x/2 + 200, point.y - 150 ));
 
-            floors.add(new wraith(context, wraith1, wraith_src1, wraith_dest1, 20, wraith, 8*point.x+point.x/2, point.y-400));
+            floors.add(new Floor(context, ground, src, dest));
+            floors.add(new wraith(context, wraith1, wraith_src, wraith_dest, 20, wraith, 2*point.x+point.x/2, point.y-400));
 
 
-            //10 frame
+
+        }
+
+        else if (num == 3) {
+
+            backgrounds.add(ground);
             src.add(new Rect (0, 0, 700, ground.getHeight()));
-            dest.add( new Rect (9*point.x, point.y - 550, 9*point.x+200, point.y));
+            dest.add( new Rect (0, point.y - 550, 200, point.y));
 
             src.add(new Rect (150, 0, 600, ground.getHeight()));
-            dest.add( new Rect (9*point.x+350, point.y - 400, 9*point.x+500, point.y));
+            dest.add( new Rect (350, point.y - 400, 500, point.y));
 
             src.add(new Rect (0, 0, 150, ground.getHeight()));
-            dest.add( new Rect (9*point.x+500, point.y - 300, 9*point.x+650, point.y));
+            dest.add( new Rect (500, point.y - 300, 650, point.y));
 
             src.add(new Rect (300, 0, 550, ground.getHeight()));
-            dest.add( new Rect (9*point.x+800, point.y - 300, 9*point.x+1050, point.y));
+            dest.add( new Rect (800, point.y - 300, 1050, point.y));
 
             src.add(new Rect (0, 0, 600, ground.getHeight()));
-            dest.add( new Rect (9*point.x+1050, point.y - 400, 9*point.x+1250, point.y));
+            dest.add( new Rect (1050, point.y - 400, 1250, point.y));
 
             src.add(new Rect (300, 0, 550, ground.getHeight()));
-            dest.add( new Rect (9*point.x+1250, point.y - 200, 9*point.x+1400, point.y));
+            dest.add( new Rect (1250, point.y - 200, 1400, point.y));
 
             src.add(new Rect (0, 0, 400, ground.getHeight()));
-            dest.add( new Rect (9*point.x+250, point.y - 650, 9*point.x+650, point.y-600));
+            dest.add( new Rect (250, point.y - 650, 650, point.y-600));
 
             src.add(new Rect (300, 0, 500, ground.getHeight()));
-            dest.add( new Rect (9*point.x+750, point.y - 770,9*point.x+950,  point.y - 700));
+            dest.add( new Rect (750, point.y - 770,950,  point.y - 700));
 
             src.add(new Rect (0, 0, point.x - 1050, ground.getHeight()));
-            dest.add( new Rect (9*point.x+1050, point.y - 830, 10*point.x, point.y-750));
+            dest.add( new Rect (1050, point.y - 830, point.x, point.y-750));
 
             ArrayList<Rect> door_src = new ArrayList<>();
             ArrayList<Rect> door_dest = new ArrayList<>();
             door_src.add(new Rect (0, 0, door.getWidth(), door.getHeight() ));
-            door_dest.add(new Rect (10*point.x - 370, point.y - 1050, 10*point.x - 250, point.y - 800 ));
+            door_dest.add(new Rect (point.x - 370, point.y - 1050, point.x - 250, point.y - 800 ));
 
             ArrayList<Rect> key_src = new ArrayList<>();
             ArrayList<Rect> key_dest = new ArrayList<>();
-            key_src.add(new Rect (0, 0, key.getWidth(), key.getHeight()));
-            key_dest.add(new Rect (9*point.x+1300, point.y - 370, 9*point.x+1370, point.y - 250 ));
+            key_src.add(new Rect (0, 0, key.getWidth(), key.getHeight() ));
+            key_dest.add(new Rect (1300, point.y - 370, 1370, point.y - 250 ));
 
-            ArrayList<Rect> spike_src1 = new ArrayList<>();
-            ArrayList<Rect> spike_dest1 = new ArrayList<>();
-            spike_src1.add(new Rect (0, 0, spike_down.getWidth(), spike_down.getHeight() ));
-            spike_dest1.add(new Rect (9*point.x+450, point.y - 610, 9*point.x+650, point.y - 540 ));
+            ArrayList<Rect> spike_src = new ArrayList<>();
+            ArrayList<Rect> spike_dest = new ArrayList<>();
+            spike_src.add(new Rect (0, 0, spike_down.getWidth(), spike_down.getHeight() ));
+            spike_dest.add(new Rect (450, point.y - 610, 650, point.y - 540 ));
 
-            floors.add(new key(context, key, key_src, key_dest, 9*point.x+1300, point.y - 470));
-            floors.add(new spike(context, spike_down, spike_src1, spike_dest1));
+            floors.add(new key(context, key, key_src, key_dest, 1300, point.y - 470));
+            floors.add(new spike(context, spike_down, spike_src, spike_dest));
             floors.add(new door(context, door, door_src, door_dest));
             floors.add(new Floor(context, ground, src, dest));
 
         }
 
         //level two
-        else if (num == 2) {
+        else if (num == 4) {
 
             //frame one
             backgrounds.add(ground);
@@ -442,7 +422,7 @@ public class Frame {
 
         }
 
-        else if (num == 3) {
+        else if (num == 5) {
 
             backgrounds.add(ground);
             src.add(new Rect (0, 0, point.x, ground.getHeight()));
@@ -481,7 +461,7 @@ public class Frame {
 
         }
 
-        else if (num == 4) {
+        else if (num == 6) {
 
             backgrounds.add(ground);
             src.add(new Rect(0, 0, 400, ground.getHeight()));
@@ -518,7 +498,7 @@ public class Frame {
             floors.add(temp);
         }
 
-        else if (num == 5) {
+        else if (num == 7) {
             backgrounds.add(ground);
             //adding floor
             src.add(new Rect(0, 0, 400, ground.getHeight()));
@@ -557,15 +537,15 @@ public class Frame {
 
         for (PhysicalModel p : floors) {
             if (p instanceof bomb && ((Tool) p).count_down == 0 ) {
-               if (((Tool) p).state == 2) {
-                  floors.remove(p);
-                   continue;
-               }
-               else {
-                   ((Tool) p).state = 2;
-                   ((Tool) p).count_down = 40;
+                if (((Tool) p).state == 2) {
+                    floors.remove(p);
+                    continue;
+                }
+                else {
+                    ((Tool) p).state = 2;
+                    ((Tool) p).count_down = 40;
 
-               }
+                }
             }
 
             if (p instanceof bomb && ((bomb) p).state == 2) {
@@ -623,7 +603,7 @@ public class Frame {
         ArrayList<Rect> bomb_dest = new ArrayList<>();
         bomb_src.add(new Rect (0, 0, bomb.getWidth(), bomb.getHeight() ));
         bomb_dest.add(new Rect (x-50, y-50, x+50, y+50 ));
-     //   bomb_dest.add(new Rect(x-50, y-50, x+300, y+300));
+        //   bomb_dest.add(new Rect(x-50, y-50, x+300, y+300));
         bomb b = new bomb(context, bomb, bomb_src, bomb_dest, y-50, x-50);
 
         //setting the count_down for the bomb

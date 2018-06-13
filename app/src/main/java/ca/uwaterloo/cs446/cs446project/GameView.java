@@ -75,20 +75,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
         Rect r = new Rect();
         r.set(0,0,p.x, p.y);
-        
+        Paint paint = new Paint();
+        paint.setColor(Color.TRANSPARENT);
         if(canvas!=null){
             // draw all the components here
 
             canvas.drawBitmap(model.backgroud,0,0,null);
-
+            //canvas.drawRect(0,0,p.x*10, p.y, paint);
             //drawing current frame
-            model.structures.get(model.cur_frame).draw(canvas);
-
-            if (temp) {
-                temp = false;
-                model.structures.get(model.cur_frame).useMagnet(1300, p.y - 450);
+            if (model.structures.size() > model.cur_frame) {
+                Frame temp = model.structures.get(model.cur_frame);
+                temp.draw(canvas);
             }
-
             for(Character c: model.characters){
                 c.draw(canvas);
             }

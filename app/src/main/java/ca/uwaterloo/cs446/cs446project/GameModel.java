@@ -78,13 +78,13 @@ public class GameModel extends Observable{
             ourInstance.characters.add(new Protagonist(context, ourInstance, 60, 70));
 
             for (int i = 0; i < 10; i++) {
-                ourInstance.structures.add(new Frame(i, point, context));
+                ourInstance.structures.add(new Frame(0, point, context));
             }
 
 
             //ourInstance.backgroud = BitmapFactory.decodeResource(context.getResources(), R.drawable.backgroud00003);
             ourInstance.backgroud = compress(context,R.drawable.backgroud00003);
-            ourInstance.backgroud = Bitmap.createScaledBitmap(ourInstance.backgroud, point.x, point.y, false);
+            ourInstance.backgroud = Bitmap.createScaledBitmap(ourInstance.backgroud, point.x*3, point.y, false);
 
         }
     }
