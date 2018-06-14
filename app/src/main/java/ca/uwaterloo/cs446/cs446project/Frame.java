@@ -298,16 +298,16 @@ public class Frame {
         else if (num == 2) {
             length = point.x*3;
             startx = 110;
-            starty = point.y - 150;
+            starty = point.y - 420;
             endx = length - 110;
-            endy = point.y - 150;
+            endy = point.y - 420;
             //forth frame
             backgrounds.add(ground);
             src.add(new Rect (0, 0, point.x, ground.getHeight()));
             dest.add( new Rect (point.x-800, point.y - 150, point.x*3, point.y));
 
             src.add(new Rect (0, 0, point.x, ground.getHeight()));
-            dest.add( new Rect (0, point.y - 420, point.x, point.y-350));
+            dest.add( new Rect (0, point.y - 420, point.x+300, point.y-350));
 
             //magnet
             ArrayList<Rect> magnet_src = new ArrayList<>();
@@ -326,8 +326,6 @@ public class Frame {
 
 
             //fifth frame
-            src.add(new Rect (0, 0, 300, ground.getHeight()));
-            dest.add( new Rect (point.x, point.y - 420, point.x+300, point.y-350));
 
             src.add(new Rect (0,0, 800, ground.getHeight()));
             dest.add( new Rect (2*point.x - 800, point.y - 650, 2*point.x, point.y-600));
@@ -372,7 +370,7 @@ public class Frame {
             endy = point.y - 830;
             backgrounds.add(ground);
             src.add(new Rect (0, 0, 700, ground.getHeight()));
-            dest.add( new Rect (0, point.y - 550, 200, point.y));
+            dest.add( new Rect (0, point.y - 300, 400, point.y));
 
             src.add(new Rect (150, 0, 600, ground.getHeight()));
             dest.add( new Rect (350, point.y - 400, 500, point.y));

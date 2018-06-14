@@ -50,6 +50,10 @@ public class SelectionActivity extends Activity implements Observer{
         });
 
         for(int i=0;i<levels.size();++i){
+            if(i>model.max_frame){
+                levels.get(i).setEnabled(false);
+            }
+
             levels.get(i).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
