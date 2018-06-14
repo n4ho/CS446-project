@@ -43,7 +43,7 @@ public class wraith extends DynamicObject {
     @Override
     public void draw(Canvas c) {
         super.draw(c);
-            int offsetx = 5;
+            int offsetx = 2;
             if (direction == 0) {
                 curpos += offsetx;
                 dest.get(0).offset(offsetx, 0);
@@ -71,6 +71,6 @@ public class wraith extends DynamicObject {
     }
 
     public boolean hitWidth(int x, int y) {
-        return curpos < x + 50 + 100 && curpos > x + 50 -100 && positiony < y + 50 + 100 && positiony > y + 50 - 100;
+        return curpos < x + 50 + 300 && curpos > x + 50 -300 && positiony < y + 50 + 300 && positiony > y + 50 - 300;
     }
 }

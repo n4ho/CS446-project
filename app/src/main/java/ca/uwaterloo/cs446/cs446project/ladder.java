@@ -40,7 +40,7 @@ public class ladder extends DynamicObject {
         if (bottom < max_bottom) {
             bottom += moving_velocity;
             top += moving_velocity;
-            dest.get(0).offset(0, moving_velocity);
+            dest.get(0).offset(0, 5);
         }
 
     }
@@ -48,7 +48,7 @@ public class ladder extends DynamicObject {
     public boolean hitLadder(int left) {
 
         int cx = left + 50;
-        return cx - 100 <= dest.get(0).centerX() &&  dest.get(0).centerX() <= cx+100;
+        return cx - 200 <= dest.get(0).centerX() &&  dest.get(0).centerX() <= cx+200;
 
 
     }

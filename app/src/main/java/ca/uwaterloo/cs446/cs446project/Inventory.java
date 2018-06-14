@@ -4,6 +4,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 
 import java.util.ArrayList;
 
@@ -17,14 +20,22 @@ public class Inventory extends UI{
     int fps;
     int index = 0;
     boolean OpenClose = true; // true = open, false = close
-    int n = 6; // total number of space
+    int n = 3; // total number of space
     Bitmap bomb;
+    Bitmap key;
+    Bitmap magnet;
+    GameModel model;
 
-    public Inventory(String name, Bitmap OnImage, Bitmap OffImage, int x, int y, int width, int height, int fps, Context context) {
+    public Inventory(String name, Bitmap OnImage, Bitmap OffImage, int x, int y, int width, int height, int fps, Context context, GameModel model) {
         super(name, OnImage, OffImage, x, y, width, height);
         this.fps = fps;
         bomb = BitmapFactory.decodeResource(context.getResources(), R.drawable.bomb);
         bomb = Bitmap.createScaledBitmap(bomb, width/2/n, height/2, false);
+        key = BitmapFactory.decodeResource(context.getResources(), R.drawable.key);
+        key = Bitmap.createScaledBitmap(key, width/2/n, height/2, false);
+        magnet = BitmapFactory.decodeResource(context.getResources(), R.drawable.magnet);
+        magnet = Bitmap.createScaledBitmap(magnet, width/2/n, height/2, false);
+        this.model = model;
     }
 
     public void draw(Canvas canvas) {
@@ -35,7 +46,29 @@ public class Inventory extends UI{
                 for(int i = 1; i <= n;i++) {
                     int temp_x = x + trans_x + width / n * (i - 1) + width / n / 4;
                     int temp_y = y + trans_y + height / 4;
-                    canvas.drawBitmap(bomb,temp_x,temp_y,null);
+                    if (i == 1) {
+                        canvas.drawBitmap(bomb,temp_x,temp_y,null);
+                    }
+                    if (i == 2) { canvas.drawBitmap(key,temp_x,temp_y,null); }
+                    if (i == 3) { canvas.drawBitmap(magnet,temp_x,temp_y,null); }
+                }
+                Paint p = new Paint();
+                int maroon = Color.parseColor("#800000");
+                p.setColor(maroon);
+                p.setStrokeWidth(10);
+                p.setStyle(Paint.Style.STROKE);
+                if (model.useBomb) {
+                    int startx = x + trans_x;
+                    int starty = y + trans_y;
+                    int endx = x + trans_x + width/3;
+                    int endy = y + trans_y + height;
+                    canvas.drawRect(startx, starty, endx, endy, p);
+                } else if (model.useMagnet) {
+                    int startx = x + trans_x + width/3*2;
+                    int starty = y + trans_y;
+                    int endx = x + trans_x + width;
+                    int endy = y + trans_y + height;
+                    canvas.drawRect(startx, starty, endx, endy, p);
                 }
 
             }
@@ -46,7 +79,9 @@ public class Inventory extends UI{
                 for(int i = 1; i <= n;i++) {
                     int temp_x = x + trans_x + width - width / fps * index + + width/n*(i-1) + width/n/4;
                     int temp_y = y + trans_y + + height/4;
-                    if (i < (float)index/(float)fps * (float)n) canvas.drawBitmap(bomb,temp_x,temp_y,null);
+                    if (i < (float)index/(float)fps * (float)n && i == 1) canvas.drawBitmap(bomb,temp_x,temp_y,null);
+                    if (i < (float)index/(float)fps * (float)n && i == 2) canvas.drawBitmap(key,temp_x,temp_y,null);
+                    if (i < (float)index/(float)fps * (float)n && i == 3) canvas.drawBitmap(magnet,temp_x,temp_y,null);
                 }
             }
             // turn off
@@ -56,7 +91,9 @@ public class Inventory extends UI{
                 for(int i = 1; i <= n;i++) {
                     int temp_x = x + trans_x + width / fps * index + width/n*(i-1) + width/n/4;
                     int temp_y = y + trans_y + height/4;
-                    if (i < (float)n - (float)index/(float)fps*(float)n) canvas.drawBitmap(bomb,temp_x,temp_y,null);
+                    if (i < (float)n - (float)index/(float)fps*(float)n && i == 1) canvas.drawBitmap(bomb,temp_x,temp_y,null);
+                    if (i < (float)n - (float)index/(float)fps*(float)n && i == 2) canvas.drawBitmap(key,temp_x,temp_y,null);
+                    if (i < (float)n - (float)index/(float)fps*(float)n && i == 3) canvas.drawBitmap(magnet,temp_x,temp_y,null);
                 }
             }
 
@@ -67,8 +104,13 @@ public class Inventory extends UI{
         if(display && !animation) {
             for (int i = 1; i <= n; i++) {
                 if (x < this.x + i * this.width / n) {
-                    System.out.println("item number " + i + " clicked");
-                    // do something when the item clicked
+                    if (i == 1 && model.bomb > 0) {
+                        model.useBomb = !model.useBomb;
+                        model.useMagnet = false;
+                    }  else if (i == 3 && model.magnet > 0) {
+                        model.useMagnet = !model.useMagnet;
+                        model.useBomb = false;
+                    }
                     break;
                 }
             }

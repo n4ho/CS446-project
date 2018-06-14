@@ -67,7 +67,7 @@ public class Floor extends StaticObject {
                 }
                 if (type == HitType.UP && rect.bottom > curDest.bottom)
                     return type;
-                if (type == HitType.DOWN && rect.bottom >= curDest.top && rect.top < curDest.top) {
+                if (type == HitType.DOWN && rect.bottom >= curDest.top && rect.bottom < curDest.bottom && rect.top < curDest.top) {
                     if (curground != -1 && dest.get(curground).top > curDest.top && Rect.intersects(dest.get(curground), rect)) {}
                     else {curground = i; }
                     return type;
@@ -79,7 +79,7 @@ public class Floor extends StaticObject {
                 }
                 if (type == HitType.RIGHT) {
                     if (dest.get(i).right <= rect.right || curground == i) {continue;}
-                    if (rect.right >= curDest.left)
+                    if (rect.right >= curDest.left && curDest.bottom > rect.bottom)
                         return type;
 
                 }

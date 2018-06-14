@@ -72,13 +72,13 @@ public class GameModel extends Observable{
             ourInstance.inventory = new Inventory("Inventory",
                     compress(context,R.drawable.inventory),
                     compress(context,R.drawable.inventory),
-                    (int) (point.x * 0.4), (int) (point.y * 0.1),
-                    (int) (point.x * 0.51), point.x / 12,
-                    ourInstance.fps, context);
+                    (int) (point.x * 0.58), (int) (point.y * 0.1),
+                    (int) (point.x * 0.3), point.x / 12,
+                    ourInstance.fps, context, ourInstance);
 
             ourInstance.uis.add(ourInstance.inventory);
 
-            ourInstance.characters.add(new Protagonist(context, ourInstance, 60, 70));
+            ourInstance.characters.add(new Protagonist(context, ourInstance, 70, 100));
 
             for (int i = 0; i < 4; i++) {
                 ourInstance.structures.add(new Frame(i, point, context));
@@ -119,16 +119,18 @@ public class GameModel extends Observable{
     public ArrayList<Frame> structures;
     public ArrayList<UI> uis;
 
-    public int cur_frame = 0;
+    public int cur_frame = 1;
     public int curlevel = 0;
     public int current_char = 0;
 
     public int trans_x = 0;
     public int trans_y = 0;
     public Inventory inventory;
-    public int bomb = 0;
-    public int magnet = 0;
+    public int bomb = 100;
+    public int magnet = 100;
     public int key = 0;
+    public boolean useBomb = false;
+    public boolean useMagnet = false;
 
 
     public GameModel(){
@@ -156,12 +158,18 @@ public class GameModel extends Observable{
         }
     }
 
-    public void characterReborn(int x, int y){
-        this.getCharacter().top=y;
+    public void characterReborn(int x, int y, boolean reset){
+        this.getCharacter().top= y - this.getCharacter().height;
         this.getCharacter().left=x;
-        trans_x = 0;
-        trans_y = 0;
+        if (reset) {
+            trans_x = 0;
+            trans_y = 0;
+        } else {
+            trans_x = -(structures.get(cur_frame).length - point.x);
+
+        }
     }
+
 
     public void update(){
         for (Character c: characters) {
@@ -220,6 +228,7 @@ public class GameModel extends Observable{
     public void up(){
         characters.get(current_char).thrustUp();
         characters.get(current_char).state=MoveType.UP;
+        System.out.println("ladder up");
     }
 
     // down button: move up(when there is a ladder)

@@ -39,7 +39,7 @@ public class Character {
         this.width=width;
         this.height=height;
 
-        this.scale = 180 / model.fps;
+        this.scale = 60 / model.fps;
         this.thrust = 10 * scale;
         this.gravity = 2 * scale;
         this.cur_gravity = gravity;
@@ -58,7 +58,7 @@ public class Character {
 
     // movement method
     public void jump(){
-        velocityY -= thrust * 2.5;
+        velocityY -= thrust * 3;
         jump = true;
     }
 
@@ -88,6 +88,7 @@ public class Character {
 
     public void stopX(){
         velocityX = 0;
+        System.out.println("*******************stoping x");
     }
 
     public void stopY(){
@@ -128,15 +129,15 @@ public class Character {
         if (left > model.structures.get(model.cur_frame).length - 100) {
             if (model.cur_frame < 9) {
                 ++model.cur_frame;
-                model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty);
+                model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true);
             } else {
                 stopX();
             }
-        } else if (left < 100 && velocityX <= 0) {
+        } else if (left < 100 && velocityX < 0) {
             if (model.cur_frame > 0) {
                 model.cur_frame--;
-
-                model.characterReborn(model.structures.get(model.cur_frame).endx, model.structures.get(model.cur_frame).endy);
+                System.out.println("-----------------got here");
+                model.characterReborn(model.structures.get(model.cur_frame).endx, model.structures.get(model.cur_frame).endy, false);
             } else {
                 stopX();
             }
@@ -144,6 +145,7 @@ public class Character {
             //left = model.point.x /7 * 6 - model.trans_x;
             //stopX();
             if (left >= model.structures.get(model.cur_frame).length - model.point.x /3 && velocityX > 0){}
+            else if (velocityX < 0) {}
             else {
                 model.trans_x -= velocityX;
             }
