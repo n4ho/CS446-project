@@ -185,7 +185,7 @@ public class GameModel extends Observable{
     public ArrayList<Frame> structures;
     public ArrayList<UI> uis;
 
-    public int cur_frame = 3;
+    public int cur_frame = 1;
     public int curlevel = 0;
     public int max_frame=0;
 
