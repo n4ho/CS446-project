@@ -10,7 +10,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -20,6 +26,7 @@ public class GameModel extends Observable{
 
     private static final GameModel ourInstance = new GameModel();
 
+
     static void setInstance(Context context, Display d, int _fps, boolean isGameView){
         ourInstance.fps=_fps;
         ourInstance.display=d;
@@ -28,6 +35,8 @@ public class GameModel extends Observable{
         Point point=ourInstance.point;
         ourInstance.display.getSize(point);
 
+        // read max_frame from file
+        readModel();
         if(isGameView) {
             System.out.println("LOAD MODEL BITMAP!");
             ourInstance.uis.add(new UI("LeftButton",
@@ -71,9 +80,9 @@ public class GameModel extends Observable{
             ourInstance.inventory = new Inventory("Inventory",
                     compress(context,R.drawable.inventory),
                     compress(context,R.drawable.inventory),
-                    (int) (point.x * 0.4), (int) (point.y * 0.1),
-                    (int) (point.x * 0.51), point.x / 12,
-                    ourInstance.fps, context);
+                    (int) (point.x * 0.58), (int) (point.y * 0.1),
+                    (int) (point.x * 0.3), point.x / 12,
+                    ourInstance.fps, context, ourInstance);
 
             ourInstance.uis.add(ourInstance.inventory);
 
@@ -90,6 +99,64 @@ public class GameModel extends Observable{
     static GameModel getInstance()
     {
         return ourInstance;
+    }
+
+    static void saveModel(){
+        String filename="ferrymangame.log";
+        File list[]=ourInstance.context.getFilesDir().listFiles();
+        File log=list[0];
+        boolean exist=false;
+        for(File f: list){
+            if(f.getName()==filename){
+                exist=true;
+                log=f;
+            }
+        }
+        if(!exist){
+            log=new File(ourInstance.context.getFilesDir(), filename);
+
+        }
+
+        try {
+            // clear log data
+            PrintWriter writer = new PrintWriter(log);
+            writer.println(ourInstance.max_frame);
+            writer.close();
+        }catch(Exception e){
+
+        }
+    }
+
+    static void readModel(){
+        String filename="ferrymangame.log";
+        File list[]=ourInstance.context.getFilesDir().listFiles();
+        File log=ourInstance.context.getFilesDir();
+        boolean exist=false;
+        for(File f: list){
+            if(f.getName()==filename){
+                exist=true;
+                log=f;
+            }
+        }
+        if(!exist){
+            ourInstance.max_frame=0;
+        }else{
+            //StringBuilder text = new StringBuilder();
+
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(log));
+                String line=br.readLine();
+                ourInstance.max_frame = Integer.parseInt(line);
+//                while ((line = br.readLine()) != null) {
+//                    text.append(line);
+//                    text.append('\n');
+//                }
+                br.close();
+            }
+            catch (IOException e) {
+                //You'll need to add proper error handling here
+            }
+        }
     }
 
     static public Bitmap compress(Context context, int image){
@@ -118,13 +185,20 @@ public class GameModel extends Observable{
     public ArrayList<Frame> structures;
     public ArrayList<UI> uis;
 
-    public int cur_frame = 1;
+    public int cur_frame = 3;
+    public int curlevel = 0;
+    public int max_frame=0;
 
     public int current_char = 0;
 
     public int trans_x = 0;
     public int trans_y = 0;
     public Inventory inventory;
+    public int bomb = 100;
+    public int magnet = 100;
+    public int key = 0;
+    public boolean useBomb = false;
+    public boolean useMagnet = false;
 
 
     public GameModel(){
@@ -152,12 +226,18 @@ public class GameModel extends Observable{
         }
     }
 
-    public void characterReborn(int x, int y){
-        this.getCharacter().top=y;
+    public void characterReborn(int x, int y, boolean reset){
+        this.getCharacter().top= y - this.getCharacter().height;
         this.getCharacter().left=x;
-        trans_x = 0;
-        trans_y = 0;
+        if (reset) {
+            trans_x = 0;
+            trans_y = 0;
+        } else {
+            trans_x = -(structures.get(cur_frame).length - point.x);
+
+        }
     }
+
 
     public void update(){
         for (Character c: characters) {
