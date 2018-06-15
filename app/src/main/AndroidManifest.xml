@@ -27,7 +27,7 @@
         <activity android:name=".OptionActivity" />
         <activity android:name=".ScoreActivity" />
         <activity
-            android:name=".bluetooth"
+            android:name=".BluetoothActivity"
             android:label="@string/title_activity_bluetooth"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
