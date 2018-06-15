@@ -94,7 +94,7 @@ public class Frame {
             startx = 110;
             starty = point.y - 200;
             endx = length - 110;
-            endy = point.y - 200;
+            endy = point.y - 400;
             //first frame
             src.add(new Rect (0, 0, point.x, ground.getHeight()));
             dest.add( new Rect (0, point.y - 200, point.x+250, point.y));

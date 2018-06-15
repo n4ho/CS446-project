@@ -185,7 +185,7 @@ public class GameModel extends Observable{
     public ArrayList<Frame> structures;
     public ArrayList<UI> uis;
 
-    public int cur_frame = 0;
+    public int cur_frame = 3;
 
     public int curlevel = 0;
     public int max_frame=0;
@@ -228,7 +228,6 @@ public class GameModel extends Observable{
     }
 
     public void characterReborn(int x, int y, boolean reset){
-        System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<reborn");
         this.getCharacter().top= y - this.getCharacter().height;
         this.getCharacter().left=x;
         if (reset) {

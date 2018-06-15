@@ -92,7 +92,7 @@ public class Floor extends StaticObject {
     public int getFloorHeight() {
 
         if (type == HitType.WATER) {
-            return dest.get(curground).top - 50;
+            return dest.get(curground).top + 50;
         }
         return dest.get(curground).top;
     }
