@@ -14,7 +14,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
-
+import android.view.ViewStructure;
 
 
 /**
@@ -117,31 +117,29 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                         ui.setSelected(true);
                         handled = true;
 
-                        if(ui.name=="LeftButton"){
+                        if(ui.name=="LeftButton") {
                             //System.out.println("left button clicked");
                             ui.setSelected(true);
-                            if((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.NULL &&
-                                    (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN)) ||
-                                    model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER) {
+                            if ((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.NULL &&
+                                    (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN || model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) == HitType.LOG_DOWN)) ||
+                                    model.structures.get(model.cur_frame).hitTools(hitBox) == HitType.LADDER) {
                                 model.left();
                             } else {
-                                //System.out.println("hit left wall");
-                                System.out.println("stop from 1");
                                 model.getCharacter().stopX();
                             }
                             return true;
                         }else if(ui.name=="RightButton"){
                             System.out.println("right button clicked");
                             ui.setSelected(true);
-
-                            if((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) == HitType.NULL &&
-                                    model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN) ||
+                            //check hit log first;
+                            if (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_LEFT) != HitType.NULL) {
+                                model.getCharacter().pushinglog = true;
+                            } else if ((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) == HitType.NULL &&
+                                    (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN || model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) != HitType.NULL)) ||
                                     model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER) {
-                                System.out.println("--------------move right");
                                 model.right();
 
                             }else{
-                                System.out.println("hit right wall");
                                 model.getCharacter().stopX();
                             }
                             return true;
@@ -176,7 +174,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                         }else if(ui.name=="JumpButton"){
                             System.out.println("jump button clicked");
                             ui.setSelected(true);
-                            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN) {
+                            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN ||
+                                    model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) == HitType.LOG_DOWN) {
                                 model.jump();
                                 model.getCharacter().jump=true;
                             }
@@ -223,7 +222,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                         if(ui.name=="JumpButton"){
                             System.out.println("jump button clicked in multi touch");
                             ui.setSelected(true);
-                            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN) {
+                            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN ||
+                                    model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) == HitType.LOG_DOWN) {
                                 model.jump();
                                 model.getCharacter().jump=true;
                             }
@@ -260,6 +260,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             System.out.println("stop from 4");
                             model.characters.get(0).stopX();
                             //model.characters.get(0).state=0;
+                            model.getCharacter().pushinglog = false;
                             return true;
                         } else if (ui.name == "RightButton") {
                             System.out.println("right button released");
@@ -267,6 +268,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             //model.right_release();
                             System.out.println("stop from 3");
                             model.characters.get(0).stopX();
+                            // stop pushing log
+                            model.getCharacter().pushinglog = false;
                             //model.characters.get(0).state=0;
                             return true;
                         } else if (ui.name == "UpButton") {
@@ -305,7 +308,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     public void update(){
-        model.gravitySwitch(true);
+        //model.gravitySwitch(true);
         Rect hitBox=new Rect(model.getCharacter().left,
                 model.getCharacter().top,
                 model.getCharacter().left+model.getCharacter().width,
@@ -336,6 +339,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         boolean ladder = model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER;
         boolean down = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN;
         boolean up = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.UP) == HitType.UP;
+        boolean logdown = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) == HitType.LOG_DOWN;
+        boolean logleft = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_LEFT) == HitType.LOG_LEFT;
 
         //if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.LEFT) System.out.println("hit left");
 
@@ -345,8 +350,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
         //if (up) System.out.println("hit ceiling");
 
-        // down, not jump, not ladder
-        if(down && !model.getCharacter().jump && !ladder) {
+        // down or on log, not jump, not ladder
+        if ((down || logdown) && model.getCharacter().jump && model.getCharacter().velocityY > 0) {
+            model.getCharacter().jump = false;
+            model.gravitySwitch(false);
+            model.getCharacter().stopY();
+        }
+
+        if((down || logdown) && !model.getCharacter().jump && !ladder) {
             model.gravitySwitch(false);
             model.getCharacter().stopY();
             //System.out.println("1");
@@ -365,7 +376,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         }
 
         if(ladder){
-            System.out.println("on ladder");
+           // System.out.println("on ladder");
             model.gravitySwitch(false);
             if(!model.getCharacter().climb) model.getCharacter().stopY();
         }
@@ -376,7 +387,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             if (model.getCharacter().velocityY != 0 )model.getCharacter().stopY();
             System.out.println("hit ceiling");
             model.gravitySwitch(true);
-            //System.out.println("5");
         }
 
         if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT)==HitType.LEFT
@@ -384,11 +394,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             model.getCharacter().stopX();
         }
 
+        if (logleft && model.getCharacter().velocityX > 0) {
+            model.getCharacter().pushinglog = true;
+        }
+
         if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT)==HitType.RIGHT
                 &&model.getCharacter().state==MoveType.RIGHT){
             model.getCharacter().stopX();
         }
-        //System.out.println("Gravity Status: "+model.getCharacter().cur_gravity);
 
         model.update();
     }

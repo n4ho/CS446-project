@@ -147,7 +147,7 @@ public class Frame {
             dest.add(new Rect (point.x+600, point.y-200, point.x+1050, point.y));
 
             src.add(new Rect (400, 0, 800, ground.getHeight()));
-            dest.add(new Rect (point.x+1300, point.y-330, 2*point.x+750, point.y));
+            dest.add(new Rect (point.x+1300, point.y-330, 2*point.x+500, point.y));
 
             //third frame
 
@@ -157,9 +157,8 @@ public class Frame {
             ArrayList<Rect> log_src = new ArrayList<>();
             ArrayList<Rect> log_dest = new ArrayList<>();
             log_src.add(new Rect(0, 0, log.getWidth(), log.getHeight()));
-            log_dest.add(new Rect(2*point.x+250, point.y/11*6, 2*point.x+300+log.getWidth()/2,
-                    point.y/11*6+log.getHeight()/3));
-            floors.add(new log(context, log, log_src, log_dest, 2*point.x+250, 300+log.getWidth()/2, 3));
+            log_dest.add(new Rect(2*point.x-100, point.y - 450, 2*point.x+500,point.y - 330));
+            floors.add(new log(context, log, log_src, log_dest, 2*point.x-100, 2*point.x+500, 2));
             floors.add(new Floor(context, ground, src, dest));
 
             background = compress(context, R.drawable.backgrond001, 1);
@@ -596,7 +595,8 @@ public class Frame {
     //for floor hit test, return LEFT, RIGHT, UP, DOWN
     public HitType hitFloor(Rect rect, HitType type) {
         for (int i = 0; i < floors.size(); i++) {
-            if (floors.get(i).hitModel(rect, type) != HitType.NULL) {
+            PhysicalModel p = floors.get(i);
+            if ((p instanceof Floor || p instanceof log) && p.hitModel(rect, type) != HitType.NULL) {
                 if (type == HitType.DOWN) {
                     floorHeight = ((Floor) floors.get(i)).getFloorHeight();
                 }
@@ -683,6 +683,20 @@ public class Frame {
         m.set_state(1);
         floors.add(m);
 
+    }
+
+    public int pushLog() {
+        for (PhysicalModel p : floors) {
+            if (p instanceof log) {
+                if (((log) p).canMove()) {
+                    ((log) p).move();
+                    return ((log) p).getMovingVelocity();
+                } else {
+                    return -1;
+                }
+            }
+        }
+        return -1;
     }
 
 

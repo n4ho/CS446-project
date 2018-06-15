@@ -59,4 +59,5 @@ public class island extends DynamicObject {
         c.drawRect(dest.get(0), p);
 
     }
+
 }

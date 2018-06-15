@@ -19,5 +19,7 @@ public enum HitType {
     CAGE,
     WATER,
     FALLING_SPIKE,
-    ISLAND
+    ISLAND,
+    LOG_LEFT,
+    LOG_DOWN
 }

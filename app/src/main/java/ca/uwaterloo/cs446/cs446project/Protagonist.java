@@ -52,6 +52,7 @@ public class Protagonist extends Character {
         climb.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.climb00003),width,height,false));
         climb.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.climb00004),width,height,false));
         climb.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.climb00005),width,height,false));
+        climb.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.climb00001),width,height,false));
 
 
     }
@@ -84,8 +85,8 @@ public class Protagonist extends Character {
                 break;
 
             case RIGHT: // runRight
-
                 canvas.drawBitmap(runRight.get(drawIndex),left,top, null);
+
                 if(changeRate==0) {
                     if (drawIndex >= runRight.size() - 1) {
                         drawIndex = 0;
@@ -112,12 +113,14 @@ public class Protagonist extends Character {
                     changeRate--;
                 }
 
+
                 break;
 
             case JUMP: // jump
                 break;
 
             case UP: //up
+
                 canvas.drawBitmap(climb.get(drawIndex),left,top,null);
                 if(changeRate==0) {
                     if (drawIndex >= climb.size() - 1) {
@@ -130,10 +133,12 @@ public class Protagonist extends Character {
                     changeRate--;
                 }
 
+
                 break;
 
             case DOWN: //down
                 canvas.drawBitmap(climb.get(drawIndex),left,top,null);
+
                 if(changeRate==0) {
                     if (drawIndex >= climb.size() - 1) {
                         drawIndex = 0;
