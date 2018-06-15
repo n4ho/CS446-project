@@ -103,9 +103,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int pointerIndex = 0;
-        Rect hitBox=new Rect(model.getCharacter().left+10,
+        Rect hitBox=new Rect(model.getCharacter().left,
                 model.getCharacter().top,
-                model.getCharacter().left+model.getCharacter().width-10,
+                model.getCharacter().left+model.getCharacter().width,
                 model.getCharacter().top+model.getCharacter().height);
 
         switch (event.getAction() & MotionEvent.ACTION_MASK){

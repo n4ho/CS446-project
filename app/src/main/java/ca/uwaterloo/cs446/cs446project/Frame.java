@@ -214,9 +214,9 @@ public class Frame {
             ArrayList<Rect> ladder_src = new ArrayList<>();
             ArrayList<Rect> ladder_dest = new ArrayList<>();
             ladder_src.add(new Rect (0, 0, ladder.getWidth(), ladder.getHeight() ));
-            ladder_dest.add(new Rect (point.x+1550, point.y-1000, point.x+1650, point.y - 650 ));
+            ladder_dest.add(new Rect (point.x+1550, -200, point.x+1650, point.y - 650 ));
 
-            floors.add (new ladder(context, ladder, ladder_src, ladder_dest, 10, 0, point.y-650));
+            floors.add (new ladder(context, ladder, ladder_src, ladder_dest, 10, -200, point.y-650));
 
             //sixth frame
 
@@ -254,7 +254,7 @@ public class Frame {
             ArrayList<Rect> ladder_src1 = new ArrayList<>();
             ArrayList<Rect> ladder_dest1 = new ArrayList<>();
             ladder_src1.add(new Rect (0, 0, ladder.getWidth(), ladder.getHeight() ));
-            ladder_dest1.add(new Rect (2*point.x+1250, point.y - 1200, 2*point.x+1350, point.y - 550 ));
+            ladder_dest1.add(new Rect (2*point.x+1250, -200, 2*point.x+1350, point.y - 550 ));
 
             //wraith
             ArrayList<Rect> wraith_src = new ArrayList<>();
@@ -263,7 +263,7 @@ public class Frame {
             wraith_dest.add(new Rect (2*point.x+1300, point.y - 450, 2*point.x+1500, point.y - 200 ));
 
             floors.add(new wraith(context, wraith1, wraith_src, wraith_dest, 20, wraith, 2*point.x+1300, point.y-450));
-            floors.add (new ladder(context, ladder, ladder_src1, ladder_dest1, 10, point.y - 1200, point.y-550));
+            floors.add (new ladder(context, ladder, ladder_src1, ladder_dest1, 10, -200, point.y-550));
             floors.add(new Floor(context, ground, src, dest));
         }
 
