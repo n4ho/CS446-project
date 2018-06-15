@@ -61,7 +61,7 @@ public class Character {
 
     // movement method
     public void jump(){
-        velocityY -= thrust * 4;
+        velocityY -= thrust * 3;
         jump = true;
     }
 

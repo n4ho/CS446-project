@@ -113,7 +113,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 //System.out.println("action down");
                 Boolean handled = false;
                 for(UI ui: model.uis){
-                    if(ui.hitTest(event.getX(), event.getY(),0)){
+                    if(ui.hitTest(event.getX(), event.getY(),30)){
                         ui.setSelected(true);
                         handled = true;
 
@@ -217,7 +217,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 System.out.println("Jump  (X,Y) = " + model.getUI("JumpButton").x + ", " + model.getUI("JumpButton").y);
 */
                 for(UI ui: model.uis){
-                    if(ui.hitTest(event.getX(pointerIndex), event.getY(pointerIndex),40)){
+                    if(ui.hitTest(event.getX(pointerIndex), event.getY(pointerIndex),90)){
                         ui.setSelected(true);
                         if(ui.name=="JumpButton"){
                             System.out.println("jump button clicked in multi touch");
@@ -360,6 +360,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         if((down || logdown) && !model.getCharacter().jump && !ladder) {
             model.gravitySwitch(false);
             model.getCharacter().stopY();
+            if (down) model.getCharacter().setY(model.structures.get(model.cur_frame).floorHeight - model.getCharacter().height + 5);
             //System.out.println("1");
             System.out.println("on floor");
 
@@ -384,7 +385,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
         // ceiling
         if(up && !ladder){
-            if (model.getCharacter().velocityY != 0 )model.getCharacter().stopY();
+            if (model.getCharacter().velocityY < 0 )model.getCharacter().stopY();
             System.out.println("hit ceiling");
             model.gravitySwitch(true);
         }

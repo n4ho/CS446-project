@@ -48,20 +48,20 @@ public class GameModel extends Observable{
             ourInstance.uis.add(new UI("RightButton",
                     compress(context,R.drawable.right),
                     compress(context,R.drawable.right),
-                    (int) (point.x * 0.09), (int) (point.y * 0.8),
+                    (int) (point.x * 0.11), (int) (point.y * 0.8),
                     point.x / 20, point.y / 15)
             );
 
             ourInstance.uis.add(new UI("UpButton",
                     compress(context,R.drawable.up),
                     compress(context,R.drawable.up),
-                    (int) (point.x * 0.06), (int) (point.y * 0.735),
+                    (int) (point.x * 0.07), (int) (point.y * 0.73),
                     point.y / 15, point.x / 20)
             );
             ourInstance.uis.add(new UI("DownButton",
                     compress(context,R.drawable.down),
                     compress(context,R.drawable.down),
-                    (int) (point.x * 0.06), (int) (point.y * 0.85),
+                    (int) (point.x * 0.07), (int) (point.y * 0.86),
                     point.y / 15, point.x / 20)
             );
             ourInstance.uis.add(new UI("JumpButton",
@@ -185,7 +185,7 @@ public class GameModel extends Observable{
     public ArrayList<Frame> structures;
     public ArrayList<UI> uis;
 
-    public int cur_frame = 1;
+    public int cur_frame = 0;
     public int curlevel = 0;
     public int max_frame=0;
 
