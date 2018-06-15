@@ -48,6 +48,13 @@ public class MainActivity extends Activity implements Observer{
             }
         });
 
+        optionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, OptionActivity.class));
+            }
+        });
+
     }
 
     @Override
