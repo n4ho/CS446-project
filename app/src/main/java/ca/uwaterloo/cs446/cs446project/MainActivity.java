@@ -60,7 +60,7 @@ public class MainActivity extends Activity implements Observer{
         multiplayerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, ScoreActivity.class));
+                startActivity(new Intent(MainActivity.this, BluetoothActivity.class));
             }
         });
 
