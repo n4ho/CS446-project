@@ -24,7 +24,7 @@ public class ladder extends DynamicObject {
         type = HitType.LADDER;
         this.top = top;
         this.bottom = bottom;
-        max_bottom = bottom + 350;
+        max_bottom = bottom + 300;
 
     }
 

@@ -426,14 +426,14 @@ public class Frame {
             ArrayList<Rect> ladder_src = new ArrayList<>();
             ArrayList<Rect> ladder_dest = new ArrayList<>();
             ladder_src.add(new Rect (0, 0, ladder.getWidth(), ladder.getHeight() ));
-            ladder_dest.add(new Rect (2*point.x+270, point.y - 1100, 2*point.x+370, point.y - 800));
+            ladder_dest.add(new Rect (2*point.x+270, -100, 2*point.x+370, point.y - 700));
 
 
             floors.add(new key(context, key, key_src, key_dest, 2*point.x+1400, point.y - 520));
             floors.add(new spike(context, spike_down, spiketwo_src, spiketwo_dest));
             floors.add(new door(context, door, door_src, door_dest));
             floors.add(new Floor(context, ground, src, dest));
-            floors.add(new ladder(context, ladder, ladder_src, ladder_dest, 10, point.y - 1100, point.y - 800));
+            floors.add(new ladder(context, ladder, ladder_src, ladder_dest, 10, -100, point.y - 700));
 
 
         }
