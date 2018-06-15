@@ -51,11 +51,11 @@ public class imageSource {
 
 
     static imageSource ourInstance = null;
-    static imageSource getInstance(Context context)
+    static imageSource getInstance(Context context, int length, int height)
     {
 
         if (ourInstance == null) {
-            ourInstance = new imageSource (context);
+            ourInstance = new imageSource (context, length, height);
             return ourInstance;
         }
 
@@ -63,7 +63,7 @@ public class imageSource {
     }
 
 
-    imageSource(Context context) {
+    imageSource(Context context, int length, int height) {
 
         bomb = compress(context,R.drawable.bomb, 10);
         magnet = compress(context,R.drawable.magnet, 10);
@@ -122,15 +122,16 @@ public class imageSource {
 
 
         ground = BitmapFactory.decodeResource(context.getResources(),R.drawable.ground);
-        log = compress(context,R.drawable.log, 10);
+        log = compress(context,R.drawable.log, 1);
         ladder = compress(context,R.drawable.ladder, 10);
         bomb = compress(context,R.drawable.bomb, 10);
         magnet = compress(context,R.drawable.magnet, 10);
         cage = compress(context,R.drawable.cage, 10);
-        water = compress(context,R.drawable.water, 10);
+        water = compress(context,R.drawable.water, 1);
         fallingSpike = compress(context,R.drawable.fallingspike, 1);
         branch = compress(context,R.drawable.treebranch, 1);
-        frame1background = compress(context,R.drawable.backgrond001, 10);
+        frame1background = compress(context,R.drawable.backgrond001, 1);
+        frame1background=Bitmap.createScaledBitmap(frame1background, length, height, false);
 
     }
 
