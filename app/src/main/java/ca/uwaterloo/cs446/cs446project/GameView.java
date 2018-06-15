@@ -113,7 +113,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 //System.out.println("action down");
                 Boolean handled = false;
                 for(UI ui: model.uis){
-                    if(ui.hitTest(event.getX(), event.getY(),30)){
+                    if(ui.hitTest(event.getX(), event.getY(),45)){
                         ui.setSelected(true);
                         handled = true;
 

@@ -169,7 +169,7 @@ public class GameModel extends Observable{
         InputStream is = context.getResources().openRawResource(+ image);
         BitmapFactory.Options opt = new BitmapFactory.Options();
         opt.inJustDecodeBounds = false;
-        opt.inSampleSize = 4;
+        opt.inSampleSize = 1;
         return BitmapFactory.decodeStream(is,null,opt);
 
     }
