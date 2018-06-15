@@ -1,5 +1,6 @@
 package ca.uwaterloo.cs446.cs446project;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -9,8 +10,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
-public class OptionActivity extends AppCompatActivity {
+import java.util.Observable;
+import java.util.Observer;
+
+public class OptionActivity extends Activity implements Observer {
     Button backButton;
+    GameModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +26,8 @@ public class OptionActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_option);
 
+
+        model=GameModel.getInstance();
         backButton=findViewById(R.id.optionBack);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -28,5 +35,10 @@ public class OptionActivity extends AppCompatActivity {
                 startActivity(new Intent(OptionActivity.this, MainActivity.class));
             }
         });
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+
     }
 }
