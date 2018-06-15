@@ -18,7 +18,6 @@ public class bomb extends Tool {
 
     int collect_position_left = 300;
     int collect_position_top = 10;
-    int bomb_size = 100;
     ArrayList <Bitmap> bomb_effect;
 
     public bomb(Context context, Bitmap background, ArrayList<Rect> src, ArrayList<Rect> dest, int top, int left) {
