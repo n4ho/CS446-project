@@ -80,7 +80,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         if(canvas!=null){
             // draw all the components here
 
-            canvas.drawBitmap(model.structures.get(model.cur_frame).background,0,0,null);
+          //  canvas.drawBitmap(model.structures.get(model.cur_frame).background,0,0,null);
             //canvas.drawRect(0,0,p.x*10, p.y, paint);
             //drawing current frame
             if (model.structures.size() > model.cur_frame) {
@@ -334,6 +334,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
         if (hittool == HitType.DOOR) {
             if (model.key > 0) {model.curlevel ++; model.key --;}
+        }
+
+        if (hittool == HitType.FALLING_SPIKE) {
+            model.characterReborn(100, 50, true);
         }
 
         boolean ladder = model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER;

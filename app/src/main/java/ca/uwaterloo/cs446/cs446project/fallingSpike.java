@@ -48,7 +48,7 @@ public class fallingSpike extends DynamicObject {
 
         }
         count++;
-        if (count%15 == 0) {
+        if (count%10 == 0) {
             Random rand = new Random();
             int x = rand.nextInt(right_lim - left_lim) + left_lim;
             dest.add(new Rect(x,0, x+40, 40 ));
