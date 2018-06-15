@@ -47,26 +47,26 @@ public class GameModel extends Observable{
             ourInstance.uis.add(new UI("LeftButton",
                     compress(context,R.drawable.left),
                     compress(context,R.drawable.left),
-                    (int) (point.x * 0.02), (int) (point.y * 0.8),
+                    (int) (point.x * 0.015), (int) (point.y * 0.8),
                     point.x / 20 , point.y / 15)
             );
             ourInstance.uis.add(new UI("RightButton",
                     compress(context,R.drawable.right),
                     compress(context,R.drawable.right),
-                    (int) (point.x * 0.11), (int) (point.y * 0.8),
+                    (int) (point.x * 0.125), (int) (point.y * 0.8),
                     point.x / 20, point.y / 15)
             );
 
             ourInstance.uis.add(new UI("UpButton",
                     compress(context,R.drawable.up),
                     compress(context,R.drawable.up),
-                    (int) (point.x * 0.07), (int) (point.y * 0.73),
+                    (int) (point.x * 0.075), (int) (point.y * 0.71),
                     point.y / 15, point.x / 20)
             );
             ourInstance.uis.add(new UI("DownButton",
                     compress(context,R.drawable.down),
                     compress(context,R.drawable.down),
-                    (int) (point.x * 0.07), (int) (point.y * 0.86),
+                    (int) (point.x * 0.075), (int) (point.y * 0.88),
                     point.y / 15, point.x / 20)
             );
             ourInstance.uis.add(new UI("JumpButton",
