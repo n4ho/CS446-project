@@ -141,7 +141,7 @@ public class Character {
         // TO DO: if character is too far away from center of the screen, do transformation
 
         if (left > model.structures.get(model.cur_frame).length - 100) {
-            if (model.cur_frame < 9) {
+            if (model.cur_frame < 3) {
                 ++model.cur_frame;
                 model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true);
             } else {

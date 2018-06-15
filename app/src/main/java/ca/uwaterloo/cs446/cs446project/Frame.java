@@ -342,15 +342,15 @@ public class Frame {
             endy = point.y - 830;
             //frame one
             src.add(new Rect (0, 0, point.x, ground.getHeight()));
-            dest.add( new Rect (0, point.y - 250, point.x+250, point.y));
+            dest.add( new Rect (0, point.y - 250, point.x/3*2, point.y));
 
             ArrayList<Rect> wraith_src = new ArrayList<>();
             ArrayList<Rect> wraith_dest = new ArrayList<>();
             wraith_src.add(new Rect (0, 0, wraith1.getWidth(), wraith1.getHeight() ));
             wraith_dest.add(new Rect (600, point.y - 450, 800, point.y - 250 ));
 
-            ArrayList<Rect> cage_src = new ArrayList<>();
-            ArrayList<Rect> cage_dest = new ArrayList<>();
+            //ArrayList<Rect> cage_src = new ArrayList<>();
+            //ArrayList<Rect> cage_dest = new ArrayList<>();
             //  cage_src.add(new Rect (0, 0, cage.getWidth(), cage.getHeight() ));
             // cage_dest.add(new Rect (1000, 200, 1300, 600 ));
 
@@ -366,7 +366,7 @@ public class Frame {
             ArrayList<Rect> water_src = new ArrayList<>();
             ArrayList<Rect> water_dest = new ArrayList<>();
             water_src.add(new Rect (0, 0, water.getWidth(), water.getHeight()));
-            water_dest.add( new Rect (250+point.x, point.y - 150, point.x*2-400, point.y));
+            water_dest.add( new Rect (point.x/3*2, point.y - 150, point.x*2-400, point.y));
 
             Floor temp = new Floor(context, water, water_src, water_dest);
             temp.type = HitType.WATER;
@@ -377,7 +377,7 @@ public class Frame {
             ArrayList<Rect> spike_dest = new ArrayList<>();
             spike_src.add(new Rect (0, 0, fallingSpike.getWidth(), fallingSpike.getHeight()));
             spike_dest.add( new Rect (point.x+300, 0, point.x+340, 40));
-            floors.add(new fallingSpike(context,fallingSpike,spike_src,spike_dest, 10, point.x+250,2*point.x-400));
+            floors.add(new fallingSpike(context,fallingSpike,spike_src,spike_dest, 10, point.x/3*2,2*point.x-400));
 
             //adding magnet
             ArrayList<Rect> magnet_src = new ArrayList<>();
@@ -420,17 +420,17 @@ public class Frame {
             ArrayList<Rect> spiketwo_src = new ArrayList<>();
             ArrayList<Rect> spiketwo_dest = new ArrayList<>();
             spiketwo_src.add(new Rect (0, 0, spike_down.getWidth(), spike_down.getHeight() ));
-            spiketwo_dest.add(new Rect (550, point.y - 750, 650, point.y - 690 ));
+            spiketwo_dest.add(new Rect (2*point.x+550, point.y - 750, 2*point.x+650, point.y - 690 ));
 
             //ladder
             ArrayList<Rect> ladder_src = new ArrayList<>();
             ArrayList<Rect> ladder_dest = new ArrayList<>();
             ladder_src.add(new Rect (0, 0, ladder.getWidth(), ladder.getHeight() ));
-            ladder_dest.add(new Rect (270, point.y - 1100, 370, point.y - 800));
+            ladder_dest.add(new Rect (2*point.x+270, point.y - 1100, 2*point.x+370, point.y - 800));
 
 
-            floors.add(new key(context, key, key_src, key_dest, 1400, point.y - 520));
-            floors.add(new spike(context, spike_down, spike_src, spike_dest));
+            floors.add(new key(context, key, key_src, key_dest, 2*point.x+1400, point.y - 520));
+            floors.add(new spike(context, spike_down, spiketwo_src, spiketwo_dest));
             floors.add(new door(context, door, door_src, door_dest));
             floors.add(new Floor(context, ground, src, dest));
             floors.add(new ladder(context, ladder, ladder_src, ladder_dest, 10, point.y - 1100, point.y - 800));
@@ -438,81 +438,6 @@ public class Frame {
 
         }
 
-
-
-
-        //level two
-        else if (num == 4) {
-            background = is.frame1background;
-            length = point.x;
-            startx = 110;
-            starty = point.y - 550;
-            endx = length - 110;
-            endy = point.y - 830;
-            //frame one
-            src.add(new Rect (0, 0, point.x, ground.getHeight()));
-            dest.add( new Rect (0, point.y - 250, point.x, point.y));
-
-            ArrayList<Rect> wraith_src = new ArrayList<>();
-            ArrayList<Rect> wraith_dest = new ArrayList<>();
-            wraith_src.add(new Rect (0, 0, wraith1.getWidth(), wraith1.getHeight() ));
-            wraith_dest.add(new Rect (600, point.y - 450, 800, point.y - 250 ));
-
-            ArrayList<Rect> cage_src = new ArrayList<>();
-            ArrayList<Rect> cage_dest = new ArrayList<>();
-          //  cage_src.add(new Rect (0, 0, cage.getWidth(), cage.getHeight() ));
-           // cage_dest.add(new Rect (1000, 200, 1300, 600 ));
-
-            floors.add(new Floor(context, ground, src, dest));
-            floors.add(new wraith(context, wraith1, wraith_src, wraith_dest, 20, wraith, 600, point.y-450));
-            //floors.add(new cage(context, cage, cage_src, cage_dest, 5, 200, 500));
-
-
-        }
-
-
-        else if (num == 5) {
-            length = point.x;
-            startx = 110;
-            starty = point.y - 550;
-            endx = length - 110;
-            endy = point.y - 830;
-            background = is.frame1background;
-            src.add(new Rect (0, 0, point.x, ground.getHeight()));
-            dest.add( new Rect (0, point.y - 250, 250, point.y));
-
-            src.add(new Rect (0, 0, point.x, ground.getHeight()));
-            dest.add( new Rect (point.x-400, point.y - 250, point.x, point.y));
-
-            floors.add(new Floor(context, ground, src, dest));
-
-            //adding water
-            ArrayList<Rect> water_src = new ArrayList<>();
-            ArrayList<Rect> water_dest = new ArrayList<>();
-            water_src.add(new Rect (0, 0, water.getWidth(), water.getHeight()));
-            water_dest.add( new Rect (250, point.y - 150, point.x-400, point.y));
-
-            Floor temp = new Floor(context, water, water_src, water_dest);
-            temp.type = HitType.WATER;
-            floors.add(temp);
-
-            //add falling spike
-            ArrayList<Rect> spike_src = new ArrayList<>();
-            ArrayList<Rect> spike_dest = new ArrayList<>();
-            spike_src.add(new Rect (0, 0, fallingSpike.getWidth(), fallingSpike.getHeight()));
-            spike_dest.add( new Rect (300, 0, 340, 40));
-            floors.add(new fallingSpike(context,fallingSpike,spike_src,spike_dest, 10, 250,point.x-400));
-
-            //adding magnet
-            ArrayList<Rect> magnet_src = new ArrayList<>();
-            ArrayList<Rect> magnet_dest = new ArrayList<>();
-            magnet_src.add(new Rect (0, 0, magnet.getWidth(), magnet.getHeight()));
-            magnet_dest.add( new Rect (point.x-250, point.y-350, point.x-150, point.y-250));
-            floors.add(new magnet(context, magnet, magnet_src, magnet_dest, point.y-350,point.x-250) );
-
-
-
-        }
 
         /*
         else if (num == 6) {
