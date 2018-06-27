@@ -438,16 +438,19 @@ public class Frame {
 
         }
 
+        else if (num == 4) {
 
-        /*
-        else if (num == 6) {
-
-            backgrounds.add(ground);
+            background = is.frame1background;
+            length = point.x*2;
+            startx = 110;
+            starty = point.y-450;
+            endx = length - 110;
+            endy = point.y - 830;
             src.add(new Rect(0, 0, 400, ground.getHeight()));
             dest.add(new Rect(0, point.y - 400, 250, point.y));
 
             src.add(new Rect(0, 0, point.x, ground.getHeight()));
-            dest.add(new Rect(point.x - 300, point.y - 400, point.x, point.y));
+            dest.add(new Rect(point.x - 300, point.y - 350, point.x+500, point.y));
 
             floors.add(new Floor(context, ground, src, dest));
 
@@ -472,26 +475,14 @@ public class Frame {
             floors.add(new island(context, ground, island1_src, island1_dest, 5, point.y - 300));
             floors.add(new island(context, ground, island2_src, island2_dest, 5, point.y - 300));
 
-            Floor temp = new Floor(context, water, water_src, water_dest);
-            temp.type = HitType.WATER;
-            floors.add(temp);
-        }
-
-        else if (num == 7) {
-            backgrounds.add(ground);
-            //adding floor
-            src.add(new Rect(0, 0, 400, ground.getHeight()));
-            dest.add(new Rect(0, point.y - 300, 500, point.y));
 
             src.add(new Rect(0, 0, 400, ground.getHeight()));
-            dest.add(new Rect(1100, point.y - 600, point.x, point.y));
+            dest.add(new Rect(point.x+1100, point.y - 600, 2*point.x, point.y));
             floors.add(new Floor(context, ground, src, dest));
 
             //adding water
-            ArrayList<Rect> water_src = new ArrayList<>();
-            ArrayList<Rect> water_dest = new ArrayList<>();
             water_src.add(new Rect(0, 0, water.getWidth(), water.getHeight()));
-            water_dest.add(new Rect(500, point.y - 300, 1100, point.y));
+            water_dest.add(new Rect(point.x+500, point.y - 300, point.x+1100, point.y));
             Floor temp = new Floor(context, water, water_src, water_dest);
             temp.type = HitType.WATER;
             floors.add(temp);
@@ -500,15 +491,13 @@ public class Frame {
             ArrayList<Rect> branch_src = new ArrayList<>();
             ArrayList<Rect> branch_dest = new ArrayList<>();
             branch_src.add(new Rect(20, 0, branch.getWidth(), branch.getHeight()));
-            branch_dest.add(new Rect(0, point.y - 900, 500, point.y-500));
+            branch_dest.add(new Rect(point.x, point.y - 900, point.x+500, point.y-500));
             floors.add(new Branch(context,branch, branch_src, branch_dest));
 
             //adding Ball
-            floors.add(new Ball(context,ground, branch_src, branch_dest, 20,300, point.y-600, point.y-400));
+            floors.add(new Ball(context,ground, branch_src, branch_dest, 20,point.x+300, point.y-600, point.y-400));
 
-
-
-        }*/
+        }
 
     }
 
