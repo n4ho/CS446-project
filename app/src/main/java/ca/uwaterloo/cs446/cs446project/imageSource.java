@@ -48,6 +48,7 @@ public class imageSource {
     public Bitmap log;
     public Bitmap ladder;
     public Bitmap frame1background;
+    public Bitmap spike_right;
 
 
     static imageSource ourInstance = null;
@@ -67,7 +68,7 @@ public class imageSource {
 
         bomb = compress(context,R.drawable.bomb, 10);
         magnet = compress(context,R.drawable.magnet, 10);
-        cage = compress(context,R.drawable.cage, 10);
+        cage = compress(context,R.drawable.cage, 1);
         water = compress(context,R.drawable.water, 10);
         fallingSpike = compress(context,R.drawable.fallingspike, 1);
         branch = compress(context,R.drawable.treebranch, 1);
@@ -117,6 +118,7 @@ public class imageSource {
         spike_up = BitmapFactory.decodeResource(context.getResources(),R.drawable.spike_up);
         spike_left = BitmapFactory.decodeResource(context.getResources(),R.drawable.spike_left);
         spike_down = BitmapFactory.decodeResource(context.getResources(),R.drawable.spike_down);
+        spike_right = BitmapFactory.decodeResource(context.getResources(), R.drawable.spike_right);
         door = compress(context,R.drawable.door, 1);
         key = compress(context,R.drawable.key, 1);
 
@@ -126,7 +128,6 @@ public class imageSource {
         ladder = compress(context,R.drawable.ladder, 10);
         bomb = compress(context,R.drawable.bomb, 10);
         magnet = compress(context,R.drawable.magnet, 10);
-        cage = compress(context,R.drawable.cage, 10);
         water = compress(context,R.drawable.water, 1);
         fallingSpike = compress(context,R.drawable.fallingspike, 1);
         branch = compress(context,R.drawable.treebranch, 1);

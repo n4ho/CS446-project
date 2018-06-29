@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * Created by julialiu on 2018-06-03.
  */
 
+
 public class Ball extends DynamicObject {
 
     int x;

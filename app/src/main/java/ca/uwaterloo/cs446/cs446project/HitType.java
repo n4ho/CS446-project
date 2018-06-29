@@ -21,5 +21,8 @@ public enum HitType {
     FALLING_SPIKE,
     ISLAND,
     LOG_LEFT,
-    LOG_DOWN
+    LOG_DOWN,
+    SENSOR,
+    LEVER,
+    SPIKESENSOR
 }

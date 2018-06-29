@@ -340,6 +340,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             model.characterReborn(100, 50, true);
         }
 
+        model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SPIKESENSOR);
+        model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEVER);
+        model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SENSOR);
         boolean ladder = model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER;
         boolean down = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN;
         boolean up = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.UP) == HitType.UP;
