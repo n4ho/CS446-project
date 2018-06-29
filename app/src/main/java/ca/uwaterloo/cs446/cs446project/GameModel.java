@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.Display;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -12,10 +13,13 @@ import android.graphics.Canvas;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -36,7 +40,8 @@ public class GameModel extends Observable{
         ourInstance.display.getSize(point);
 
         // read max_frame from file
-        readModel();
+        //readModel();
+
         if(isGameView) {
             System.out.println("LOAD MODEL BITMAP!");
             ourInstance.uis.add(new UI("LeftButton",
@@ -109,70 +114,74 @@ public class GameModel extends Observable{
     }
 
     static void saveModel(){
-        String filename="ferrymangame.log";
-        File list[]=ourInstance.context.getFilesDir().listFiles();
-        File log=list[0];
-        boolean exist=false;
-        for(File f: list){
-            if(f.getName()==filename){
-                exist=true;
-                log=f;
-            }
-        }
-        if(!exist){
-            log=new File(ourInstance.context.getFilesDir(), filename);
-
-        }
-
         try {
-            // clear log data
-            PrintWriter writer = new PrintWriter(log);
-            writer.println(ourInstance.max_frame);
-            writer.close();
-        }catch(Exception e){
+            PrintWriter pw = new PrintWriter("game.txt");
+            pw.close();
+        }catch (Exception e){
 
         }
+
+            try {
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+                        ourInstance.context.openFileOutput("game.txt", Context.MODE_PRIVATE));
+                ourInstance.max_frame=Math.max(ourInstance.max_frame,ourInstance.cur_frame);
+                outputStreamWriter.write(Integer.toString(ourInstance.max_frame));
+                outputStreamWriter.close();
+            }
+            catch (IOException e) {
+                Log.e("Exception", "File write failed: " + e.toString());
+            }
     }
 
     static void readModel(){
-        String filename="ferrymangame.log";
-        File list[]=ourInstance.context.getFilesDir().listFiles();
-        File log=ourInstance.context.getFilesDir();
-        boolean exist=false;
-        for(File f: list){
-            if(f.getName()==filename){
-                exist=true;
-                log=f;
-            }
-        }
-        if(!exist){
-            ourInstance.max_frame=0;
-        }else{
-            //StringBuilder text = new StringBuilder();
 
-            try {
-                BufferedReader br = new BufferedReader(new FileReader(log));
-                String line=br.readLine();
-                ourInstance.max_frame = Integer.parseInt(line);
-//                while ((line = br.readLine()) != null) {
-//                    text.append(line);
-//                    text.append('\n');
-//                }
-                br.close();
-            }
-            catch (IOException e) {
-                //You'll need to add proper error handling here
+        String ret = "";
+
+        try {
+            InputStream inputStream = ourInstance.context.openFileInput("game.txt");
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
             }
         }
+        catch (FileNotFoundException e) {
+            Log.e("read model", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("read model", "Can not read file: " + e.toString());
+        }
+
+        if(ret==""){
+            ourInstance.max_frame=0;
+            File directory = ourInstance.context.getFilesDir();
+            File new_file =
+                    new File(directory.getAbsolutePath() + File.separator +  "game.txt");
+            try
+            {
+                new_file.createNewFile();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            Log.d("Create File", "File exists?"+new_file.exists());
+
+        }else {
+            ourInstance.max_frame = Integer.parseInt(ret);
+        }
+
     }
 
     static public Bitmap compress(Context context, int image){
-//        BitmapFactory.Options options = new BitmapFactory.Options();
-//        options.inJustDecodeBounds = true;
-//        BitmapFactory.decodeResource(context.getResources(), image, options);
-//        options.inSampleSize = 15;
-//        options.inJustDecodeBounds = false;
-//        return BitmapFactory.decodeResource(context.getResources(), image, options);
         InputStream is = context.getResources().openRawResource(+ image);
         BitmapFactory.Options opt = new BitmapFactory.Options();
         opt.inJustDecodeBounds = false;
@@ -192,7 +201,7 @@ public class GameModel extends Observable{
     public ArrayList<Frame> structures;
     public ArrayList<UI> uis;
 
-    public int cur_frame = 9;
+    public int cur_frame = 0;
 
     public int curlevel = 0;
     public int max_frame=0;

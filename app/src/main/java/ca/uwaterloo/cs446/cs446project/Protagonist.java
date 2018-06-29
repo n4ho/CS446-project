@@ -94,7 +94,7 @@ public class Protagonist extends Character {
 
         switch (this.state){
             case IDLE: // idle
-                canvas.drawBitmap(idle.get(drawIndex),left,top, null);
+
             if(changeRate==0) {
                 if (drawIndex >= idle.size() - 1) {
                     drawIndex = 0;
@@ -105,10 +105,11 @@ public class Protagonist extends Character {
             }else{
                 changeRate--;
             }
+
+                canvas.drawBitmap(idle.get(drawIndex),left,top, null);
                 break;
 
             case RIGHT: // runRight
-                canvas.drawBitmap(runRight.get(drawIndex),left,top, null);
 
                 if(changeRate==0) {
                     if (drawIndex >= runRight.size() - 1) {
@@ -121,10 +122,13 @@ public class Protagonist extends Character {
                     changeRate--;
                 }
 
+                canvas.drawBitmap(runRight.get(drawIndex),left,top, null);
+
+
                 break;
 
             case LEFT: //run left
-                canvas.drawBitmap(runLeft.get(drawIndex),left,top,null);
+
                 if(changeRate==0) {
                     if (drawIndex >= runLeft.size() - 1) {
                         drawIndex = 0;
@@ -136,6 +140,7 @@ public class Protagonist extends Character {
                     changeRate--;
                 }
 
+                canvas.drawBitmap(runLeft.get(drawIndex),left,top,null);
 
                 break;
 
@@ -144,7 +149,6 @@ public class Protagonist extends Character {
 
             case UP: //up
 
-                canvas.drawBitmap(climb.get(drawIndex),left,top,null);
                 if(changeRate==0) {
                     if (drawIndex >= climb.size() - 1) {
                         drawIndex = 0;
@@ -156,11 +160,11 @@ public class Protagonist extends Character {
                     changeRate--;
                 }
 
+                canvas.drawBitmap(climb.get(drawIndex),left,top,null);
 
                 break;
 
             case DOWN: //down
-                canvas.drawBitmap(climb.get(drawIndex),left,top,null);
 
                 if(changeRate==0) {
                     if (drawIndex >= climb.size() - 1) {
@@ -172,6 +176,8 @@ public class Protagonist extends Character {
                 }else{
                     changeRate--;
                 }
+
+                canvas.drawBitmap(climb.get(drawIndex),left,top,null);
 
                 break;
 
