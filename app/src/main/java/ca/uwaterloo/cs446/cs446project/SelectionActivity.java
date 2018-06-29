@@ -39,7 +39,9 @@ public class SelectionActivity extends Activity implements Observer{
         levels.add((Button)findViewById(R.id.level2));
         levels.add((Button)findViewById(R.id.level3));
 
+        GameModel.readModel();
         model= GameModel.getInstance();
+
         GameModel.setInstance(this, getWindowManager().getDefaultDisplay(), 60, false);
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -50,17 +52,44 @@ public class SelectionActivity extends Activity implements Observer{
         });
 
         for(int i=0;i<levels.size();++i){
-            if(i>model.max_frame){
-                levels.get(i).setEnabled(false);
+            if(model.max_frame<4){
+                if(i>0){
+                    levels.get(i).setEnabled(false);
+                }
+            }else if(model.max_frame<7){
+                if(i>1){
+                    levels.get(i).setEnabled(false);
+                }
+            }else{
+                // all enabled
             }
 
-            levels.get(i).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startActivity(new Intent(SelectionActivity.this, GameActivity.class));
-                }
-            });
+
         }
+
+        levels.get(0).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SelectionActivity.this, GameActivity.class));
+                    model.cur_frame=0;
+            }
+        });
+
+        levels.get(1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SelectionActivity.this, GameActivity.class));
+                model.cur_frame=4;
+            }
+        });
+
+        levels.get(2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SelectionActivity.this, GameActivity.class));
+                model.cur_frame=7;
+            }
+        });
     }
 
     @Override
