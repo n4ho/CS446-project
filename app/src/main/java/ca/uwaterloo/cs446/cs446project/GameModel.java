@@ -86,7 +86,14 @@ public class GameModel extends Observable{
 
             ourInstance.uis.add(ourInstance.inventory);
 
-            ourInstance.characters.add(new Protagonist(context, ourInstance, 70, 100));
+            ourInstance.characters.add(new Protagonist(context, ourInstance, 70, 100,0));
+            ourInstance.characters.add(new Protagonist(context, ourInstance, 70, 100,1));
+            ourInstance.characters.add(new Protagonist(context, ourInstance, 70, 100,2));
+            ourInstance.current_char.add(0);
+            ourInstance.current_char.add(1);
+            ourInstance.current_char.add(2);
+
+
 
             for (int i = 0; i < 10; i++) {
                 ourInstance.structures.add(new Frame(i, point, context));
@@ -190,7 +197,7 @@ public class GameModel extends Observable{
     public int curlevel = 0;
     public int max_frame=0;
 
-    public int current_char = 0;
+    public ArrayList<Integer> current_char;
 
     public int trans_x = 0;
     public int trans_y = 0;
@@ -207,6 +214,7 @@ public class GameModel extends Observable{
         characters=new ArrayList<Character>();
         structures=new ArrayList<Frame>();
         uis=new ArrayList<UI>();
+        current_char = new ArrayList<>();
 
         point = new Point();
     }
@@ -241,9 +249,8 @@ public class GameModel extends Observable{
 
 
     public void update(){
-        for (Character c: characters) {
-            c.update();
-        }
+        getCharacter().update();
+
         for(UI u: uis){
             u.translate(trans_x,trans_y);
         }
@@ -262,59 +269,63 @@ public class GameModel extends Observable{
     // left button clicked
     public void left() {
         // only thrust left/ right if character on ground
-        characters.get(current_char).state=MoveType.LEFT;
-        characters.get(current_char).thrustLeft();
+        characters.get(current_char.get(0)).state=MoveType.LEFT;
+        characters.get(current_char.get(0)).thrustLeft();
     }
 
     // left button released
     public void left_release(){
         // if character in air, velocity in X should not stop
         //characters.get(current_char).state=0;
-        characters.get(current_char).stopX();
+        characters.get(current_char.get(0)).stopX();
     }
 
     // right button clicked
     public void right(){
-        characters.get(current_char).state=MoveType.RIGHT;
-        characters.get(current_char).thrustRight();
+        characters.get(current_char.get(0)).state=MoveType.RIGHT;
+        characters.get(current_char.get(0)).thrustRight();
     }
 
     // right button released
     public void right_release(){
         // if character in air, velocity in X should not stop
         //characters.get(current_char).state=0;
-        characters.get(current_char).stopX();
+        characters.get(current_char.get(0)).stopX();
     }
 
 
     // jump button: jump
     public void jump(){
         //characters.get(current_char).state=MoveType.JUMP;
-        characters.get(current_char).jump();
+        characters.get(current_char.get(0)).jump();
     }
 
     // up button: move up(when there is a ladder)
     public void up(){
-        characters.get(current_char).thrustUp();
-        characters.get(current_char).state=MoveType.UP;
+        characters.get(current_char.get(0)).thrustUp();
+        characters.get(current_char.get(0)).state=MoveType.UP;
         System.out.println("ladder up");
     }
 
     // down button: move up(when there is a ladder)
     public void down(){
-        characters.get(current_char).thrustDown();
-        characters.get(current_char).state=MoveType.DOWN;
+        characters.get(current_char.get(0)).thrustDown();
+        characters.get(current_char.get(0)).state=MoveType.DOWN;
     }
 
     public void gravitySwitch(boolean b){
         if(b){
-            characters.get(current_char).startGravity();
+            characters.get(current_char.get(0)).startGravity();
         }else{
-            characters.get(current_char).stopGravity();
+            characters.get(current_char.get(0)).stopGravity();
         }
     }
 
-    public Character getCharacter(){
-        return characters.get(current_char);
+    public Character getCharacter() {
+        return characters.get(current_char.get(0));
+    }
+
+    public boolean haveSelectedCharacter(){
+        return current_char.size() > 0;
     }
 }
