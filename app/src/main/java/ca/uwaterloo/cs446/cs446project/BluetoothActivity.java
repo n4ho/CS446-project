@@ -47,7 +47,7 @@ public class BluetoothActivity extends Activity {
                 startActivityForResult(getVisible, 0);
 
 
-                pairedDevices = BA.getBondedDevices();
+                pairedDevices = BA.getRemoteDevices();
 
                 ArrayList list = new ArrayList();
 

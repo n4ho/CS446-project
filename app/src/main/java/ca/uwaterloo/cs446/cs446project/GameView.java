@@ -1,5 +1,7 @@
 package ca.uwaterloo.cs446.cs446project;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -8,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.Display;
 import android.support.v4.view.GestureDetectorCompat;
 import android.view.GestureDetector;
@@ -25,6 +28,7 @@ import android.widget.Button;
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     public MainThread thread;
+    public ConnectedThread connectedThread;
     public GameModel model;
     Display display;
     int fps = 60;
@@ -35,6 +39,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public boolean cageonelock = true;
     public boolean cagetwolock = true;
 
+    private BluetoothAdapter BA;
+    BluetoothDevice pairedDevices;
+
     public GameView(Context context, Display d, GameModel model){
         super(context);
         getHolder().addCallback(this);
@@ -42,6 +49,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         this.model=model;
 
         thread=new MainThread(getHolder(), this);
+        BA = BluetoothAdapter.getDefaultAdapter();
+        pairedDevices = BA.();
+
+        connectedThread = new ConnectedThread();
     }
 
     @Override
@@ -49,6 +60,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         thread.setRunning(true);
         thread.start();
         //model=new GameModel(this.getContext(), display,fps);
+        connectedThread.start();
 
     }
 
