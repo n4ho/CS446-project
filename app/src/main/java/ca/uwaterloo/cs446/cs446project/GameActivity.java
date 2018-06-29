@@ -76,7 +76,7 @@ public class GameActivity extends Activity implements Observer{
     protected void onPause() {
         super.onPause();
 
-        //mServ.pauseMusic();
+        mServ.pauseMusic();
     }
 
     @Override
