@@ -35,6 +35,8 @@ public class Character {
 
     public MoveType state=MoveType.RIGHT;
 
+    public int char_frame;
+
     public Character(Context context, GameModel model, int width, int height){
         this.context=context;
         this.model=model;
@@ -50,6 +52,8 @@ public class Character {
         this.maxVelocity = 15;
         this.jump = false;
         this.climb = false;
+
+        this.char_frame = model.cur_frame;
 
     }
 
@@ -105,74 +109,109 @@ public class Character {
 
     public void startGravity(){ cur_gravity = gravity;}
 
+    public boolean hitTest(float x, float y, float tolerance){
+        return x<=this.left+width+tolerance && x>=this.left-tolerance
+                && y<=this.top+height+tolerance && y>=this.top-tolerance;
+    }
+
 
     public void update(){
-        //check if character is pushing a log
-        if (pushinglog) {
-            int pushv = model.structures.get(model.cur_frame).pushLog();
-            if (pushv == -1) {
-                stopX();
-                pushinglog = false;
+        if (model.haveSelectedCharacter()){
+            //check if character is pushing a log
+            if (pushinglog) {
+                int pushv = model.structures.get(model.cur_frame).pushLog();
+                if (pushv == -1) {
+                    stopX();
+                    pushinglog = false;
+                }
+                else {
+                    velocityX = pushv;
+                }
             }
-            else {
-                velocityX = pushv;
+
+            // apply gravity
+            velocityY += cur_gravity;
+
+            // update position
+            top = top + (int) velocityY;
+            left = left + (int) velocityX;
+
+            // if character is standing on the bottom of the screen
+            if(top >= model.point.y - height) {
+                stopY();
+                top = model.point.y - height;
+            }
+
+            // if character is jumping too high
+            if(top < 0){
+                top = 0;
+                stopY();
+            }
+
+
+            // list of characters following
+
+            for(int i = 1; i < model.current_char.size(); i++){
+                model.characters.get(model.current_char.get(i)).state = model.getCharacter().state;
+                if(model.getCharacter().state==MoveType.RIGHT){
+                    model.characters.get(model.current_char.get(i)).top=model.getCharacter().top;
+                    model.characters.get(model.current_char.get(i)).left=model.getCharacter().left - 50 * i;
+                }
+                else if (model.getCharacter().state==MoveType.LEFT){
+                    model.characters.get(model.current_char.get(i)).top=model.getCharacter().top;
+                    model.characters.get(model.current_char.get(i)).left=model.getCharacter().left + 50 * i;
+                }
+                else if (model.getCharacter().state==MoveType.UP){
+                    model.characters.get(model.current_char.get(i)).top=model.getCharacter().top + 30 * i;
+                    model.characters.get(model.current_char.get(i)).left=model.getCharacter().left;
+                }
+                else if (model.getCharacter().state==MoveType.DOWN){
+                    model.characters.get(model.current_char.get(i)).top=model.getCharacter().top - 30 * i;
+                    model.characters.get(model.current_char.get(i)).left=model.getCharacter().left;
+                }
+
+            }
+
+            // if character is too far away from center of the screen, do transformation
+            if (left > model.structures.get(model.cur_frame).length - 100) {
+                if (model.cur_frame < 9) {
+                    changeFrame(model.cur_frame + 1);
+                    model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true);
+                } else {
+                    stopX();
+                }
+            } else if (left < 100 && velocityX < 0) {
+                if (model.cur_frame > 0) {
+                    changeFrame(model.cur_frame - 1);
+                    model.characterReborn(model.structures.get(model.cur_frame).endx, model.structures.get(model.cur_frame).endy, false);
+                } else {
+                    stopX();
+                }
+            } else if (left > model.point.x /3 * 2 - model.trans_x) {
+
+                if (left >= model.structures.get(model.cur_frame).length - model.point.x /3 && velocityX > 0){}
+                else if (velocityX < 0) {}
+                else {
+                    model.trans_x -= velocityX;
+                }
+            } else if (left < model.point.x /3 - model.trans_x) {
+
+                if (left <=  model.point.x /3 && velocityX < 0){}
+                else if (velocityX < 0) {
+                    model.trans_x -= velocityX;
+                }
             }
         }
-
-        // apply gravity
-        velocityY += cur_gravity;
-
-        // update position
-        top = top + (int) velocityY;
-        left = left + (int) velocityX;
-
-        // if character is standing on the bottom of the screen
-        if(top >= model.point.y - height) {
-            stopY();
-            top = model.point.y - height;
-        }
-
-        // if character is jumping too high
-        if(top < 0){
-            top = 0;
-            stopY();
-        }
-
-        // TO DO: if character is too far away from center of the screen, do transformation
-
-        if (left > model.structures.get(model.cur_frame).length - 100) {
-            if (model.cur_frame < 9) {
-                ++model.cur_frame;
-                model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true);
-            } else {
-                stopX();
-            }
-        } else if (left < 100 && velocityX < 0) {
-            if (model.cur_frame > 0) {
-                model.cur_frame--;
-                model.characterReborn(model.structures.get(model.cur_frame).endx, model.structures.get(model.cur_frame).endy, false);
-            } else {
-                stopX();
-            }
-        } else if (left > model.point.x /3 * 2 - model.trans_x) {
-
-            if (left >= model.structures.get(model.cur_frame).length - model.point.x /3 && velocityX > 0){}
-            else if (velocityX < 0) {}
-            else {
-                model.trans_x -= velocityX;
-            }
-        } else if (left < model.point.x /3 - model.trans_x) {
-
-            if (left <=  model.point.x /3 && velocityX < 0){}
-            else if (velocityX < 0) {
-                model.trans_x -= velocityX;
-            }
-        }
-
-
     }
 
 
     public void draw(Canvas canvas){
+    }
+
+    public void changeFrame(int f){
+        model.cur_frame = f;
+        for(int i : model.current_char){
+            model.characters.get(i).char_frame = f;
+        }
     }
 }
