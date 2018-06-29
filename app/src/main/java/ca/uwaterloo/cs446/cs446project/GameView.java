@@ -28,6 +28,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     Display display;
     int fps = 60;
     boolean temp = true;
+    public boolean drawbegin = true;
+    public boolean drawend = false;
+    public boolean drawconver = false;
 
     public GameView(Context context, Display d, GameModel model){
         super(context);
@@ -83,16 +86,25 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
           //  canvas.drawBitmap(model.structures.get(model.cur_frame).background,0,0,null);
             //canvas.drawRect(0,0,p.x*10, p.y, paint);
             //drawing current frame
-            if (model.structures.size() > model.cur_frame) {
-                Frame temp = model.structures.get(model.cur_frame);
-                temp.draw(canvas);
+            if (drawbegin) {
+                drawbegin = model.structures.get(model.cur_frame).drawBegin(canvas, p.x, p.y);
             }
-            for(Character c: model.characters){
-                c.draw(canvas);
-            }
+            else if (drawend) {
+                drawend = model.structures.get(model.cur_frame-1).drawEnd(canvas, p.x, p.y);
+            } else if (drawconver) {
+                drawconver = model.structures.get(model.cur_frame).drawConver(canvas, p.x, p.y);
+            } else {
+                if (model.structures.size() > model.cur_frame) {
+                    Frame temp = model.structures.get(model.cur_frame);
+                    temp.draw(canvas);
+                }
+                for(Character c: model.characters){
+                    c.draw(canvas);
+                }
 
-            for(UI ui: model.uis){
-                ui.draw(canvas);
+                for(UI ui: model.uis){
+                    ui.draw(canvas);
+                }
             }
             //model.optionalDraw(0, canvas); draw ui
             //model.optionalDraw(1,canvas); draw characters
@@ -111,101 +123,107 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         switch (event.getAction() & MotionEvent.ACTION_MASK){
             case MotionEvent.ACTION_DOWN:
                 //System.out.println("action down");
-                Boolean handled = false;
-                for(UI ui: model.uis){
-                    if(ui.hitTest(event.getX(), event.getY(),45)){
-                        ui.setSelected(true);
-                        handled = true;
+                if (drawbegin || drawend || drawconver) {
+                    model.structures.get(model.cur_frame).d.skipOne();
 
-                        if(ui.name=="LeftButton") {
-                            //System.out.println("left button clicked");
+                }
+                else {
+                    Boolean handled = false;
+                    for (UI ui : model.uis) {
+                        if (ui.hitTest(event.getX(), event.getY(), 45)) {
                             ui.setSelected(true);
-                            if ((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.NULL &&
-                                    (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN || model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) == HitType.LOG_DOWN)) ||
-                                    model.structures.get(model.cur_frame).hitTools(hitBox) == HitType.LADDER) {
-                                model.left();
-                            } else {
-                                model.getCharacter().stopX();
-                            }
-                            return true;
-                        }else if(ui.name=="RightButton"){
-                            System.out.println("right button clicked");
-                            ui.setSelected(true);
-                            //check hit log first;
-                            if (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_LEFT) != HitType.NULL) {
-                                model.getCharacter().pushinglog = true;
-                            } else if ((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) == HitType.NULL &&
-                                    (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN || model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) != HitType.NULL)) ||
-                                    model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER) {
-                                model.right();
+                            handled = true;
 
-                            }else{
-                                model.getCharacter().stopX();
-                            }
-                            return true;
-                        }else if(ui.name=="UpButton"){
-                            //System.out.println("up button clicked");
-                            ui.setSelected(true);
-                            if(model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER){
-                                //&&model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN)
-                                //model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.UP) == HitType.NULL
+                            if (ui.name == "LeftButton") {
+                                //System.out.println("left button clicked");
+                                ui.setSelected(true);
+                                if ((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.NULL &&
+                                        (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN || model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) == HitType.LOG_DOWN)) ||
+                                        model.structures.get(model.cur_frame).hitTools(hitBox) == HitType.LADDER) {
+                                    model.left();
+                                } else {
+                                    model.getCharacter().stopX();
+                                }
+                                return true;
+                            } else if (ui.name == "RightButton") {
+                                System.out.println("right button clicked");
+                                ui.setSelected(true);
+                                //check hit log first;
+                                if (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_LEFT) != HitType.NULL) {
+                                    model.getCharacter().pushinglog = true;
+                                } else if ((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) == HitType.NULL &&
+                                        (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN || model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) != HitType.NULL)) ||
+                                        model.structures.get(model.cur_frame).hitTools(hitBox) == HitType.LADDER) {
+                                    model.right();
 
-                                model.up();
-                                model.getCharacter().climb=true;
-                            }
-                            else{
-                                //System.out.println("hit ceiling");
-                                model.getCharacter().stopY();
-                            }
-                            return true;
-                        }else if(ui.name=="DownButton"){
-                            //System.out.println("down button clicked");
-                            ui.setSelected(true);
-                            if(model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER) {
-                                //model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.NULL
-                                model.down();
-                                model.getCharacter().climb=true;
-                            }else{
-                                //System.out.println("hit floor");
-                                model.getCharacter().stopY();
-                            }
+                                } else {
+                                    model.getCharacter().stopX();
+                                }
+                                return true;
+                            } else if (ui.name == "UpButton") {
+                                //System.out.println("up button clicked");
+                                ui.setSelected(true);
+                                if (model.structures.get(model.cur_frame).hitTools(hitBox) == HitType.LADDER) {
+                                    //&&model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN)
+                                    //model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.UP) == HitType.NULL
 
-                            return true;
-                        }else if(ui.name=="JumpButton"){
-                            System.out.println("jump button clicked");
-                            ui.setSelected(true);
-                            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN ||
-                                    model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) == HitType.LOG_DOWN) {
-                                model.jump();
-                                model.getCharacter().jump=true;
+                                    model.up();
+                                    model.getCharacter().climb = true;
+                                } else {
+                                    //System.out.println("hit ceiling");
+                                    model.getCharacter().stopY();
+                                }
+                                return true;
+                            } else if (ui.name == "DownButton") {
+                                //System.out.println("down button clicked");
+                                ui.setSelected(true);
+                                if (model.structures.get(model.cur_frame).hitTools(hitBox) == HitType.LADDER) {
+                                    //model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.NULL
+                                    model.down();
+                                    model.getCharacter().climb = true;
+                                } else {
+                                    //System.out.println("hit floor");
+                                    model.getCharacter().stopY();
+                                }
+
+                                return true;
+                            } else if (ui.name == "JumpButton") {
+                                System.out.println("jump button clicked");
+                                ui.setSelected(true);
+                                if (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN ||
+                                        model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) == HitType.LOG_DOWN) {
+                                    model.jump();
+                                    model.getCharacter().jump = true;
+                                }
+
+                                return true;
+                            } else if (ui.name == "Backpack") {
+                                //System.out.println("backpack clicked");
+                                ui.setSelected(true);
+                                model.inventory.animation();
+                                return true;
+
+                            } else if (ui.name == "Inventory") {
+                                model.inventory.clicked(event.getX());
+
                             }
-
-                            return true;
-                        }else if(ui.name == "Backpack"){
-                            //System.out.println("backpack clicked");
-                            ui.setSelected(true);
-                            model.inventory.animation();
-                            return true;
-
-                        }else if(ui.name == "Inventory"){
-                            model.inventory.clicked(event.getX());
-
                         }
-                    }
-                }
 
-                if (handled) break;
-                if (model.useBomb) {
-                    model.structures.get(model.cur_frame).useBomb((int)event.getX() - model.trans_x, (int)event.getY());
-                    model.useBomb = false;
-                    model.bomb --;
-                    break;
-                }
-                if (model.useMagnet) {
-                    model.structures.get(model.cur_frame).useMagnet((int)event.getX() - model.trans_x, (int)event.getY());
-                    model.useMagnet = false;
-                    model.magnet --;
-                    break;
+                    }
+
+                    if (handled) break;
+                    if (model.useBomb) {
+                        model.structures.get(model.cur_frame).useBomb((int) event.getX() - model.trans_x, (int) event.getY());
+                        model.useBomb = false;
+                        model.bomb--;
+                        break;
+                    }
+                    if (model.useMagnet) {
+                        model.structures.get(model.cur_frame).useMagnet((int) event.getX() - model.trans_x, (int) event.getY());
+                        model.useMagnet = false;
+                        model.magnet--;
+                        break;
+                    }
                 }
 
                 break;
@@ -333,7 +351,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         }
 
         if (hittool == HitType.DOOR) {
-            if (model.key > 0) {model.curlevel ++; model.key --;}
+            if (model.key > 0) {
+                model.curlevel ++; model.key --;
+
+                if (model.cur_frame < 9) {
+                    model.cur_frame++;
+                    model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true);
+                }
+                this.drawend = true;
+            }
         }
 
         if (hittool == HitType.FALLING_SPIKE) {

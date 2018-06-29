@@ -49,6 +49,7 @@ public class Frame {
     Bitmap branch;
     Bitmap log;
     imageSource is;
+    dialogue d;
 
 
     public Frame (int num, Point point, Context context) {
@@ -78,7 +79,13 @@ public class Frame {
         water =is.water;
         cage = is.cage;
         branch = is.branch;
-
+        if (num >= 0 && num <= 3) {
+            d = new dialogue(0);
+        } else if (num <= 6) {
+            d = new dialogue(1);
+        } else {
+            d = new dialogue(2);
+        }
         if (num == 0) {
             background = is.frame1background;
             length = point.x*3;
@@ -1038,8 +1045,18 @@ public class Frame {
             }
             p.draw(canvas);
         }
+    }
 
+    public boolean drawBegin(Canvas c, int x, int y) {
+        return d.draw(c, x, y, 0);
+    }
 
+    public boolean drawEnd(Canvas c, int x, int y) {
+        return d.draw(c, x, y, 1);
+    }
+
+    public boolean drawConver(Canvas c, int x, int y) {
+        return d.draw(c, x, y, 2);
     }
 
     //for floor hit test, return LEFT, RIGHT, UP, DOWN
