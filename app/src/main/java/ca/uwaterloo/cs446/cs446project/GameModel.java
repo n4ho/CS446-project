@@ -278,55 +278,55 @@ public class GameModel extends Observable{
     // left button clicked
     public void left() {
         // only thrust left/ right if character on ground
-        characters.get(current_char.get(0)).state=MoveType.LEFT;
-        characters.get(current_char.get(0)).thrustLeft();
+        getCharacter().state=MoveType.LEFT;
+        getCharacter().thrustLeft();
     }
 
     // left button released
     public void left_release(){
         // if character in air, velocity in X should not stop
         //characters.get(current_char).state=0;
-        characters.get(current_char.get(0)).stopX();
+        getCharacter().stopX();
     }
 
     // right button clicked
     public void right(){
-        characters.get(current_char.get(0)).state=MoveType.RIGHT;
-        characters.get(current_char.get(0)).thrustRight();
+        getCharacter().state=MoveType.RIGHT;
+        getCharacter().thrustRight();
     }
 
     // right button released
     public void right_release(){
         // if character in air, velocity in X should not stop
         //characters.get(current_char).state=0;
-        characters.get(current_char.get(0)).stopX();
+        getCharacter().stopX();
     }
 
 
     // jump button: jump
     public void jump(){
         //characters.get(current_char).state=MoveType.JUMP;
-        characters.get(current_char.get(0)).jump();
+        getCharacter().jump();
     }
 
     // up button: move up(when there is a ladder)
     public void up(){
-        characters.get(current_char.get(0)).thrustUp();
-        characters.get(current_char.get(0)).state=MoveType.UP;
+        getCharacter().thrustUp();
+        getCharacter().state=MoveType.UP;
         System.out.println("ladder up");
     }
 
     // down button: move up(when there is a ladder)
     public void down(){
-        characters.get(current_char.get(0)).thrustDown();
-        characters.get(current_char.get(0)).state=MoveType.DOWN;
+        getCharacter().thrustDown();
+        getCharacter().state=MoveType.DOWN;
     }
 
     public void gravitySwitch(boolean b){
         if(b){
-            characters.get(current_char.get(0)).startGravity();
+            getCharacter().startGravity();
         }else{
-            characters.get(current_char.get(0)).stopGravity();
+            getCharacter().stopGravity();
         }
     }
 

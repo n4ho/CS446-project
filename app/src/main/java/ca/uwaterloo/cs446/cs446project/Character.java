@@ -35,6 +35,8 @@ public class Character {
 
     public MoveType state=MoveType.RIGHT;
 
+    public int char_frame;
+
     public Character(Context context, GameModel model, int width, int height){
         this.context=context;
         this.model=model;
@@ -50,6 +52,8 @@ public class Character {
         this.maxVelocity = 15;
         this.jump = false;
         this.climb = false;
+
+        this.char_frame = model.cur_frame;
 
     }
 
@@ -171,14 +175,14 @@ public class Character {
             // if character is too far away from center of the screen, do transformation
             if (left > model.structures.get(model.cur_frame).length - 100) {
                 if (model.cur_frame < 9) {
-                    ++model.cur_frame;
+                    changeFrame(model.cur_frame + 1);
                     model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true);
                 } else {
                     stopX();
                 }
             } else if (left < 100 && velocityX < 0) {
                 if (model.cur_frame > 0) {
-                    model.cur_frame--;
+                    changeFrame(model.cur_frame - 1);
                     model.characterReborn(model.structures.get(model.cur_frame).endx, model.structures.get(model.cur_frame).endy, false);
                 } else {
                     stopX();
@@ -202,5 +206,12 @@ public class Character {
 
 
     public void draw(Canvas canvas){
+    }
+
+    public void changeFrame(int f){
+        model.cur_frame = f;
+        for(int i : model.current_char){
+            model.characters.get(i).char_frame = f;
+        }
     }
 }

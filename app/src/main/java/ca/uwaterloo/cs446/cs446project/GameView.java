@@ -89,7 +89,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 temp.draw(canvas);
             }
             for(Character c: model.characters){
-                c.draw(canvas);
+                if(c.char_frame == model.cur_frame) c.draw(canvas);
             }
 
             for(UI ui: model.uis){
@@ -104,10 +104,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int pointerIndex = 0;
-        Rect hitBox=new Rect(model.getCharacter().left,
-                model.getCharacter().top,
-                model.getCharacter().left+model.getCharacter().width,
-                model.getCharacter().top+model.getCharacter().height);
+        Rect hitBox = new Rect(0,0,0,0);
+        if(model.haveSelectedCharacter()){
+            hitBox=new Rect(model.getCharacter().left,
+                    model.getCharacter().top,
+                    model.getCharacter().left+model.getCharacter().width,
+                    model.getCharacter().top+model.getCharacter().height);
+        }
 
         switch (event.getAction() & MotionEvent.ACTION_MASK){
             case MotionEvent.ACTION_DOWN:
@@ -115,7 +118,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 Boolean handled = false;
 
                 for(UI ui: model.uis){
-                    if(ui.hitTest(event.getX(), event.getY(),45)){
+                    if(ui.hitTest(event.getX(), event.getY(),30)){
                         ui.setSelected(true);
                         handled = true;
 
@@ -210,13 +213,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                     break;
                 }
                 for(int i = 0; i < model.characters.size(); i++){
-                    if(model.characters.get(i).hitTest(event.getX() - model.trans_x,event.getY()- model.trans_y,0) == true){
+                    if(model.characters.get(i).hitTest(event.getX() - model.trans_x,event.getY()- model.trans_y,0) == true &&
+                            model.characters.get(i).char_frame == model.cur_frame){
                         if(model.current_char.contains(i)){
-                            model.current_char.remove(i);
+                            model.current_char.remove((Integer) i);
                         }
                         else{
                             model.current_char.add(i);
                         }
+                        break;
                     }
                 }
 
