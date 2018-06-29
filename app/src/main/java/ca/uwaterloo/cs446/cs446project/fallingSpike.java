@@ -19,13 +19,17 @@ public class fallingSpike extends DynamicObject {
     int count = 0;
     int right_lim;
     int left_lim;
+    int top;
+    int f;
 
     public fallingSpike(Context context, Bitmap background, ArrayList<Rect> src, ArrayList<Rect> dest, int moving_velocity,
-                        int left_lim, int right_lim) {
+                        int left_lim, int right_lim, int top, int f) {
         super(context, background, src, dest, moving_velocity);
         this.right_lim = right_lim;
         this.left_lim = left_lim;
         type = HitType.FALLING_SPIKE;
+        this.top = top;
+        this.f = f;
     }
 
 
@@ -48,10 +52,10 @@ public class fallingSpike extends DynamicObject {
 
         }
         count++;
-        if (count%10 == 0) {
+        if (count%f == 0) {
             Random rand = new Random();
             int x = rand.nextInt(right_lim - left_lim) + left_lim;
-            dest.add(new Rect(x,0, x+40, 40 ));
+            dest.add(new Rect(x,top, x+40, top+40 ));
         }
     }
 

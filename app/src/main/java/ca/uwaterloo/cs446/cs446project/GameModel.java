@@ -88,7 +88,7 @@ public class GameModel extends Observable{
 
             ourInstance.characters.add(new Protagonist(context, ourInstance, 70, 100));
 
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 10; i++) {
                 ourInstance.structures.add(new Frame(i, point, context));
             }
 
@@ -185,7 +185,7 @@ public class GameModel extends Observable{
     public ArrayList<Frame> structures;
     public ArrayList<UI> uis;
 
-    public int cur_frame = 3;
+    public int cur_frame = 9;
 
     public int curlevel = 0;
     public int max_frame=0;
