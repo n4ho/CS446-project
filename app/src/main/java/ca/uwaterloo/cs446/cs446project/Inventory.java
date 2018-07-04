@@ -43,18 +43,31 @@ public class Inventory extends UI{
 
             if(!animation) {
                 canvas.drawBitmap(OnImage, x + trans_x, y + trans_y, null);
+                Paint p = new Paint();
+                int maroon = Color.parseColor("#800000");
+                p.setColor(maroon);
+
+                Paint p1 = new Paint();
+                p1.setColor(maroon);
+                p1.setTextSize(50);
+
                 for(int i = 1; i <= n;i++) {
                     int temp_x = x + trans_x + width / n * (i - 1) + width / n / 4;
                     int temp_y = y + trans_y + height / 4;
                     if (i == 1) {
+                        canvas.drawText("+"+Integer.toString(model.bomb), temp_x+80, temp_y, p1);
                         canvas.drawBitmap(bomb,temp_x,temp_y,null);
                     }
-                    if (i == 2) { canvas.drawBitmap(key,temp_x,temp_y,null); }
-                    if (i == 3) { canvas.drawBitmap(magnet,temp_x,temp_y,null); }
+                    if (i == 2) {
+                        canvas.drawText("+"+Integer.toString(model.key), temp_x+80, temp_y, p1);
+                        canvas.drawBitmap(key,temp_x,temp_y,null);
+                    }
+                    if (i == 3) {
+                        canvas.drawText("+"+Integer.toString(model.magnet), temp_x+80, temp_y, p1);
+                        canvas.drawBitmap(magnet,temp_x,temp_y,null);
+                    }
                 }
-                Paint p = new Paint();
-                int maroon = Color.parseColor("#800000");
-                p.setColor(maroon);
+
                 p.setStrokeWidth(10);
                 p.setStyle(Paint.Style.STROKE);
                 if (model.useBomb) {

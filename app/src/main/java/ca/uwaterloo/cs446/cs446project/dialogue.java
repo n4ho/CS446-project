@@ -69,6 +69,7 @@ public class dialogue {
     }
 
     public boolean draw(Canvas c, int x, int y, int type) {
+
         ArrayList<String> s;
         if (type == 0) {
             s = start;
