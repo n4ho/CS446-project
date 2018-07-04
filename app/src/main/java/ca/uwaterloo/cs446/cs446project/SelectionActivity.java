@@ -71,7 +71,7 @@ public class SelectionActivity extends Activity implements Observer{
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SelectionActivity.this, GameActivity.class));
-                    model.cur_frame=0;
+                 //   model.cur_frame=0;
             }
         });
 
@@ -79,7 +79,7 @@ public class SelectionActivity extends Activity implements Observer{
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SelectionActivity.this, GameActivity.class));
-                model.cur_frame=4;
+               // model.cur_frame=4;
             }
         });
 
@@ -87,7 +87,7 @@ public class SelectionActivity extends Activity implements Observer{
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SelectionActivity.this, GameActivity.class));
-                model.cur_frame=7;
+                //model.cur_frame=7;
             }
         });
     }

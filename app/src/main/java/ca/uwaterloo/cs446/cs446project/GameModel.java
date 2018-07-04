@@ -201,7 +201,7 @@ public class GameModel extends Observable{
     public ArrayList<Frame> structures;
     public ArrayList<UI> uis;
 
-    public int cur_frame = 0;
+    public int cur_frame = 5;
 
     public int curlevel = 0;
     public int max_frame=0;
@@ -211,11 +211,12 @@ public class GameModel extends Observable{
     public int trans_x = 0;
     public int trans_y = 0;
     public Inventory inventory;
-    public int bomb = 100;
-    public int magnet = 100;
-    public int key = 0;
+    public int bomb = 1;
+    public int magnet = 2;
+    public int key = 10 ;
     public boolean useBomb = false;
     public boolean useMagnet = false;
+    public boolean go_back = false;
 
 
     public GameModel(){

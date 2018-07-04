@@ -97,8 +97,14 @@ public class Frame {
             src.add(new Rect (0, 0, point.x, ground.getHeight()));
             dest.add( new Rect (0, point.y - 200, point.x+250, point.y));
 
-            //second frame
+            //adding bomb
+            ArrayList<Rect> bomb_src = new ArrayList<>();
+            ArrayList<Rect> bomb_dest = new ArrayList<>();
+            bomb_src.add(new Rect (0, 0, bomb.getWidth(), bomb.getHeight() ));
+            bomb_dest.add(new Rect (1000, point.y-350, 1150, point.y - 210 ));
+            floors.add(new bomb(context, bomb, bomb_src, bomb_dest, point.y-350, 1000));
 
+            //second frame
             src.add(new Rect (0, 0, 200, ground.getHeight()));
             dest.add(new Rect (point.x+350, point.y - 350, point.x+550, point.y - 250));
 
@@ -461,35 +467,28 @@ public class Frame {
             water_src.add(new Rect(0, 0, water.getWidth(), water.getHeight()));
             water_dest.add(new Rect(point.x+250, point.y - 300, 2*point.x - 300, point.y));
 
-
-            //Adding two island
-            ArrayList<Rect> island1_src = new ArrayList<>();
-            ArrayList<Rect> island1_dest = new ArrayList<>();
-            island1_src.add(new Rect(0, 0, ground.getWidth(), ground.getHeight()));
-            island1_dest.add(new Rect(point.x+500, point.y - 300, point.x+700, point.y - 200));
-
-            ArrayList<Rect> island2_src = new ArrayList<>();
-            ArrayList<Rect> island2_dest = new ArrayList<>();
-            island2_src.add(new Rect(0, 0, ground.getWidth(), ground.getHeight()));
-            island2_dest.add(new Rect(point.x+1050, point.y - 300, point.x+1250, point.y - 200));
-
-            floors.add(new island(context, ground, island1_src, island1_dest, 5, point.y - 300));
-            floors.add(new island(context, ground, island2_src, island2_dest, 5, point.y - 300));
-
+            //adding falling spike
+            /*ArrayList<Rect> spike_src = new ArrayList<>();
+            ArrayList<Rect> spike_dest = new ArrayList<>();
+            spike_src.add(new Rect (0, 0, fallingSpike.getWidth(), fallingSpike.getHeight()));
+            spike_dest.add( new Rect (point.x+250, 0, 2*point.x-300, 40));
+            floors.add(new fallingSpike(context,fallingSpike,spike_src,spike_dest, 10, point.x+250,2*point.x-300,0, 10));*/
 
             src.add(new Rect(0, 0, 400, ground.getHeight()));
-            dest.add(new Rect(2*point.x+1100, point.y - 400, 3*point.x, point.y));
+            dest.add(new Rect(2*point.x+1100, point.y - 500, 3*point.x, point.y));
             floors.add(new Floor(context, ground, src, dest));
 
+            //adding log
+            ArrayList<Rect> log_src = new ArrayList<>();
+            ArrayList<Rect> log_dest = new ArrayList<>();
+            log_src.add(new Rect(0, 0, log.getWidth(), log.getHeight()));
+            log_dest.add(new Rect(2*point.x-200, point.y - 460, 2*point.x+500,point.y - 340));
+            floors.add(new log(context, log, log_src, log_dest, 2*point.x-200, 2*point.x+500, 2));
+
             //adding water
-            water_src.add(new Rect(0, 0, water.getWidth(), water.getHeight()));
-            water_dest.add(new Rect(2*point.x+500, point.y - 300, 2*point.x+1100, point.y));
             Floor temp = new Floor(context, water, water_src, water_dest);
             temp.type = HitType.WATER;
             floors.add(temp);
-
-            //adding Ball
-            //floors.add(new Ball(context,ground, branch_src, branch_dest, 20,point.x+300, point.y-600, point.y-400));
 
         }
 
@@ -554,8 +553,8 @@ public class Frame {
             ArrayList<Rect> fallingspikedest = new ArrayList<>();
             fallingspikesrc.add(new Rect (0, 0, fallingSpike.getWidth(), fallingSpike.getHeight()));
             fallingspikedest.add( new Rect (point.x, point.y-530, point.x+40, point.y-490));
-            floors.add(new fallingSpike(context,fallingSpike,fallingspikesrc,fallingspikedest, 4, point.x,point.x+600, point.y-590, 10));
-            floors.add(new fallingSpike(context,fallingSpike,fallingspikesrc,fallingspikedest, 4, point.x+800,point.x*2-200, point.y-590,10));
+            floors.add(new fallingSpike(context,fallingSpike,fallingspikesrc,fallingspikedest, 4, point.x,point.x+600, point.y-590, 30));
+            floors.add(new fallingSpike(context,fallingSpike,fallingspikesrc,fallingspikedest, 4, point.x+800,point.x*2-200, point.y-590,30));
 
             //wraith
             ArrayList<Rect> wraith_src = new ArrayList<>();
@@ -566,6 +565,13 @@ public class Frame {
 
             src.add(new Rect(500, 0, 800, ground.getHeight()));
             dest.add(new Rect(point.x*2, point.y - 720, point.x*2+300, point.y-650));
+
+            //adding bomb
+            ArrayList<Rect> bomb_src1 = new ArrayList<>();
+            ArrayList<Rect> bomb_dest1 = new ArrayList<>();
+            bomb_src1.add(new Rect (0, 0, bomb.getWidth(), bomb.getHeight() ));
+            bomb_dest1.add(new Rect (point.x*2+50, point.y - 870, point.x*2+200, point.y - 730 ));
+            floors.add(new bomb(context, bomb, bomb_src1, bomb_dest1, point.y - 870, point.x*2+50));
 
             //adding magnet
             ArrayList<Rect> magnet_src = new ArrayList<>();
@@ -982,11 +988,11 @@ public class Frame {
             floors.add(new cage(context, cage, cage_src, cage_dest, 5, 0, point.y-800));
 
             //adding following spike
-            ArrayList<Rect> spike_src = new ArrayList<>();
+            /*ArrayList<Rect> spike_src = new ArrayList<>();
             ArrayList<Rect> spike_dest = new ArrayList<>();
             spike_src.add(new Rect (0, 0, fallingSpike.getWidth(), fallingSpike.getHeight()));
             spike_dest.add( new Rect (1500, point.y-750, 1540, point.y-710));
-            floors.add(new fallingSpike(context,fallingSpike,spike_src,spike_dest, 10, 1500,point.x*2,point.y-750, 10));
+            floors.add(new fallingSpike(context,fallingSpike,spike_src,spike_dest, 10, 1500,point.x*2,point.y-750, 10));*/
 
             //adding wraith
             ArrayList<Rect> wraith_src = new ArrayList<>();

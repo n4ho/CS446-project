@@ -150,5 +150,11 @@ public class GameActivity extends Activity implements Observer{
     @Override
     public void update(Observable observable, Object o) {
 
+        if (model.go_back) {
+            startActivity(new Intent(GameActivity.this, SelectionActivity.class));
+            model.go_back = false;
+        }
     }
+
+
 }
