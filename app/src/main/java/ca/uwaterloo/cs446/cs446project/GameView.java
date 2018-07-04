@@ -101,7 +101,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                     temp.draw(canvas);
                 }
                 for(Character c: model.characters){
-                    c.draw(canvas);
+                    if(c.char_frame == model.cur_frame) c.draw(canvas);
                 }
 
                 for(UI ui: model.uis){
