@@ -40,13 +40,5 @@ public class cage extends DynamicObject {
     public void draw(Canvas c) {
         super.draw(c);
         c.drawBitmap(background, src.get(0), dest.get(0),  null);
-
-    }
-
-    public boolean hitCage(int left) {
-
-        int cx = left + 50;
-        return cx - 100 <= dest.get(0).centerX() &&  dest.get(0).centerX() <= cx+100;
-
     }
 }

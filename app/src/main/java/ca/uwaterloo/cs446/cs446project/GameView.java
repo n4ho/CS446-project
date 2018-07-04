@@ -32,6 +32,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public boolean drawbegin = true;
     public boolean drawend = false;
     public boolean drawconver = false;
+    public boolean cageonelock = true;
+    public boolean cagetwolock = true;
 
     public GameView(Context context, Display d, GameModel model){
         super(context);
@@ -367,6 +369,20 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             }
             if (hittool == HitType.SPIKE || hittool == HitType.WRAITH) {
                 model.characterReborn(100, 50, true);
+            }
+
+            if (hittool == HitType.CAGE) {
+                if (model.cur_frame == 4 && cageonelock == true || model.cur_frame == 9 && cagetwolock == true) {
+                    if (model.key > 0) {
+                        model.key--;
+                        model.unlockCharacter();
+                        if (model.cur_frame == 4) {
+                            cageonelock = false;
+                        } else {
+                            cagetwolock = false;
+                        }
+                    }
+                }
             }
 
             if (hittool == HitType.DOOR) {

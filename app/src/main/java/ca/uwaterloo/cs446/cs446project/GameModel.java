@@ -338,4 +338,9 @@ public class GameModel extends Observable{
     public boolean haveSelectedCharacter(){
         return current_char.size() > 0;
     }
+
+    public void unlockCharacter() {
+        //to be implemented;
+
+    }
 }
