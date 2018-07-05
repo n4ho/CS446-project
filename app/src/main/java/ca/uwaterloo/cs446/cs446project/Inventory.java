@@ -55,15 +55,15 @@ public class Inventory extends UI{
                     int temp_x = x + trans_x + width / n * (i - 1) + width / n / 4;
                     int temp_y = y + trans_y + height / 4;
                     if (i == 1) {
-                        canvas.drawText("+"+Integer.toString(model.bomb), temp_x+80, temp_y, p1);
+                        canvas.drawText("+"+Integer.toString(model.bomb), temp_x+58, temp_y+20, p1);
                         canvas.drawBitmap(bomb,temp_x,temp_y,null);
                     }
                     if (i == 2) {
-                        canvas.drawText("+"+Integer.toString(model.key), temp_x+80, temp_y, p1);
+                        canvas.drawText("+"+Integer.toString(model.key), temp_x+58, temp_y+20, p1);
                         canvas.drawBitmap(key,temp_x,temp_y,null);
                     }
                     if (i == 3) {
-                        canvas.drawText("+"+Integer.toString(model.magnet), temp_x+80, temp_y, p1);
+                        canvas.drawText("+"+Integer.toString(model.magnet), temp_x+58, temp_y+20, p1);
                         canvas.drawBitmap(magnet,temp_x,temp_y,null);
                     }
                 }
@@ -71,14 +71,14 @@ public class Inventory extends UI{
                 p.setStrokeWidth(10);
                 p.setStyle(Paint.Style.STROKE);
                 if (model.useBomb) {
-                    int startx = x + trans_x;
-                    int starty = y + trans_y;
-                    int endx = x + trans_x + width/3;
+                    int startx = x + trans_x + 5;
+                    int starty = y + trans_y + 5;
+                    int endx = x + trans_x + width/3 + 8;
                     int endy = y + trans_y + height;
                     canvas.drawRect(startx, starty, endx, endy, p);
                 } else if (model.useMagnet) {
-                    int startx = x + trans_x + width/3*2;
-                    int starty = y + trans_y;
+                    int startx = x + trans_x + width/3*2 + 6;
+                    int starty = y + trans_y + 5;
                     int endx = x + trans_x + width;
                     int endy = y + trans_y + height;
                     canvas.drawRect(startx, starty, endx, endy, p);
@@ -117,7 +117,7 @@ public class Inventory extends UI{
         if(display && !animation) {
             for (int i = 1; i <= n; i++) {
                 if (x < this.x + i * this.width / n) {
-                    if (i == 1 && model.bomb > 0) {
+                    if (i == 1 && model.bomb >= 0) {
                         model.useBomb = !model.useBomb;
                         model.useMagnet = false;
                     }  else if (i == 3 && model.magnet > 0) {
