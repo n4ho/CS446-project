@@ -1,6 +1,5 @@
 package ca.uwaterloo.cs446.cs446project;
 
-
         import android.Manifest;
         import android.annotation.TargetApi;
         import android.bluetooth.BluetoothAdapter;
@@ -30,14 +29,17 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
     BluetoothAdapter mBluetoothAdapter;
     Button btnEnableDisable_Discoverable;
 
-    BluetoothConnectionService mBluetoothConnection;
+    static public BluetoothConnectionService mBluetoothConnection = null;
 
     Button btnStartConnection;
     Button btnSend;
+    Button back;
 
     EditText etSend;
 
-    private static final UUID MY_UUID_INSECURE = UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
+    private static final UUID MY_UUID_INSECURE =
+            UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
+
     BluetoothDevice mBTDevice;
 
     public ArrayList<BluetoothDevice> mBTDevices = new ArrayList<>();
@@ -148,6 +150,7 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
                 //case1: bonded already
                 if (mDevice.getBondState() == BluetoothDevice.BOND_BONDED){
                     Log.d(TAG, "BroadcastReceiver: BOND_BONDED.");
+                    //inside BroadcastReceiver4
                     mBTDevice = mDevice;
                 }
                 //case2: creating a bone
@@ -187,6 +190,7 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
         btnStartConnection = (Button) findViewById(R.id.btnStartConnection);
         btnSend = (Button) findViewById(R.id.btnSend);
         etSend = (EditText) findViewById(R.id.editText);
+        back = (Button) findViewById(R.id.btnback);
 
         //Broadcasts when bond state changes (ie:pairing)
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
@@ -215,21 +219,34 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                byte [] bytes = etSend.getText().toString().getBytes(Charset.defaultCharset());
+                byte[] bytes = etSend.getText().toString().getBytes(Charset.defaultCharset());
                 mBluetoothConnection.write(bytes);
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(BluetoothActivity.this, MainActivity.class));
             }
         });
 
     }
 
-
-    public void startConnection() {
-        startBTConnection(mBTDevice, MY_UUID_INSECURE);
+    //create method for starting connection
+//***remember the conncction will fail and app will crash if you haven't paired first
+    public void startConnection(){
+        startBTConnection(mBTDevice,MY_UUID_INSECURE);
     }
 
+    /**
+     * starting chat service method
+     */
+    public void startBTConnection(BluetoothDevice device, UUID uuid){
+        Log.d(TAG, "startBTConnection: Initializing RFCOM Bluetooth Connection.");
 
-    public void startBTConnection(BluetoothDevice device, UUID uuid) {
-        mBluetoothConnection.startClient(device, uuid);
+        mBluetoothConnection.startClient(device,uuid);
+        startActivity(new Intent(BluetoothActivity.this, GameActivity.class));
     }
 
 

@@ -69,6 +69,16 @@
         android:layout_toEndOf="@+id/btnONOFF"
         android:text="SEND" />
 
+    <Button
+        android:id="@+id/btnback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnStartConnection"
+        android:layout_alignBottom="@+id/btnStartConnection"
+        android:layout_marginStart="23dp"
+        android:layout_toEndOf="@+id/btnStartConnection"
+        android:text="BACK" />
+
 
 
 

@@ -29,6 +29,11 @@ public class GameModel extends Observable{
 
 
     private static final GameModel ourInstance = new GameModel();
+    BluetoothConnectionService bluetoothConnection;
+    public int pair_x;
+    public int pair_y;
+    public int pair_frame;
+    public boolean pair_arrive = false;
 
 
     static void setInstance(Context context, Display d, int _fps, boolean isGameView){
@@ -43,6 +48,8 @@ public class GameModel extends Observable{
         //readModel();
 
         if(isGameView) {
+            ourInstance.bluetoothConnection = BluetoothActivity.mBluetoothConnection;
+
             System.out.println("LOAD MODEL BITMAP!");
             ourInstance.uis.add(new UI("LeftButton",
                     compress(context,R.drawable.left),
@@ -201,7 +208,7 @@ public class GameModel extends Observable{
     public ArrayList<Frame> structures;
     public ArrayList<UI> uis;
 
-    public int cur_frame = 5;
+    public int cur_frame = 0;
 
     public int curlevel = 0;
     public int max_frame=0;
@@ -211,12 +218,13 @@ public class GameModel extends Observable{
     public int trans_x = 0;
     public int trans_y = 0;
     public Inventory inventory;
-    public int bomb = 1;
-    public int magnet = 2;
-    public int key = 10 ;
+    public int bomb = 10;
+    public int magnet = 10;
+    public int key = 0 ;
     public boolean useBomb = false;
     public boolean useMagnet = false;
     public boolean go_back = false;
+    static public boolean connectionSuccess = false;
 
 
     public GameModel(){
@@ -285,8 +293,6 @@ public class GameModel extends Observable{
 
     // left button released
     public void left_release(){
-        // if character in air, velocity in X should not stop
-        //characters.get(current_char).state=0;
         getCharacter().stopX();
     }
 
@@ -298,8 +304,6 @@ public class GameModel extends Observable{
 
     // right button released
     public void right_release(){
-        // if character in air, velocity in X should not stop
-        //characters.get(current_char).state=0;
         getCharacter().stopX();
     }
 
