@@ -95,8 +95,14 @@ public class GameActivity extends Activity implements Observer{
         quit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GameModel.connectionSuccess = false;
-                startActivity(new Intent(GameActivity.this, SelectionActivity.class));
+                if (GameModel.connectionSuccess) {
+                    startActivity(new Intent(GameActivity.this, MainActivity.class));
+                    GameModel.connectionSuccess = false;
+                    model.drawwin = false;
+                    model.drawlose = false;
+                } else {
+                    startActivity(new Intent(GameActivity.this, SelectionActivity.class));
+                }
             }
         });
 

@@ -34,6 +34,9 @@ public class GameModel extends Observable{
     public int pair_y;
     public int pair_frame;
     public boolean pair_arrive = false;
+    public boolean drawwin = false;
+    public boolean drawlose = false;
+    public boolean arrived = false;
 
 
     static void setInstance(Context context, Display d, int _fps, boolean isGameView){

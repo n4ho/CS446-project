@@ -34,8 +34,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public boolean drawconver = false;
     public boolean cageonelock = true;
     public boolean cagetwolock = true;
-    public boolean drawwin = false;
-    public boolean drawlose = false;
 
     public GameView(Context context, Display d, GameModel model){
         super(context);
@@ -114,14 +112,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 }
 
                 String s = "";
-                if (drawwin) {
+                if (model.drawwin) {
                     s = "YOU WIN!!!";
                     Paint p1 = new Paint();
                     p1.setTextSize(200);
                     p1.setStyle(Paint.Style.FILL);
                     p1.setColor(Color.WHITE);
                     canvas.drawText(s, p.x/4-model.trans_x, p.y/2, p1);
-                } else if (drawlose) {
+                } else if (model.drawlose) {
                     s = "YOU LOSE!!!";
                     Paint p1 = new Paint();
                     p1.setTextSize(200);
@@ -271,10 +269,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
             case MotionEvent.ACTION_POINTER_DOWN:
                 pointerIndex ++;
-                /*System.out.println("multi touch, index = " + pointerIndex);
-                System.out.println("Event (X,Y) = " + event.getX(pointerIndex) + ", " + event.getY(pointerIndex));
-                System.out.println("Jump  (X,Y) = " + model.getUI("JumpButton").x + ", " + model.getUI("JumpButton").y);
-*/
+
                 for(UI ui: model.uis){
                     if(ui.hitTest(event.getX(pointerIndex), event.getY(pointerIndex),90)){
                         ui.setSelected(true);
@@ -371,10 +366,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         //check if bluetooth mode is on
         if(GameModel.connectionSuccess && model.bluetoothConnection != null) {
             //send data
-            String s = model.cur_frame + " " + model.getCharacter().left + " " + model.getCharacter().top;
-            byte [] temp = s.getBytes();
-
-            model.bluetoothConnection.write(temp);
+            if (model.arrived == false) {
+                String s = model.cur_frame + " " + model.getCharacter().left + " " + model.getCharacter().top;
+                byte [] temp = s.getBytes();
+                model.bluetoothConnection.write(temp);
+            }
+            else {
+                String s = "arrived";
+                byte [] temp = s.getBytes();
+                model.bluetoothConnection.write(temp);
+            }
 
             //get data
             String r = model.bluetoothConnection.incomingMessage;
@@ -383,8 +384,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 model.pair_frame = Integer.valueOf(l[0]);
                 model.pair_x = Integer.valueOf(l[1]);
                 model.pair_y = Integer.valueOf(l[2]);
-            }else  if  (l.length == 1 && l[0].equals("arrived")){
-                System.out.println("___________________________________________________________");
+            }else  if  (l.length > 0 && l[0].equals("arrived")){
                 model.pair_arrive = true;
             }
         }
@@ -433,16 +433,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 if ((GameModel.connectionSuccess || model.pair_arrive) && model.cur_frame == 3) {
                     if (model.key > 0) {
                         model.key--;
-                        if (model.pair_arrive) {
-                            this.drawlose = true;
+                        if (model.pair_arrive && !model.drawwin) {
+                            model.drawlose = true;
                             model.pair_arrive = false;
 
                         } else {
-                            this.drawwin = true;
-                            String s = "arrived";
-                            byte [] temp = s.getBytes();
-                            model.bluetoothConnection.write(temp);
-
+                            model.arrived = true;
+                            model.drawwin = true;
                         }
 
                     }
