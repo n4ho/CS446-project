@@ -18,6 +18,7 @@ public class Protagonist extends Character {
     ArrayList<Bitmap> runRight;
     ArrayList<Bitmap> runLeft;
     ArrayList<Bitmap> climb;
+    Bitmap characterIdel;
 
 
     private int drawIndex;
@@ -29,6 +30,7 @@ public class Protagonist extends Character {
         runRight=new ArrayList<Bitmap>();
         runLeft=new ArrayList<Bitmap>();
         climb=new ArrayList<>();
+        characterIdel = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.jackidle),width,height,false);
 
         if(type == 0){
             idle.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.jackidle),width,height,false));
@@ -91,6 +93,12 @@ public class Protagonist extends Character {
         //this.left++;
 
         super.draw(canvas);
+
+        if (GameModel.connectionSuccess) {
+            if (model.pair_frame == model.cur_frame) {
+                canvas.drawBitmap(characterIdel, model.pair_x, model.pair_y, null);
+            }
+        }
 
         switch (this.state){
             case IDLE: // idle

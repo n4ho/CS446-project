@@ -51,20 +51,25 @@ public class SelectionActivity extends Activity implements Observer{
             }
         });
 
-        for(int i=0;i<levels.size();++i){
-            if(model.max_frame<4){
-                if(i>0){
-                    levels.get(i).setEnabled(false);
-                }
-            }else if(model.max_frame<7){
-                if(i>1){
-                    levels.get(i).setEnabled(false);
-                }
-            }else{
-                // all enabled
+        //enable only the first level if currently pairing with others
+        if (BluetoothActivity.mBluetoothConnection != null) {
+            for (int i = 1; i < levels.size(); i++) {
+                levels.get(i).setEnabled(false);
             }
-
-
+        } else {
+            for(int i=0;i<levels.size();++i){
+                if(model.max_frame<4){
+                    if(i>0){
+                        levels.get(i).setEnabled(false);
+                    }
+                }else if(model.max_frame<7){
+                    if(i>1){
+                        levels.get(i).setEnabled(false);
+                    }
+                }else{
+                    // all enabled
+                }
+            }
         }
 
         levels.get(0).setOnClickListener(new View.OnClickListener() {
@@ -90,6 +95,8 @@ public class SelectionActivity extends Activity implements Observer{
                 //model.cur_frame=7;
             }
         });
+
+
     }
 
     @Override
