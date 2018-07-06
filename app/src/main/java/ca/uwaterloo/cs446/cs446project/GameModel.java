@@ -340,6 +340,18 @@ public class GameModel extends Observable{
         return current_char.size() > 0;
     }
 
+    public ArrayList<Character> getUnselectedChar(){
+        ArrayList<Character> a = new ArrayList<>();
+        int i = 0;
+        for(Character c : characters){
+            if (!current_char.contains(i)){
+                a.add(c);
+            }
+            i++;
+        }
+        return a;
+    }
+
     public void setFrame(int f){
         cur_frame = f;
         for(int i : current_char){

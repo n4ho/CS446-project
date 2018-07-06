@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.support.v4.content.ContextCompat;
@@ -16,6 +17,8 @@ import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 import android.view.ViewStructure;
 import android.widget.Button;
+
+import java.util.ArrayList;
 
 
 /**
@@ -108,7 +111,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                     paint = new Paint();
                     paint.setStyle(Paint.Style.FILL);
                     paint.setColor(Color.WHITE);
-                    canvas.drawCircle(model.getCharacter().left + 35, model.getCharacter().top - 15,10,paint);
+                    Path path = new Path();
+                    path.moveTo(model.getCharacter().left + 25, model.getCharacter().top - 25);
+                    path.lineTo(model.getCharacter().left + 45, model.getCharacter().top - 25);
+                    path.lineTo(model.getCharacter().left + 35,model.getCharacter().top - 5);
+                    path.lineTo(model.getCharacter().left + 25, model.getCharacter().top - 25);
+                    canvas.drawPath(path, paint);
+                    //canvas.drawCircle(model.getCharacter().left + 35, model.getCharacter().top - 15,10,paint);
                 }
 
                 for(UI ui: model.uis){
@@ -363,6 +372,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     public void update(){
+        Boolean spikesensor = false;
+        Boolean sensor = false;
+        Boolean lever = false;
         if (model.haveSelectedCharacter()){
             //model.gravitySwitch(true);
             Rect hitBox=new Rect(model.getCharacter().left,
@@ -424,9 +436,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 model.characterReborn(100, 50, true);
             }
 
-            model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SPIKESENSOR);
-            model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEVER);
-            model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SENSOR);
+            spikesensor = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SPIKESENSOR) == HitType.SPIKESENSOR;
+            lever = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEVER) == HitType.LEVER;
+            sensor = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SENSOR) == HitType.SENSOR;
             boolean ladder = model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER;
             boolean down = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN;
             boolean up = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.UP) == HitType.UP;
@@ -480,6 +492,21 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             }
 
         }
+
+        ArrayList<Character> unselectedChar = model.getUnselectedChar();
+        for(Character c : unselectedChar){
+            Rect hitBox=new Rect(c.left,c.top,c.left+c.width,c.top+c.height);
+            if(lever == false) {
+                lever = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEVER) == HitType.LEVER;
+            }
+            if (spikesensor == false){
+                spikesensor = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SPIKESENSOR) == HitType.SPIKESENSOR;
+            }
+            if (sensor == false){
+                sensor = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SENSOR) == HitType.SENSOR;
+            }
+        }
+
         model.update();
     }
 }
