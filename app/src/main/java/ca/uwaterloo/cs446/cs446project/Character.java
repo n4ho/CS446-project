@@ -175,14 +175,14 @@ public class Character {
             // if character is too far away from center of the screen, do transformation
             if (left > model.structures.get(model.cur_frame).length - 100) {
                 if (model.cur_frame < 9 && model.cur_frame != 3 && model.cur_frame != 6 && model.cur_frame != 9) {
-                    changeFrame(model.cur_frame + 1);
+                    model.setFrame(model.cur_frame + 1);
                     model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true);
                 } else {
                     stopX();
                 }
             } else if (left < 100 && velocityX < 0) {
                 if (model.cur_frame > 0 && model.cur_frame != 4 && model.cur_frame != 7) {
-                    changeFrame(model.cur_frame - 1);
+                    model.setFrame(model.cur_frame - 1);
                     model.characterReborn(model.structures.get(model.cur_frame).endx, model.structures.get(model.cur_frame).endy, false);
                 } else {
                     stopX();
@@ -208,10 +208,4 @@ public class Character {
     public void draw(Canvas canvas){
     }
 
-    public void changeFrame(int f){
-        model.cur_frame = f;
-        for(int i : model.current_char){
-            model.characters.get(i).char_frame = f;
-        }
-    }
 }

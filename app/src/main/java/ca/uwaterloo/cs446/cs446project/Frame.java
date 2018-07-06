@@ -436,7 +436,7 @@ public class Frame {
             background = is.frame1background;
             length = point.x*3;
             startx = 110;
-            starty = point.y-450;
+            starty = point.y-650;
             endx = length - 110;
             endy = point.y - 450;
             src.add(new Rect(0, 0, 400, ground.getHeight()));
@@ -1021,9 +1021,16 @@ public class Frame {
 
     }
 
-    public void draw (Canvas canvas) {
+    public void draw (Canvas canvas, GameModel model) {
 
         canvas.drawBitmap(background, 0, 0, null);
+
+        if(model.cur_frame == 4 && model.rescue_mom == false){
+            canvas.drawBitmap(model.locked_mom,1115,point.y-550,null);
+        }
+        else if(model.cur_frame == 9 && model.rescue_dad == false){
+            canvas.drawBitmap(model.locked_dad,point.x*2-365, 350,null);
+        }
 
         for (PhysicalModel p : floors) {
             if (p instanceof bomb && ((Tool) p).count_down == 0 ) {

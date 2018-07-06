@@ -102,13 +102,10 @@ public class GameModel extends Observable{
             ourInstance.uis.add(ourInstance.inventory);
 
             ourInstance.characters.add(new Protagonist(context, ourInstance, 70, 100,0));
-            ourInstance.characters.add(new Protagonist(context, ourInstance, 70, 100,1));
-            ourInstance.characters.add(new Protagonist(context, ourInstance, 70, 100,2));
             ourInstance.current_char.add(0);
-            ourInstance.current_char.add(1);
-            ourInstance.current_char.add(2);
 
-
+            ourInstance.locked_mom = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.momidle),70,100,false);
+            ourInstance.locked_dad = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.dadidle),70,100,false);
 
             for (int i = 0; i < 10; i++) {
                 ourInstance.structures.add(new Frame(i, point, context));
@@ -212,7 +209,7 @@ public class GameModel extends Observable{
     public ArrayList<UI> uis;
 
     public int cur_frame = 0;
-
+  
     public int curlevel = 0;
     public int max_frame=0;
 
@@ -222,13 +219,19 @@ public class GameModel extends Observable{
     public int trans_y = 0;
     public Inventory inventory;
     public int bomb = 10;
+
     public int magnet = 10;
     public int key = 0 ;
+  
     public boolean useBomb = false;
     public boolean useMagnet = false;
     public boolean go_back = false;
     static public boolean connectionSuccess = false;
 
+    public boolean rescue_mom = false;
+    public boolean rescue_dad = false;
+    public Bitmap locked_mom;
+    public Bitmap locked_dad;
 
     public GameModel(){
 
@@ -270,7 +273,7 @@ public class GameModel extends Observable{
 
 
     public void update(){
-        getCharacter().update();
+        if (haveSelectedCharacter()) getCharacter().update();
 
         for(UI u: uis){
             u.translate(trans_x,trans_y);
@@ -346,8 +349,19 @@ public class GameModel extends Observable{
         return current_char.size() > 0;
     }
 
-    public void unlockCharacter() {
+    public void setFrame(int f){
+        cur_frame = f;
+        for(int i : current_char){
+            characters.get(i).char_frame = f;
+        }
+    }
+
+    public void unlockCharacter(int type) {
         //to be implemented;
+        ourInstance.characters.add(new Protagonist(context, ourInstance, 70, 100,type));
+        ourInstance.current_char.add(type);
+        if (type == 1) rescue_mom = true;
+        if (type == 2) rescue_dad = true;
 
     }
 }

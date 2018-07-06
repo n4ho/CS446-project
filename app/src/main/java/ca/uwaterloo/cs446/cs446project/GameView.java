@@ -101,10 +101,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
                 if (model.structures.size() > model.cur_frame) {
                     Frame temp = model.structures.get(model.cur_frame);
-                    temp.draw(canvas);
+                    temp.draw(canvas,model);
                 }
                 for(Character c: model.characters){
                     if(c.char_frame == model.cur_frame) c.draw(canvas);
+                }
+                if(model.haveSelectedCharacter()){
+                    paint = new Paint();
+                    paint.setStyle(Paint.Style.FILL);
+                    paint.setColor(Color.WHITE);
+                    canvas.drawCircle(model.getCharacter().left + 35, model.getCharacter().top - 15,10,paint);
                 }
 
                 for(UI ui: model.uis){
@@ -159,74 +165,77 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 else {
                     Boolean handled = false;
                     for (UI ui : model.uis) {
-                        if (ui.hitTest(event.getX(), event.getY(), 45)) {
+                        if (ui.hitTest(event.getX(), event.getY(), 30)) {
                             ui.setSelected(true);
                             handled = true;
 
-                            if (ui.name == "LeftButton") {
-                                //System.out.println("left button clicked");
-                                ui.setSelected(true);
-                                if ((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.NULL &&
-                                        (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN || model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) == HitType.LOG_DOWN)) ||
-                                        model.structures.get(model.cur_frame).hitTools(hitBox) == HitType.LADDER) {
-                                    model.left();
-                                } else {
-                                    model.getCharacter().stopX();
-                                }
-                                return true;
-                            } else if (ui.name == "RightButton") {
-                                System.out.println("right button clicked");
-                                ui.setSelected(true);
-                                //check hit log first;
-                                if (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_LEFT) != HitType.NULL) {
-                                    model.getCharacter().pushinglog = true;
-                                } else if ((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) == HitType.NULL &&
-                                        (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN || model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) != HitType.NULL)) ||
-                                        model.structures.get(model.cur_frame).hitTools(hitBox) == HitType.LADDER) {
-                                    model.right();
+                            if(model.haveSelectedCharacter()){
+                                if (ui.name == "LeftButton") {
+                                    //System.out.println("left button clicked");
+                                    ui.setSelected(true);
+                                    if ((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.NULL &&
+                                            (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN || model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) == HitType.LOG_DOWN)) ||
+                                            model.structures.get(model.cur_frame).hitTools(hitBox) == HitType.LADDER) {
+                                        model.left();
+                                    } else {
+                                        model.getCharacter().stopX();
+                                    }
+                                    return true;
+                                } else if (ui.name == "RightButton") {
+                                    System.out.println("right button clicked");
+                                    ui.setSelected(true);
+                                    //check hit log first;
+                                    if (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_LEFT) != HitType.NULL) {
+                                        model.getCharacter().pushinglog = true;
+                                    } else if ((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) == HitType.NULL &&
+                                            (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN || model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) != HitType.NULL)) ||
+                                            model.structures.get(model.cur_frame).hitTools(hitBox) == HitType.LADDER) {
+                                        model.right();
 
-                                } else {
-                                    model.getCharacter().stopX();
-                                }
-                                return true;
-                            } else if (ui.name == "UpButton") {
-                                //System.out.println("up button clicked");
-                                ui.setSelected(true);
-                                if (model.structures.get(model.cur_frame).hitTools(hitBox) == HitType.LADDER) {
-                                    //&&model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN)
-                                    //model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.UP) == HitType.NULL
+                                    } else {
+                                        model.getCharacter().stopX();
+                                    }
+                                    return true;
+                                } else if (ui.name == "UpButton") {
+                                    //System.out.println("up button clicked");
+                                    ui.setSelected(true);
+                                    if (model.structures.get(model.cur_frame).hitTools(hitBox) == HitType.LADDER) {
+                                        //&&model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN)
+                                        //model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.UP) == HitType.NULL
 
-                                    model.up();
-                                    model.getCharacter().climb = true;
-                                } else {
-                                    //System.out.println("hit ceiling");
-                                    model.getCharacter().stopY();
-                                }
-                                return true;
-                            } else if (ui.name == "DownButton") {
-                                //System.out.println("down button clicked");
-                                ui.setSelected(true);
-                                if (model.structures.get(model.cur_frame).hitTools(hitBox) == HitType.LADDER) {
-                                    //model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.NULL
-                                    model.down();
-                                    model.getCharacter().climb = true;
-                                } else {
-                                    //System.out.println("hit floor");
-                                    model.getCharacter().stopY();
-                                }
+                                        model.up();
+                                        model.getCharacter().climb = true;
+                                    } else {
+                                        //System.out.println("hit ceiling");
+                                        model.getCharacter().stopY();
+                                    }
+                                    return true;
+                                } else if (ui.name == "DownButton") {
+                                    //System.out.println("down button clicked");
+                                    ui.setSelected(true);
+                                    if (model.structures.get(model.cur_frame).hitTools(hitBox) == HitType.LADDER) {
+                                        //model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.NULL
+                                        model.down();
+                                        model.getCharacter().climb = true;
+                                    } else {
+                                        //System.out.println("hit floor");
+                                        model.getCharacter().stopY();
+                                    }
 
-                                return true;
-                            } else if (ui.name == "JumpButton") {
-                                System.out.println("jump button clicked");
-                                ui.setSelected(true);
-                                if (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN ||
-                                        model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) == HitType.LOG_DOWN) {
-                                    model.jump();
-                                    model.getCharacter().jump = true;
-                                }
+                                    return true;
+                                } else if (ui.name == "JumpButton") {
+                                    System.out.println("jump button clicked");
+                                    ui.setSelected(true);
+                                    if (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN ||
+                                            model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) == HitType.LOG_DOWN) {
+                                        model.jump();
+                                        model.getCharacter().jump = true;
+                                    }
 
-                                return true;
-                            } else if (ui.name == "Backpack") {
+                                    return true;
+                                }
+                            }
+                            if (ui.name == "Backpack") {
                                 //System.out.println("backpack clicked");
                                 ui.setSelected(true);
                                 model.inventory.animation();
@@ -237,8 +246,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             }
 
                         }
+                    }
 
-                        if (handled) break;
+                    if (!handled) {
                         if (model.useBomb) {
                             model.structures.get(model.cur_frame).useBomb((int) event.getX() - model.trans_x, (int) event.getY());
                             model.useBomb = false;
@@ -252,6 +262,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             break;
                         }
                     }
+
                     for (int i = 0; i < model.characters.size(); i++) {
                         if (model.characters.get(i).hitTest(event.getX() - model.trans_x, event.getY() - model.trans_y, 0) == true &&
                                 model.characters.get(i).char_frame == model.cur_frame) {
@@ -269,20 +280,22 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
             case MotionEvent.ACTION_POINTER_DOWN:
                 pointerIndex ++;
-
-                for(UI ui: model.uis){
-                    if(ui.hitTest(event.getX(pointerIndex), event.getY(pointerIndex),90)){
-                        ui.setSelected(true);
-                        if(ui.name=="JumpButton"){
-                            System.out.println("jump button clicked in multi touch");
+            
+                if(model.haveSelectedCharacter()){
+                    for(UI ui: model.uis){
+                        if(ui.hitTest(event.getX(pointerIndex), event.getY(pointerIndex),90)){
                             ui.setSelected(true);
-                            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN ||
-                                    model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) == HitType.LOG_DOWN) {
-                                model.jump();
-                                model.getCharacter().jump=true;
-                            }
+                            if(ui.name=="JumpButton"){
+                                System.out.println("jump button clicked in multi touch");
+                                ui.setSelected(true);
+                                if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN ||
+                                        model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) == HitType.LOG_DOWN) {
+                                    model.jump();
+                                    model.getCharacter().jump=true;
+                                }
 
-                            return true;
+                                return true;
+                            }
                         }
                     }
                 }
@@ -290,13 +303,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
             case MotionEvent.ACTION_POINTER_UP:
                 //System.out.println("multi touch release");
-                for(UI ui: model.uis) {
-                    if (ui.selected) {
-                        if (ui.name == "JumpButton") {
-                            System.out.println("jump button released");
-                            ui.setSelected(false);
-                            model.getCharacter().jump = false;
-                            return true;
+                if(model.haveSelectedCharacter()){
+                    for(UI ui: model.uis) {
+                        if (ui.selected) {
+                            if (ui.name == "JumpButton") {
+                                System.out.println("jump button released");
+                                ui.setSelected(false);
+                                model.getCharacter().jump = false;
+                                return true;
+                            }
                         }
                     }
                 }
@@ -306,47 +321,49 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 System.out.println("action up");
                 for(UI ui: model.uis) {
                     if (ui.selected) {
+                        if(model.haveSelectedCharacter()){
+                            if (ui.name == "LeftButton") {
+                                System.out.println("left button released");
+                                ui.setSelected(false);
+                                // if character in air, dont stop
+                                System.out.println("stop from 4");
+                                model.getCharacter().stopX();
+                                //model.characters.get(0).state=0;
+                                model.getCharacter().pushinglog = false;
+                                return true;
+                            } else if (ui.name == "RightButton") {
+                                System.out.println("right button released");
+                                ui.setSelected(false);
+                                //model.right_release();
+                                System.out.println("stop from 3");
+                                model.getCharacter().stopX();
+                                // stop pushing log
+                                model.getCharacter().pushinglog = false;
+                                //model.characters.get(0).state=0;
+                                return true;
+                            } else if (ui.name == "UpButton") {
+                                System.out.println("up button released");
+                                ui.setSelected(false);
+                                model.getCharacter().stopY();
+                                model.getCharacter().climb = false;
+                                //model.characters.get(0).state=0;
+                                return true;
+                            } else if (ui.name == "DownButton") {
+                                System.out.println("down button released");
+                                ui.setSelected(false);
+                                model.getCharacter().stopY();
+                                model.getCharacter().climb = false;
+                                //model.characters.get(0).state=0;
+                                return true;
+                            } else if (ui.name == "JumpButton") {
+                                System.out.println("jump button released");
+                                ui.setSelected(false);
+                                model.getCharacter().jump = false;
 
-                        if (ui.name == "LeftButton") {
-                            System.out.println("left button released");
-                            ui.setSelected(false);
-                            // if character in air, dont stop
-                            System.out.println("stop from 4");
-                            model.getCharacter().stopX();
-                            //model.characters.get(0).state=0;
-                            model.getCharacter().pushinglog = false;
-                            return true;
-                        } else if (ui.name == "RightButton") {
-                            System.out.println("right button released");
-                            ui.setSelected(false);
-                            //model.right_release();
-                            System.out.println("stop from 3");
-                            model.getCharacter().stopX();
-                            // stop pushing log
-                            model.getCharacter().pushinglog = false;
-                            //model.characters.get(0).state=0;
-                            return true;
-                        } else if (ui.name == "UpButton") {
-                            System.out.println("up button released");
-                            ui.setSelected(false);
-                            model.getCharacter().stopY();
-                            model.getCharacter().climb = false;
-                            //model.characters.get(0).state=0;
-                            return true;
-                        } else if (ui.name == "DownButton") {
-                            System.out.println("down button released");
-                            ui.setSelected(false);
-                            model.getCharacter().stopY();
-                            model.getCharacter().climb = false;
-                            //model.characters.get(0).state=0;
-                            return true;
-                        } else if (ui.name == "JumpButton") {
-                            System.out.println("jump button released");
-                            ui.setSelected(false);
-                            model.getCharacter().jump = false;
-
-                            return true;
-                        }else if(ui.name == "Backpack"){
+                                return true;
+                            }
+                        }
+                        if(ui.name == "Backpack"){
                             System.out.println("backpack released");
                             ui.setSelected(false);
                             // do something
@@ -415,21 +432,23 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             }
 
             if (hittool == HitType.CAGE) {
-                if (model.cur_frame == 4 && cageonelock == true || model.cur_frame == 9 && cagetwolock == true) {
+                if (model.cur_frame == 4 && cageonelock == true ) {
                     if (model.key > 0) {
                         model.key--;
-                        model.unlockCharacter();
-                        if (model.cur_frame == 4) {
-                            cageonelock = false;
-                        } else {
-                            cagetwolock = false;
-                        }
+                        model.unlockCharacter(1);
+                        cageonelock = false;
+                    }
+                }
+                else if(model.cur_frame == 9 && cagetwolock == true){
+                    if (model.key > 0) {
+                        model.key--;
+                        model.unlockCharacter(2);
+                        cagetwolock = false;
                     }
                 }
             }
 
             if (hittool == HitType.DOOR) {
-
                 if ((GameModel.connectionSuccess || model.pair_arrive) && model.cur_frame == 3) {
                     if (model.key > 0) {
                         model.key--;
@@ -441,7 +460,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             model.arrived = true;
                             model.drawwin = true;
                         }
-
                     }
                 }
                 else {
@@ -473,49 +491,52 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             boolean logdown = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) == HitType.LOG_DOWN;
             boolean logleft = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_LEFT) == HitType.LOG_LEFT;
 
-            // down or on log, not jump, not ladder
-            if ((down || logdown) && model.getCharacter().jump && model.getCharacter().velocityY > 0) {
-                model.getCharacter().jump = false;
-                model.gravitySwitch(false);
-                model.getCharacter().stopY();
+            if (model.haveSelectedCharacter()){
+                // down or on log, not jump, not ladder
+                if ((down || logdown) && model.getCharacter().jump && model.getCharacter().velocityY > 0) {
+                    model.getCharacter().jump = false;
+                    model.gravitySwitch(false);
+                    model.getCharacter().stopY();
+                }
+
+                if((down || logdown) && !model.getCharacter().jump && !ladder) {
+                    model.gravitySwitch(false);
+                    model.getCharacter().stopY();
+                    if (down) model.getCharacter().setY(model.structures.get(model.cur_frame).floorHeight - model.getCharacter().height + 5);
+
+
+                }else if (!ladder){
+                    model.gravitySwitch(true);
+                }
+
+                if(ladder){
+                    model.gravitySwitch(false);
+                    if(!model.getCharacter().climb) model.getCharacter().stopY();
+                }
+
+
+                // ceiling
+                if(up && !ladder){
+                    if (model.getCharacter().velocityY < 0 )model.getCharacter().stopY();
+                    System.out.println("hit ceiling");
+                    model.gravitySwitch(true);
+                }
+
+                if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT)==HitType.LEFT
+                        &&model.getCharacter().state==MoveType.LEFT){
+                    model.getCharacter().stopX();
+                }
+
+                if (logleft && model.getCharacter().velocityX > 0) {
+                    model.getCharacter().pushinglog = true;
+                }
+
+                if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT)==HitType.RIGHT
+                        &&model.getCharacter().state==MoveType.RIGHT){
+                    model.getCharacter().stopX();
+                }
             }
 
-            if((down || logdown) && !model.getCharacter().jump && !ladder) {
-                model.gravitySwitch(false);
-                model.getCharacter().stopY();
-                if (down) model.getCharacter().setY(model.structures.get(model.cur_frame).floorHeight - model.getCharacter().height + 5);
-
-
-            }else if (!ladder){
-                model.gravitySwitch(true);
-            }
-
-            if(ladder){
-                model.gravitySwitch(false);
-                if(!model.getCharacter().climb) model.getCharacter().stopY();
-            }
-
-
-            // ceiling
-            if(up && !ladder){
-                if (model.getCharacter().velocityY < 0 )model.getCharacter().stopY();
-                System.out.println("hit ceiling");
-                model.gravitySwitch(true);
-            }
-
-            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT)==HitType.LEFT
-                    &&model.getCharacter().state==MoveType.LEFT){
-                model.getCharacter().stopX();
-            }
-
-            if (logleft && model.getCharacter().velocityX > 0) {
-                model.getCharacter().pushinglog = true;
-            }
-
-            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT)==HitType.RIGHT
-                    &&model.getCharacter().state==MoveType.RIGHT){
-                model.getCharacter().stopX();
-            }
         }
         model.update();
     }
