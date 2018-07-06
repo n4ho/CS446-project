@@ -22,6 +22,7 @@ public class MainActivity extends Activity implements Observer{
     Button creditButton;
     Button optionButton;
     Button scoreButton;
+    Button bluetoothButton;
 
     GameModel model;
 
@@ -39,6 +40,8 @@ public class MainActivity extends Activity implements Observer{
         optionButton=(Button)findViewById(R.id.option);
         creditButton=(Button)findViewById(R.id.credit);
         scoreButton=(Button)findViewById(R.id.score);
+        bluetoothButton=(Button)findViewById(R.id.bluetooth);
+
 
         model= GameModel.getInstance();
         GameModel.setInstance(this, getWindowManager().getDefaultDisplay(), 60, false);
@@ -61,6 +64,13 @@ public class MainActivity extends Activity implements Observer{
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, ScoreActivity.class));
+            }
+        });
+
+        bluetoothButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, BluetoothActivity.class));
             }
         });
 

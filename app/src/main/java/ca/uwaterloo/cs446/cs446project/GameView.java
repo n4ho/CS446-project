@@ -92,7 +92,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             if (drawbegin) {
                 drawbegin = model.structures.get(model.cur_frame).drawBegin(canvas, p.x, p.y);
             }
-            else if (drawend) {
+            else if (drawend && GameModel.connectionSuccess == false) {
                 drawend = model.structures.get(model.cur_frame - 1).drawEnd(canvas, p.x, p.y);
                 if (drawend == false && model.cur_frame == 9) {
                     model.go_back = true;
@@ -100,6 +100,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             } else if (drawconver) {
                 drawconver = model.structures.get(model.cur_frame).drawConver(canvas, p.x, p.y);
             } else {
+
+
                 if (model.structures.size() > model.cur_frame) {
                     Frame temp = model.structures.get(model.cur_frame);
                     temp.draw(canvas,model);
@@ -122,6 +124,23 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
                 for(UI ui: model.uis){
                     ui.draw(canvas);
+                }
+
+                String s = "";
+                if (model.drawwin) {
+                    s = "YOU WIN!!!";
+                    Paint p1 = new Paint();
+                    p1.setTextSize(200);
+                    p1.setStyle(Paint.Style.FILL);
+                    p1.setColor(Color.WHITE);
+                    canvas.drawText(s, p.x/4-model.trans_x, p.y/2, p1);
+                } else if (model.drawlose) {
+                    s = "YOU LOSE!!!";
+                    Paint p1 = new Paint();
+                    p1.setTextSize(200);
+                    p1.setStyle(Paint.Style.FILL);
+                    p1.setColor(Color.WHITE);
+                    canvas.drawText(s, p.x / 4 - model.trans_x, p.y / 2, p1);
                 }
             }
             //model.optionalDraw(0, canvas); draw ui
@@ -270,10 +289,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
             case MotionEvent.ACTION_POINTER_DOWN:
                 pointerIndex ++;
-                /*System.out.println("multi touch, index = " + pointerIndex);
-                System.out.println("Event (X,Y) = " + event.getX(pointerIndex) + ", " + event.getY(pointerIndex));
-                System.out.println("Jump  (X,Y) = " + model.getUI("JumpButton").x + ", " + model.getUI("JumpButton").y);
-*/
+            
                 if(model.haveSelectedCharacter()){
                     for(UI ui: model.uis){
                         if(ui.hitTest(event.getX(pointerIndex), event.getY(pointerIndex),90)){
@@ -372,9 +388,37 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     public void update(){
+
         Boolean spikesensor = false;
         Boolean sensor = false;
         Boolean lever = false;
+
+        //check if bluetooth mode is on
+        if(GameModel.connectionSuccess && model.bluetoothConnection != null) {
+            //send data
+            if (model.arrived == false) {
+                String s = model.cur_frame + " " + model.getCharacter().left + " " + model.getCharacter().top;
+                byte [] temp = s.getBytes();
+                model.bluetoothConnection.write(temp);
+            }
+            else {
+                String s = "arrived";
+                byte [] temp = s.getBytes();
+                model.bluetoothConnection.write(temp);
+            }
+
+            //get data
+            String r = model.bluetoothConnection.incomingMessage;
+            String [] l = r.split(" ");
+            if (l.length == 3) {
+                model.pair_frame = Integer.valueOf(l[0]);
+                model.pair_x = Integer.valueOf(l[1]);
+                model.pair_y = Integer.valueOf(l[2]);
+            }else  if  (l.length > 0 && l[0].equals("arrived")){
+                model.pair_arrive = true;
+            }
+        }
+
         if (model.haveSelectedCharacter()){
             //model.gravitySwitch(true);
             Rect hitBox=new Rect(model.getCharacter().left,
@@ -418,17 +462,32 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             }
 
             if (hittool == HitType.DOOR) {
-                if (model.key > 0) {
-                    model.curlevel ++; model.key --;
+                if ((GameModel.connectionSuccess || model.pair_arrive) && model.cur_frame == 3) {
+                    if (model.key > 0) {
+                        model.key--;
+                        if (model.pair_arrive && !model.drawwin) {
+                            model.drawlose = true;
+                            model.pair_arrive = false;
 
-                    if (model.cur_frame < 9) {
-                        model.setFrame(model.cur_frame + 1);
-                        model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true);
+                        } else {
+                            model.arrived = true;
+                            model.drawwin = true;
+                        }
                     }
-                    else {
-                        model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true);
+                }
+                else {
+                    if (model.key > 0) {
+                        model.curlevel++;
+                        model.key--;
+
+                        if (model.cur_frame < 9) {
+                            model.cur_frame++;
+                            model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true);
+                        } else {
+                            model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true);
+                        }
+                        this.drawend = true;
                     }
-                    this.drawend = true;
                 }
             }
 
