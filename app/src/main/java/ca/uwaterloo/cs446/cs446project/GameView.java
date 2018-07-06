@@ -12,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.Display;
 import android.support.v4.view.GestureDetectorCompat;
 import android.view.GestureDetector;
+import android.view.InputDevice;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
@@ -19,6 +20,8 @@ import android.view.ViewStructure;
 import android.widget.Button;
 
 import java.util.ArrayList;
+
+import static android.view.MotionEvent.AXIS_HSCROLL;
 
 
 /**
@@ -149,6 +152,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         }
     }
 
+    boolean isScroll = false;
+    float startX = 0;
+    float scrollx = 0;
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int pointerIndex = 0;
@@ -160,10 +167,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                     model.getCharacter().top+model.getCharacter().height);
         }
 
-        switch (event.getAction() & MotionEvent.ACTION_MASK){
+        switch (event.getAction() & MotionEvent.ACTION_MASK & event.getActionMasked()){
             case MotionEvent.ACTION_DOWN:
+                isScroll = true;
 
                 if (drawbegin || drawend || drawconver) {
+                    isScroll = false;
                     if (drawend) {
                         model.structures.get(model.cur_frame-1).d.skipOne();
                     } else {
@@ -177,6 +186,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                         if (ui.hitTest(event.getX(), event.getY(), 30)) {
                             ui.setSelected(true);
                             handled = true;
+                            isScroll = false;
 
                             if(model.haveSelectedCharacter()){
                                 if (ui.name == "LeftButton") {
@@ -252,6 +262,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
                             } else if (ui.name == "Inventory") {
                                 model.inventory.clicked(event.getX());
+                                return true;
                             }
 
                         }
@@ -262,12 +273,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             model.structures.get(model.cur_frame).useBomb((int) event.getX() - model.trans_x, (int) event.getY());
                             model.useBomb = false;
                             model.bomb--;
+                            isScroll = false;
                             break;
                         }
                         if (model.useMagnet) {
                             model.structures.get(model.cur_frame).useMagnet((int) event.getX() - model.trans_x, (int) event.getY());
                             model.useMagnet = false;
                             model.magnet--;
+                            isScroll = false;
                             break;
                         }
                     }
@@ -280,8 +293,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             } else {
                                 model.current_char.add(i);
                             }
+                            isScroll = false;
                             break;
                         }
+                    }
+
+                    if (isScroll = true){
+                        startX = event.getX() - model.trans_x;
+                        return true;
                     }
 
                 }
@@ -379,13 +398,22 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             return true;
                         }
                     }
-
+                    if(isScroll){
+                        scrollx = event.getX() - model.trans_x - startX;
+                        if(scrollx > 50) model.trans_x += 300;
+                        else if (scrollx < -50) model.trans_x += -300;
+                        if (model.trans_x < -model.point.x *2) model.trans_x = -model.point.x*2;
+                        else if (model.trans_x > 0) model.trans_x = 0;
+                    }
                 }
+                return true;
+
             default:
                 break;
         }
         return super.onTouchEvent(event);
     }
+
 
     public void update(){
 

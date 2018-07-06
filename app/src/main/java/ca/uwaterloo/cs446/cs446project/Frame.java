@@ -647,7 +647,7 @@ public class Frame {
             ArrayList<Rect> spike_src = new ArrayList<>();
             ArrayList<Rect> spike_dest = new ArrayList<>();
             spike_src.add(new Rect(0,0,spike_up.getWidth(), spike_up.getHeight()));
-            spike_dest.add(new Rect (1300, point.y - 250, point.x+300, point.y-190));
+            spike_dest.add(new Rect (1400, point.y - 250, point.x+300, point.y-190));
             floors.add(new spike(context, spike_up, spike_src, spike_dest));
 
             //adding wraith
