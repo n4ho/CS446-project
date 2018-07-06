@@ -420,6 +420,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         Boolean spikesensor = false;
         Boolean sensor = false;
         Boolean lever = false;
+        int spikesensorOffset = 1;
+        int sensorOffset = 1;
+        int leverOffset = 1;
 
         //check if bluetooth mode is on
         if(GameModel.connectionSuccess && model.bluetoothConnection != null) {
@@ -509,7 +512,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                         model.key--;
 
                         if (model.cur_frame < 9) {
-                            model.cur_frame++;
+                            model.setFrame(model.cur_frame + 1);
                             model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true);
                         } else {
                             model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true);
@@ -526,6 +529,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             spikesensor = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SPIKESENSOR) == HitType.SPIKESENSOR;
             lever = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEVER) == HitType.LEVER;
             sensor = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SENSOR) == HitType.SENSOR;
+            if(!spikesensor) spikesensorOffset++;
+            if(!sensor) sensorOffset++;
+            if(!lever) leverOffset++;
             boolean ladder = model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER;
             boolean down = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN;
             boolean up = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.UP) == HitType.UP;
@@ -584,14 +590,32 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         for(Character c : unselectedChar){
             Rect hitBox=new Rect(c.left,c.top,c.left+c.width,c.top+c.height);
             if(lever == false) {
-                lever = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEVER) == HitType.LEVER;
+                if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEVER) == HitType.LEVER){
+                    lever = true;
+                    for(int  i = 1; i < leverOffset; i++){
+                        model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEVER);
+                    }
+                }
             }
             if (spikesensor == false){
-                spikesensor = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SPIKESENSOR) == HitType.SPIKESENSOR;
+                if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SPIKESENSOR) == HitType.SPIKESENSOR){
+                    spikesensor = true;
+                    for(int i = 1; i < spikesensorOffset; i++){
+                        model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SPIKESENSOR);
+                    }
+                }
             }
             if (sensor == false){
-                sensor = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SENSOR) == HitType.SENSOR;
+                if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SENSOR) == HitType.SENSOR){
+                    sensor = true;
+                    for (int i = 1; i < sensorOffset; i++){
+                        model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SENSOR);
+                    }
+                }
             }
+            if(!spikesensor) spikesensorOffset++;
+            if(!sensor) sensorOffset++;
+            if(!lever) leverOffset++;
         }
 
         model.update();
