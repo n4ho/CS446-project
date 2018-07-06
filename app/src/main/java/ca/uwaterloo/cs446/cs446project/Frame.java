@@ -624,7 +624,7 @@ public class Frame {
             //adding sensor
             ArrayList<Rect> sensor_src = new ArrayList<>();
             ArrayList<Rect> sensor_dest = new ArrayList<>();
-            sensor_dest.add(new Rect(200, point.y-240, 270, point.y-200));
+            sensor_dest.add(new Rect(400, point.y-240, 470, point.y-200));
             sensor_dest.add(new Rect(1100, point.y-640, 1170, point.y-600));
             floors.add(new Sensor(context, null, sensor_src, sensor_dest, f));
 
@@ -649,10 +649,6 @@ public class Frame {
             spike_src.add(new Rect(0,0,spike_up.getWidth(), spike_up.getHeight()));
             spike_dest.add(new Rect (1300, point.y - 250, point.x+300, point.y-190));
             floors.add(new spike(context, spike_up, spike_src, spike_dest));
-
-
-            src.add(new Rect(0, 0, 300, ground.getHeight()));
-            dest.add(new Rect(700, point.y - 600, 1200, point.y - 530));
 
             //adding wraith
             ArrayList<Rect> wraith_src1 = new ArrayList<>();
