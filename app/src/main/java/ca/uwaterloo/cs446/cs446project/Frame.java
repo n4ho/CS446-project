@@ -433,7 +433,7 @@ public class Frame {
 
         else if (num == 4) {
 
-            background = is.frame1background;
+            background = is.frame2background;
             length = point.x*3;
             startx = 110;
             starty = point.y-650;
@@ -468,11 +468,11 @@ public class Frame {
             water_dest.add(new Rect(point.x+250, point.y - 300, 2*point.x - 300, point.y));
 
             //adding falling spike
-            /*ArrayList<Rect> spike_src = new ArrayList<>();
+            ArrayList<Rect> spike_src = new ArrayList<>();
             ArrayList<Rect> spike_dest = new ArrayList<>();
             spike_src.add(new Rect (0, 0, fallingSpike.getWidth(), fallingSpike.getHeight()));
             spike_dest.add( new Rect (point.x+250, 0, 2*point.x-300, 40));
-            floors.add(new fallingSpike(context,fallingSpike,spike_src,spike_dest, 10, point.x+250,2*point.x-300,0, 10));*/
+            floors.add(new fallingSpike(context,fallingSpike,spike_src,spike_dest, 10, point.x+250,2*point.x-300,0, 10));
 
             src.add(new Rect(0, 0, 400, ground.getHeight()));
             dest.add(new Rect(2*point.x+1100, point.y - 500, 3*point.x, point.y));
@@ -493,7 +493,7 @@ public class Frame {
         }
 
         else if (num == 5) {
-            background = is.frame1background;
+            background = is.frame2background;
             length = point.x*3;
             startx = 110;
             starty = point.y-750;
@@ -600,7 +600,7 @@ public class Frame {
 
         else if (num == 6) {
             //with mom
-            background = is.frame1background;
+            background = is.frame2background;
             length = point.x*3;
             startx = 110;
             starty = point.y-250;
@@ -655,7 +655,7 @@ public class Frame {
             ArrayList<Rect> spike_src = new ArrayList<>();
             ArrayList<Rect> spike_dest = new ArrayList<>();
             spike_src.add(new Rect(0,0,spike_up.getWidth(), spike_up.getHeight()));
-            spike_dest.add(new Rect (1400, point.y - 250, point.x+300, point.y-190));
+            spike_dest.add(new Rect (1400, point.y - 250, point.x+240, point.y-190));
             floors.add(new spike(context, spike_up, spike_src, spike_dest));
 
             //adding wraith
@@ -693,7 +693,7 @@ public class Frame {
             ArrayList<Rect> sensor_src3 = new ArrayList<>();
             ArrayList<Rect> sensor_dest3 = new ArrayList<>();
             sensor_dest3.add(new Rect(2*point.x+100, 260, 2*point.x+170, 300));
-            sensor_dest3.add(new Rect(3*point.x-420, point.y-240, 3*point.x-350, point.y-200));
+            sensor_dest3.add(new Rect(point.x+1200, point.y-740, point.x+1270, point.y-700));
             floors.add(new Sensor(context, null, sensor_src3, sensor_dest3, f3));
 
             //adding key
@@ -721,7 +721,7 @@ public class Frame {
         }
 
         else if (num == 7) {
-            background = is.frame1background;
+            background = is.frame3background;
             length = point.x*3;
             startx = 110;
             starty = 0;
@@ -813,7 +813,7 @@ public class Frame {
         }
 
         else if (num == 8) {
-            background = is.frame1background;
+            background = is.frame3background;
             length = point.x*3;
             startx = 110;
             starty = point.y-750;
@@ -879,7 +879,7 @@ public class Frame {
             floors.add(new fallingSpike(context,fallingSpike,spike_src1,spike_dest1, 2, point.x+1300,2*point.x, 0, 200));
 
             //adding spike
-            /*ArrayList<Rect> spikesrc1 = new ArrayList<>();
+            ArrayList<Rect> spikesrc1 = new ArrayList<>();
             ArrayList<Rect> spikedest1 = new ArrayList<>();
             spikesrc1.add(new Rect(0, 0, spike_up.getWidth(), spike_up.getHeight()));
             spikedest1.add(new Rect(point.x+400, point.y-250, point.x+700,point.y-180));
@@ -897,7 +897,7 @@ public class Frame {
             sensordest1.add(new Rect(point.x+1400, point.y-240, point.x+1470, point.y-200));
             ArrayList<spike> spikes = new ArrayList<>();
             spikes.add(s);
-            floors.add(new SpikeSensor(context, ground, sensorsrc1, sensordest1, spikes));*/
+            floors.add(new SpikeSensor(context, ground, sensorsrc1, sensordest1, spikes));
 
             src.add(new Rect(0, 0, 300, ground.getHeight()));
             dest.add(new Rect(point.x*2+300,point.y-450, point.x*2+600, point.y-400));
@@ -942,7 +942,7 @@ public class Frame {
         }
 
         else if (num == 9) {
-            background = is.frame1background;
+            background = is.frame3background;
             length = point.x*3;
             startx = 110;
             starty = point.y-750;
@@ -992,11 +992,11 @@ public class Frame {
             floors.add(new cage(context, cage, cage_src, cage_dest, 5, 0, point.y-800));
 
             //adding following spike
-            /*ArrayList<Rect> spike_src = new ArrayList<>();
+            ArrayList<Rect> spike_src = new ArrayList<>();
             ArrayList<Rect> spike_dest = new ArrayList<>();
             spike_src.add(new Rect (0, 0, fallingSpike.getWidth(), fallingSpike.getHeight()));
             spike_dest.add( new Rect (1500, point.y-750, 1540, point.y-710));
-            floors.add(new fallingSpike(context,fallingSpike,spike_src,spike_dest, 10, 1500,point.x*2,point.y-750, 10));*/
+            floors.add(new fallingSpike(context,fallingSpike,spike_src,spike_dest, 10, 1500,point.x*2,point.y-750, 10));
 
             //adding wraith
             ArrayList<Rect> wraith_src = new ArrayList<>();

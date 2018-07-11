@@ -39,7 +39,7 @@ public class MainActivity extends Activity implements Observer{
         startButton=(Button)findViewById(R.id.start);
         optionButton=(Button)findViewById(R.id.option);
         creditButton=(Button)findViewById(R.id.credit);
-        //scoreButton=(Button)findViewById(R.id.score);
+
         bluetoothButton=(Button)findViewById(R.id.bluetooth);
 
 
@@ -61,13 +61,6 @@ public class MainActivity extends Activity implements Observer{
                 finish();
             }
         });
-
-//        scoreButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(MainActivity.this, ScoreActivity.class));
-//            }
-//        });
 
         bluetoothButton.setOnClickListener(new View.OnClickListener() {
             @Override

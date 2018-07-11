@@ -32,10 +32,8 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
     static public BluetoothConnectionService mBluetoothConnection = null;
 
     Button btnStartConnection;
-    Button btnSend;
     Button back;
 
-    EditText etSend;
 
     private static final UUID MY_UUID_INSECURE =
             UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
@@ -188,8 +186,6 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
         mBTDevices = new ArrayList<>();
 
         btnStartConnection = (Button) findViewById(R.id.btnStartConnection);
-        btnSend = (Button) findViewById(R.id.btnSend);
-        etSend = (EditText) findViewById(R.id.editText);
         back = (Button) findViewById(R.id.btnback);
 
         //Broadcasts when bond state changes (ie:pairing)
@@ -213,14 +209,6 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
             @Override
             public void onClick(View view) {
                 startConnection();
-            }
-        });
-
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                byte[] bytes = etSend.getText().toString().getBytes(Charset.defaultCharset());
-                mBluetoothConnection.write(bytes);
             }
         });
 

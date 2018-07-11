@@ -3,6 +3,7 @@ package ca.uwaterloo.cs446.cs446project;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -51,32 +52,31 @@ public class SelectionActivity extends Activity implements Observer{
             }
         });
 
-        //enable only the first level if currently pairing with others
-        if (BluetoothActivity.mBluetoothConnection != null) {
-            for (int i = 1; i < levels.size(); i++) {
-                levels.get(i).setEnabled(false);
+            for (int i = 0; i < levels.size(); i++) {
+                levels.get(i).setEnabled(true);
             }
-        } else {
-            for(int i=0;i<levels.size();++i){
-                if(model.max_frame<4){
-                    if(i>0){
-                        levels.get(i).setEnabled(false);
-                    }
-                }else if(model.max_frame<7){
-                    if(i>1){
-                        levels.get(i).setEnabled(false);
-                    }
-                }else{
-                    // all enabled
-                }
-            }
+
+            levels.get(0).setBackground(getResources().getDrawable(R.drawable.level1_screenshot));
+        levels.get(1).setBackground(getResources().getDrawable(R.drawable.level2_screenshot));
+        levels.get(2).setBackground(getResources().getDrawable(R.drawable.leve3_screenshot));
+        model.max_frame = 4;
+        if (model.max_frame < 7) {
+            levels.get(2).setEnabled(false);
+            levels.get(2).setBackground(null);
+            levels.get(2).setText("III");
+        }
+        if (model.max_frame < 4) {
+            levels.get(1).setEnabled(false);
+            levels.get(1).setBackground(null);
+            levels.get(1).setText("II");
         }
 
         levels.get(0).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SelectionActivity.this, GameActivity.class));
-                 //   model.cur_frame=0;
+                   model.cur_frame=0;
+                   finish();
             }
         });
 
@@ -84,7 +84,8 @@ public class SelectionActivity extends Activity implements Observer{
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SelectionActivity.this, GameActivity.class));
-               // model.cur_frame=4;
+                model.cur_frame=4;
+                finish();
             }
         });
 
@@ -92,7 +93,8 @@ public class SelectionActivity extends Activity implements Observer{
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SelectionActivity.this, GameActivity.class));
-                //model.cur_frame=7;
+                model.cur_frame=7;
+                finish();
             }
         });
 
