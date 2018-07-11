@@ -5,17 +5,23 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.support.v4.content.ContextCompat;
 import android.view.Display;
 import android.support.v4.view.GestureDetectorCompat;
 import android.view.GestureDetector;
+import android.view.InputDevice;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 import android.view.ViewStructure;
 import android.widget.Button;
+
+import java.util.ArrayList;
+
+import static android.view.MotionEvent.AXIS_HSCROLL;
 
 
 /**
@@ -110,7 +116,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                     paint = new Paint();
                     paint.setStyle(Paint.Style.FILL);
                     paint.setColor(Color.WHITE);
-                    canvas.drawCircle(model.getCharacter().left + 35, model.getCharacter().top - 15,10,paint);
+                    Path path = new Path();
+                    path.moveTo(model.getCharacter().left + 25, model.getCharacter().top - 25);
+                    path.lineTo(model.getCharacter().left + 45, model.getCharacter().top - 25);
+                    path.lineTo(model.getCharacter().left + 35,model.getCharacter().top - 5);
+                    path.lineTo(model.getCharacter().left + 25, model.getCharacter().top - 25);
+                    canvas.drawPath(path, paint);
+                    //canvas.drawCircle(model.getCharacter().left + 35, model.getCharacter().top - 15,10,paint);
                 }
 
                 for(UI ui: model.uis){
@@ -140,6 +152,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         }
     }
 
+    boolean isScroll = false;
+    float startX = 0;
+    float scrollx = 0;
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int pointerIndex = 0;
@@ -151,10 +167,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                     model.getCharacter().top+model.getCharacter().height);
         }
 
-        switch (event.getAction() & MotionEvent.ACTION_MASK){
+        switch (event.getAction() & MotionEvent.ACTION_MASK & event.getActionMasked()){
             case MotionEvent.ACTION_DOWN:
+                isScroll = true;
 
                 if (drawbegin || drawend || drawconver) {
+                    isScroll = false;
                     if (drawend) {
                         model.structures.get(model.cur_frame-1).d.skipOne();
                     } else {
@@ -168,6 +186,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                         if (ui.hitTest(event.getX(), event.getY(), 30)) {
                             ui.setSelected(true);
                             handled = true;
+                            isScroll = false;
 
                             if(model.haveSelectedCharacter()){
                                 if (ui.name == "LeftButton") {
@@ -243,6 +262,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
                             } else if (ui.name == "Inventory") {
                                 model.inventory.clicked(event.getX());
+                                return true;
                             }
 
                         }
@@ -253,12 +273,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             model.structures.get(model.cur_frame).useBomb((int) event.getX() - model.trans_x, (int) event.getY());
                             model.useBomb = false;
                             model.bomb--;
+                            isScroll = false;
                             break;
                         }
                         if (model.useMagnet) {
                             model.structures.get(model.cur_frame).useMagnet((int) event.getX() - model.trans_x, (int) event.getY());
                             model.useMagnet = false;
                             model.magnet--;
+                            isScroll = false;
                             break;
                         }
                     }
@@ -271,8 +293,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             } else {
                                 model.current_char.add(i);
                             }
+                            isScroll = false;
                             break;
                         }
+                    }
+
+                    if (isScroll = true){
+                        startX = event.getX() - model.trans_x;
+                        return true;
                     }
 
                 }
@@ -370,15 +398,31 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             return true;
                         }
                     }
-
+                    if(isScroll){
+                        scrollx = event.getX() - model.trans_x - startX;
+                        if(scrollx > 50) model.trans_x += 300;
+                        else if (scrollx < -50) model.trans_x += -300;
+                        if (model.trans_x < -model.point.x *2) model.trans_x = -model.point.x*2;
+                        else if (model.trans_x > 0) model.trans_x = 0;
+                    }
                 }
+                return true;
+
             default:
                 break;
         }
         return super.onTouchEvent(event);
     }
 
+
     public void update(){
+
+        Boolean spikesensor = false;
+        Boolean sensor = false;
+        Boolean lever = false;
+        int spikesensorOffset = 1;
+        int sensorOffset = 1;
+        int leverOffset = 1;
 
         //check if bluetooth mode is on
         if(GameModel.connectionSuccess && model.bluetoothConnection != null) {
@@ -468,7 +512,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                         model.key--;
 
                         if (model.cur_frame < 9) {
-                            model.cur_frame++;
+                            model.setFrame(model.cur_frame + 1);
                             model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true);
                         } else {
                             model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true);
@@ -482,9 +526,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 model.characterReborn(100, 50, true);
             }
 
-            model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SPIKESENSOR);
-            model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEVER);
-            model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SENSOR);
+            spikesensor = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SPIKESENSOR) == HitType.SPIKESENSOR;
+            lever = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEVER) == HitType.LEVER;
+            sensor = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SENSOR) == HitType.SENSOR;
+            if(!spikesensor) spikesensorOffset++;
+            if(!sensor) sensorOffset++;
+            if(!lever) leverOffset++;
             boolean ladder = model.structures.get(model.cur_frame).hitTools(hitBox)==HitType.LADDER;
             boolean down = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN;
             boolean up = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.UP) == HitType.UP;
@@ -538,6 +585,39 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             }
 
         }
+
+        ArrayList<Character> unselectedChar = model.getUnselectedChar();
+        for(Character c : unselectedChar){
+            Rect hitBox=new Rect(c.left,c.top,c.left+c.width,c.top+c.height);
+            if(lever == false) {
+                if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEVER) == HitType.LEVER){
+                    lever = true;
+                    for(int  i = 1; i < leverOffset; i++){
+                        model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEVER);
+                    }
+                }
+            }
+            if (spikesensor == false){
+                if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SPIKESENSOR) == HitType.SPIKESENSOR){
+                    spikesensor = true;
+                    for(int i = 1; i < spikesensorOffset; i++){
+                        model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SPIKESENSOR);
+                    }
+                }
+            }
+            if (sensor == false){
+                if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SENSOR) == HitType.SENSOR){
+                    sensor = true;
+                    for (int i = 1; i < sensorOffset; i++){
+                        model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SENSOR);
+                    }
+                }
+            }
+            if(!spikesensor) spikesensorOffset++;
+            if(!sensor) sensorOffset++;
+            if(!lever) leverOffset++;
+        }
+
         model.update();
     }
 }
