@@ -176,14 +176,14 @@ public class Character {
             if (left > model.structures.get(model.cur_frame).length - 100) {
                 if (model.cur_frame < 9 && model.cur_frame != 3 && model.cur_frame != 6 && model.cur_frame != 9) {
                     model.setFrame(model.cur_frame + 1);
-                    model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true);
+                    model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true,false);
                 } else {
                     stopX();
                 }
             } else if (left < 100 && velocityX < 0) {
                 if (model.cur_frame > 0 && model.cur_frame != 4 && model.cur_frame != 7) {
                     model.setFrame(model.cur_frame - 1);
-                    model.characterReborn(model.structures.get(model.cur_frame).endx, model.structures.get(model.cur_frame).endy, false);
+                    model.characterReborn(model.structures.get(model.cur_frame).endx, model.structures.get(model.cur_frame).endy, false,false);
                 } else {
                     stopX();
                 }

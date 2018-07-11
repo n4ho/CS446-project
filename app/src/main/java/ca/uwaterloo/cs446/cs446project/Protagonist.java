@@ -94,11 +94,11 @@ public class Protagonist extends Character {
 
         super.draw(canvas);
 
-        if (GameModel.connectionSuccess) {
-            if (model.pair_frame == model.cur_frame) {
-                canvas.drawBitmap(characterIdel, model.pair_x, model.pair_y, null);
-            }
-        }
+//        if (GameModel.connectionSuccess) {
+//            if (model.pair_frame == model.cur_frame) {
+//                canvas.drawBitmap(characterIdel, model.pair_x, model.pair_y, null);
+//            }
+//        }
 
         switch (this.state){
             case IDLE: // idle

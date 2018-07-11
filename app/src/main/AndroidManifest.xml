@@ -3,6 +3,7 @@
     package="ca.uwaterloo.cs446.cs446project">
 
     <uses-feature android:name="android.hardware.bluetooth" />
+
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -18,8 +19,9 @@
         android:roundIcon="@drawable/icon2"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <service android:enabled="true" android:name=".MusicService" />
+        <service
+            android:name=".MusicService"
+            android:enabled="true" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -32,7 +34,11 @@
         <activity android:name=".SelectionActivity" />
         <activity android:name=".OptionActivity" />
         <activity android:name=".BluetoothActivity" />
-        <activity android:name=".ScoreActivity"></activity>
+        <activity android:name=".ScoreActivity" />
+        <activity
+            android:name=".Credit"
+            android:label="@string/title_activity_credit"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -48,6 +48,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         this.model=model;
 
         thread=new MainThread(getHolder(), this);
+        model.thread = thread;
     }
 
     @Override
@@ -124,6 +125,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                     canvas.drawPath(path, paint);
                     //canvas.drawCircle(model.getCharacter().left + 35, model.getCharacter().top - 15,10,paint);
                 }
+
+                if (model.connectionSuccess) {
+                    if (model.pair_frame == model.cur_frame) {
+                        System.out.println("draw pair");
+                        model.pair.draw(canvas);
+                    }
+                }
+
 
                 for(UI ui: model.uis){
                     ui.draw(canvas);
@@ -445,6 +454,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 model.pair_frame = Integer.valueOf(l[0]);
                 model.pair_x = Integer.valueOf(l[1]);
                 model.pair_y = Integer.valueOf(l[2]);
+                model.pair.left = model.pair_x;
+                model.pair.top = model.pair_y;
             }else  if  (l.length > 0 && l[0].equals("arrived")){
                 model.pair_arrive = true;
             }
@@ -458,7 +469,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                     model.getCharacter().top+model.getCharacter().height);
 
             if(model.getCharacter().top==model.point.y - model.getCharacter().height){
-                model.characterReborn(100,50, true);
+                model.characterReborn(100,50, true,true);
             }
 
             HitType hittool  = model.structures.get(model.cur_frame).hitTools(hitBox);
@@ -472,7 +483,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 model.bomb ++;
             }
             if (hittool == HitType.SPIKE || hittool == HitType.WRAITH) {
-                model.characterReborn(100, 50, true);
+                model.characterReborn(100, 50, true,true);
             }
 
             if (hittool == HitType.CAGE) {
@@ -513,9 +524,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
                         if (model.cur_frame < 9) {
                             model.setFrame(model.cur_frame + 1);
-                            model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true);
+                            model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true,false);
                         } else {
-                            model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true);
+                            model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true,false);
                         }
                         this.drawend = true;
                     }
@@ -523,7 +534,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             }
 
             if (hittool == HitType.FALLING_SPIKE) {
-                model.characterReborn(100, 50, true);
+                model.characterReborn(100, 50, true,true);
             }
 
             spikesensor = model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.SPIKESENSOR) == HitType.SPIKESENSOR;
@@ -616,8 +627,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             if(!spikesensor) spikesensorOffset++;
             if(!sensor) sensorOffset++;
             if(!lever) leverOffset++;
+            if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN){
+                c.setY(model.structures.get(model.cur_frame).floorHeight - c.height + 5);
+            }
         }
-
         model.update();
     }
 }

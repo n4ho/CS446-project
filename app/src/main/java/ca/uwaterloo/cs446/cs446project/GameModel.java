@@ -30,6 +30,7 @@ public class GameModel extends Observable{
 
     private static final GameModel ourInstance = new GameModel();
     BluetoothConnectionService bluetoothConnection;
+    public MainThread thread;
     public int pair_x;
     public int pair_y;
     public int pair_frame;
@@ -106,6 +107,12 @@ public class GameModel extends Observable{
 
             ourInstance.locked_mom = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.momidle),70,100,false);
             ourInstance.locked_dad = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.dadidle),70,100,false);
+
+            if(ourInstance.connectionSuccess){
+                ourInstance.pair = new Protagonist(context, ourInstance, 70, 100,2);
+            }
+
+            ourInstance.pair = new Protagonist(context, ourInstance, 70, 100,2);
 
             for (int i = 0; i < 10; i++) {
                 ourInstance.structures.add(new Frame(i, point, context));
@@ -205,6 +212,7 @@ public class GameModel extends Observable{
 
     // game objs
     public ArrayList<Character> characters;
+    public Character pair;
     public ArrayList<Frame> structures;
     public ArrayList<UI> uis;
 
@@ -259,7 +267,16 @@ public class GameModel extends Observable{
         }
     }
 
-    public void characterReborn(int x, int y, boolean reset){
+    public void characterReborn(int x, int y, boolean reset,boolean wait){
+
+        if(wait){
+            try {
+                thread.sleep(1000);
+            }catch (Exception e){
+                //System.err.println("Failed to sleep MainThread");
+            }
+        }
+
         this.getCharacter().top= y - this.getCharacter().height;
         this.getCharacter().left=x;
         if (reset) {
