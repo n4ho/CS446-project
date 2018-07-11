@@ -48,6 +48,8 @@ public class imageSource {
     public Bitmap log;
     public Bitmap ladder;
     public Bitmap frame1background;
+    public Bitmap frame2background;
+    public Bitmap frame3background;
     public Bitmap spike_right;
 
 
@@ -133,6 +135,10 @@ public class imageSource {
         branch = compress(context,R.drawable.treebranch, 1);
         frame1background = compress(context,R.drawable.backgrond001, 1);
         frame1background=Bitmap.createScaledBitmap(frame1background, length, height, false);
+        frame2background = compress(context,R.drawable.background00001, 1);
+        frame2background=Bitmap.createScaledBitmap(frame2background, length, height, false);
+        frame3background = compress(context,R.drawable.background00004, 1);
+        frame3background=Bitmap.createScaledBitmap(frame3background, length, height, false);
 
     }
 

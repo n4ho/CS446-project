@@ -39,7 +39,6 @@ public class MainActivity extends Activity implements Observer{
         startButton=(Button)findViewById(R.id.start);
         optionButton=(Button)findViewById(R.id.option);
         creditButton=(Button)findViewById(R.id.credit);
-        scoreButton=(Button)findViewById(R.id.score);
         bluetoothButton=(Button)findViewById(R.id.bluetooth);
 
 
@@ -50,6 +49,7 @@ public class MainActivity extends Activity implements Observer{
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, SelectionActivity.class));
+                finish();
             }
         });
 
@@ -57,13 +57,7 @@ public class MainActivity extends Activity implements Observer{
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, OptionActivity.class));
-            }
-        });
-
-        scoreButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, ScoreActivity.class));
+                finish();
             }
         });
 
@@ -71,6 +65,7 @@ public class MainActivity extends Activity implements Observer{
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, BluetoothActivity.class));
+                finish();
             }
         });
 
