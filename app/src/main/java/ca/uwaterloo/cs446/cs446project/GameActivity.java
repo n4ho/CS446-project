@@ -101,7 +101,8 @@ public class GameActivity extends Activity implements Observer{
                     model.drawwin = false;
                     model.drawlose = false;
                 } else {
-                    startActivity(new Intent(GameActivity.this, SelectionActivity.class));
+                    startActivity(new Intent(GameActivity.this, MainActivity.class));
+                    finish();
                 }
             }
         });
@@ -122,13 +123,15 @@ public class GameActivity extends Activity implements Observer{
 
         GameModel.setInstance(this, getWindowManager().getDefaultDisplay(), 60, true);
 
-        // bind music service to activity
-        doBindService();
-        // start service
-        Intent music = new Intent();
-        music.setClass(this,MusicService.class);
-        startService(music);
 
+            // bind music service to activity
+            doBindService();
+        if(model.musicOn) {
+            // start service
+            Intent music = new Intent();
+            music.setClass(this, MusicService.class);
+            startService(music);
+        }
 
 
     }
@@ -137,22 +140,21 @@ public class GameActivity extends Activity implements Observer{
     protected void onPause() {
         super.onPause();
 
-        mServ.pauseMusic();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        //mServ.resumeMusic();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         doUnbindService();
     }
+
+
 
     @Override
     public void update(Observable observable, Object o) {

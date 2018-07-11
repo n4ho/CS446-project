@@ -236,6 +236,8 @@ public class GameModel extends Observable{
     public boolean go_back = false;
     static public boolean connectionSuccess = false;
 
+    public boolean musicOn=true;
+
     public boolean rescue_mom = false;
     public boolean rescue_dad = false;
     public Bitmap locked_mom;
