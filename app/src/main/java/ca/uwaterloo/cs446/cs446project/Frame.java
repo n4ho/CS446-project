@@ -636,6 +636,14 @@ public class Frame {
             MovingFloor f2 = new MovingFloor(context, ground, movingsrc2, movingdest2, 3, point.y - 670, point.y - 400);
             floors.add(f2);
 
+            //adding bomb
+            ArrayList<Rect> bomb_src = new ArrayList<>();
+            ArrayList<Rect> bomb_dest = new ArrayList<>();
+            bomb_src.add(new Rect (0, 0, bomb.getWidth(), bomb.getHeight() ));
+            bomb_dest.add(new Rect (800, point.y-750, 950, point.y - 610 ));
+            floors.add(new bomb(context, bomb, bomb_src, bomb_dest, point.y-750, 800));
+
+
             //adding sensor
             ArrayList<Rect> sensor_src2 = new ArrayList<>();
             ArrayList<Rect> sensor_dest2 = new ArrayList<>();
