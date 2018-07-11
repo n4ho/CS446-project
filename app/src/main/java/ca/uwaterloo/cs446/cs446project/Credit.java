@@ -29,6 +29,7 @@ public class Credit extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Credit.this, MainActivity.class));
+                finish();
             }
         });
 
