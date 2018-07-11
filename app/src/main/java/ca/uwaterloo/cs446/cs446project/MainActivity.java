@@ -39,6 +39,7 @@ public class MainActivity extends Activity implements Observer{
         startButton=(Button)findViewById(R.id.start);
         optionButton=(Button)findViewById(R.id.option);
         creditButton=(Button)findViewById(R.id.credit);
+
         bluetoothButton=(Button)findViewById(R.id.bluetooth);
 
 
