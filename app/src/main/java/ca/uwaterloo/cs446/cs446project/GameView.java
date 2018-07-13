@@ -99,7 +99,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             else if (drawend && GameModel.connectionSuccess == false) {
                 drawend = model.structures.get(model.cur_frame - 1).drawEnd(canvas, p.x, p.y);
                 if (drawend == false && model.cur_frame == 9) {
-                    model.go_back = true;
+                    ((GameActivity) getContext()).backToSelection();
                 }
             } else if (drawconver) {
                 drawconver = model.structures.get(model.cur_frame).drawConver(canvas, p.x, p.y);
