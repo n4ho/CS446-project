@@ -104,6 +104,8 @@ public class GameModel extends Observable{
 
             ourInstance.characters.add(new Protagonist(context, ourInstance, 70, 100,0));
             ourInstance.current_char.add(0);
+            ourInstance.characters.add(new Protagonist(context, ourInstance, 70, 100,1));
+            ourInstance.current_char.add(1);
 
             ourInstance.locked_mom = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.momidle),70,100,false);
             ourInstance.locked_dad = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.dadidle),70,100,false);
@@ -216,7 +218,7 @@ public class GameModel extends Observable{
     public ArrayList<Frame> structures;
     public ArrayList<UI> uis;
 
-    public int cur_frame = 4;
+    public int cur_frame = 0;
   
     public int curlevel = 0;
     public int max_frame=0;
@@ -226,10 +228,10 @@ public class GameModel extends Observable{
     public int trans_x = 0;
     public int trans_y = 0;
     public Inventory inventory;
-    public int bomb = 1;
+    public int bomb = 100;
 
-    public int magnet = 1;
-    public int key = 0;
+    public int magnet = 100;
+    public int key = 100;
   
     public boolean useBomb = false;
     public boolean useMagnet = false;
@@ -314,6 +316,7 @@ public class GameModel extends Observable{
         // only thrust left/ right if character on ground
         getCharacter().state=MoveType.LEFT;
         getCharacter().thrustLeft();
+        System.out.println("char" + current_char.get(0) + "going left, positon = " + getCharacter().left);
     }
 
     // left button released
