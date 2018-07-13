@@ -68,8 +68,12 @@ public class GameActivity extends Activity implements Observer{
         save=new Button(this);
         quit=new Button(this);
 
-        //quit.setBackgroundResource(R.drawable.more_rough_wood_7);
-        //save.setBackgroundResource(R.drawable.more_rough_wood_7);
+        //quit.setBackgroundResource(R.drawable.more_rough_wood_8_meitu_1);
+        //save.setBackgroundResource(R.drawable.more_rough_wood_8_meitu_1);
+
+        //quit.setFontFeatureSettings("casual");
+        //save.setFontFeatureSettings("casual");
+
 
         quit.setLeft(10);
         quit.setWidth(40);

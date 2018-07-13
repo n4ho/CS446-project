@@ -710,6 +710,13 @@ public class Frame {
             wraith_dest.add(new Rect (3*point.x-650, point.y - 450, 3*point.x-500, point.y - 220 ));
             floors.add(new wraith(context, wraith1, wraith_src, wraith_dest, 20, wraith, 2*point.x+1300, point.y-450));
 
+            //adding spike
+            ArrayList<Rect> spike1_src = new ArrayList<>();
+            ArrayList<Rect> spike1_dest = new ArrayList<>();
+            spike1_src.add(new Rect(0, 0, spike_up.getWidth()/2, spike_up.getHeight()));
+            spike1_dest.add(new Rect(3*point.x-700, point.y - 260, point.x*3-600,point.y-190));
+            floors.add(new spike(context, spike_up, spike1_src, spike1_dest));
+
             //adding door
             ArrayList<Rect> door_src = new ArrayList<>();
             ArrayList<Rect> door_dest = new ArrayList<>();
@@ -1003,14 +1010,14 @@ public class Frame {
             ArrayList<Rect> wraith_dest = new ArrayList<>();
             wraith_src.add(new Rect (0, 0, wraith1.getWidth(), wraith1.getHeight() ));
             wraith_dest.add(new Rect (1400, point.y - 950, 1600, point.y - 820 ));
-            floors.add(new wraith(context, wraith1, wraith_src, wraith_dest, 20, wraith, 1000, point.y-950));
+            floors.add(new wraith(context, wraith1, wraith_src, wraith_dest, 20, wraith, 1400, point.y-950));
 
             //adding wraith
             ArrayList<Rect> wraith_src1 = new ArrayList<>();
             ArrayList<Rect> wraith_dest1 = new ArrayList<>();
             wraith_src1.add(new Rect (0, 0, wraith1.getWidth(), wraith1.getHeight() ));
             wraith_dest1.add(new Rect (2000, point.y - 950, 2200, point.y - 820 ));
-            floors.add(new wraith(context, wraith1, wraith_src1, wraith_dest1, 20, wraith, 1300, point.y-450));
+            floors.add(new wraith(context, wraith1, wraith_src1, wraith_dest1, 20, wraith, 2000, point.y-950));
 
             //adding door
             ArrayList<Rect> door_src = new ArrayList<>();
