@@ -162,16 +162,13 @@ public class GameActivity extends Activity implements Observer{
         doUnbindService();
     }
 
-
+    public void backToSelection() {
+        startActivity(new Intent(GameActivity.this, SelectionActivity.class));
+        finish();
+    }
 
     @Override
     public void update(Observable observable, Object o) {
 
-        if (model.go_back) {
-            startActivity(new Intent(GameActivity.this, SelectionActivity.class));
-            model.go_back = false;
-        }
     }
-
-
 }

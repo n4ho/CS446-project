@@ -157,5 +157,12 @@ public class Inventory extends UI{
         }
     }
 
+    @Override
+    public boolean hitTest(float x, float y, float tolerance){
+        if(display == false) return false;
+        return x<=this.x+width+tolerance && x>=this.x-tolerance
+                && y<=this.y+height+tolerance && y>=this.y-tolerance;
+    }
+
 
 }

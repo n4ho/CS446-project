@@ -102,7 +102,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             else if (drawend && GameModel.connectionSuccess == false) {
                 drawend = model.structures.get(model.cur_frame - 1).drawEnd(canvas, p.x, p.y);
                 if (drawend == false && model.cur_frame == 9) {
-                    model.go_back = true;
+                    ((GameActivity) getContext()).backToSelection();
                 }
             } else if (drawconver) {
                 drawconver = model.structures.get(model.cur_frame).drawConver(canvas, p.x, p.y);
@@ -202,12 +202,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
                             if(model.haveSelectedCharacter()){
                                 if (ui.name == "LeftButton") {
-                                    //System.out.println("left button clicked");
+                                    System.out.println("left button clicked");
+                                    if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) != HitType.NULL);
+                                        //System.out.println("hit left");
+                                    if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN);
+                                        //System.out.println("hit floor");
                                     ui.setSelected(true);
                                     if ((model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT) == HitType.NULL &&
-                                            (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN || model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) == HitType.LOG_DOWN)) ||
+                                            (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN ||
+                                             model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_DOWN) == HitType.LOG_DOWN)) ||
                                             model.structures.get(model.cur_frame).hitTools(hitBox) == HitType.LADDER) {
                                         model.left();
+
                                     } else {
                                         model.getCharacter().stopX();
                                     }
@@ -215,6 +221,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                                 } else if (ui.name == "RightButton") {
                                     System.out.println("right button clicked");
                                     ui.setSelected(true);
+                                    if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT) != HitType.NULL);
+                                        //System.out.println("hit right");
+                                    if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN);
+                                        //System.out.println("hit floor");
                                     //check hit log first;
                                     if (model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LOG_LEFT) != HitType.NULL) {
                                         model.getCharacter().pushinglog = true;
@@ -586,6 +596,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEFT)==HitType.LEFT
                         &&model.getCharacter().state==MoveType.LEFT){
                     model.getCharacter().stopX();
+                    System.out.println("hit left");
                 }
 
                 if (logleft && model.getCharacter().velocityX > 0) {
@@ -595,6 +606,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.RIGHT)==HitType.RIGHT
                         &&model.getCharacter().state==MoveType.RIGHT){
                     model.getCharacter().stopX();
+                    System.out.println("hit right");
                 }
             }
 

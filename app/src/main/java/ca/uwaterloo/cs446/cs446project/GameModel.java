@@ -223,7 +223,7 @@ public class GameModel extends Observable{
     public ArrayList<Frame> structures;
     public ArrayList<UI> uis;
 
-    public int cur_frame = 4;
+    public int cur_frame = 0;
   
     public int curlevel = 0;
     public int max_frame=0;
@@ -233,14 +233,13 @@ public class GameModel extends Observable{
     public int trans_x = 0;
     public int trans_y = 0;
     public Inventory inventory;
-    public int bomb = 1;
+    public int bomb = 2;
 
-    public int magnet = 1;
-    public int key = 0;
+    public int magnet = 2;
+    public int key = 2;
   
     public boolean useBomb = false;
     public boolean useMagnet = false;
-    public boolean go_back = false;
     static public boolean connectionSuccess = false;
 
     public boolean musicOn=true;
@@ -278,14 +277,6 @@ public class GameModel extends Observable{
 
     public void characterReborn(int x, int y, boolean reset,boolean wait){
 
-        if(wait){
-            try {
-                thread.sleep(1000);
-            }catch (Exception e){
-                //System.err.println("Failed to sleep MainThread");
-            }
-        }
-
         this.getCharacter().top= y - this.getCharacter().height;
         this.getCharacter().left=x;
         if (reset) {
@@ -321,6 +312,7 @@ public class GameModel extends Observable{
         // only thrust left/ right if character on ground
         getCharacter().state=MoveType.LEFT;
         getCharacter().thrustLeft();
+        //System.out.println("char" + current_char.get(0) + "going left, position = " + getCharacter().left);
     }
 
     // left button released
@@ -400,6 +392,5 @@ public class GameModel extends Observable{
         ourInstance.current_char.add(type);
         if (type == 1) rescue_mom = true;
         if (type == 2) rescue_dad = true;
-
     }
 }
