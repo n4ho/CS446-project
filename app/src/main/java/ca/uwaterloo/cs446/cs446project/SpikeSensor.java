@@ -28,7 +28,7 @@ public class SpikeSensor extends StaticObject {
 
     @Override
     public HitType hitModel(Rect rect, HitType type) {
-        if (Rect.intersects(rect, dest.get(0))) {
+        if (Rect.intersects(rect, dest.get(0)) || (dest.size() > 1 && Rect.intersects(rect, dest.get(1)))) {
             for (int i = 0; i < s.size(); i++) {
                 s.get(i).needToDraw = false;
             }
