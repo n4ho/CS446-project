@@ -69,14 +69,14 @@ public class MusicService extends Service  implements MediaPlayer.OnErrorListene
     public void pauseMusic() {
         if (mPlayer.isPlaying()) {
             mPlayer.pause();
-            //length = mPlayer.getCurrentPosition();
+            length = mPlayer.getCurrentPosition();
 
         }
     }
 
     public void resumeMusic() {
         if (mPlayer.isPlaying() == false) {
-            //mPlayer.seekTo(length);
+            mPlayer.seekTo(length);
             mPlayer.start();
         }
     }
