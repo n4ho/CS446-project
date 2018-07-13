@@ -2,17 +2,21 @@ package ca.uwaterloo.cs446.cs446project;
 
         import android.Manifest;
         import android.annotation.TargetApi;
+        import android.app.Activity;
         import android.bluetooth.BluetoothAdapter;
         import android.bluetooth.BluetoothDevice;
         import android.content.BroadcastReceiver;
         import android.content.Context;
         import android.content.Intent;
         import android.content.IntentFilter;
+        import android.content.pm.ActivityInfo;
         import android.os.Build;
         import android.os.Bundle;
         import android.support.v7.app.AppCompatActivity;
         import android.util.Log;
         import android.view.View;
+        import android.view.Window;
+        import android.view.WindowManager;
         import android.widget.AdapterView;
         import android.widget.Button;
         import android.widget.EditText;
@@ -23,7 +27,7 @@ package ca.uwaterloo.cs446.cs446project;
         import java.util.UUID;
 
 
-public class BluetoothActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class BluetoothActivity extends Activity implements AdapterView.OnItemClickListener{
     private static final String TAG = "BluetoothActivity";
 
     BluetoothAdapter mBluetoothAdapter;
@@ -179,6 +183,12 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
         setContentView(R.layout.activity_bluetooth);
         Button btnONOFF = (Button) findViewById(R.id.btnONOFF);
         btnEnableDisable_Discoverable = (Button) findViewById(R.id.btnDiscoverable_on_off);

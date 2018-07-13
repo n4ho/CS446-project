@@ -66,11 +66,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+        System.out.println("GAMEVIEW DESTROYED, THREAD IS STOPPED");
         boolean retry=true;
+
         while (retry){
             try{
                 thread.setRunning(false);
-                thread.join();
+                //thread.join();
+                thread.interrupt();
             }catch (Exception e){
                 e.printStackTrace();
             }

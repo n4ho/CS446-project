@@ -27,8 +27,25 @@ public class MainActivity extends Activity implements Observer{
     GameModel model;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        System.out.println("MAIN ACTIVITY IS RESUMED");
+    }
+
+    @Override
+    protected void onDestroy() {
+        System.out.println("MAIN ACTIVITY IS DESTROYED");
+
+        super.onDestroy();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        System.out.println("MAIN ACTIVITY IS CREATED");
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
