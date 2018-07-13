@@ -122,6 +122,13 @@ public class GameModel extends Observable{
         }
     }
 
+    static void ResetModel(){
+        ourInstance.characters=null;
+        ourInstance.pair=null;
+        ourInstance.structures=null;
+        ourInstance.uis=null;
+    }
+
     static GameModel getInstance()
     {
         return ourInstance;

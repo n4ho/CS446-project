@@ -104,8 +104,15 @@ public class GameActivity extends Activity implements Observer{
                     GameModel.connectionSuccess = false;
                     model.drawwin = false;
                     model.drawlose = false;
+
+                    // release memory
+                    imageSource.ourInstance=null;
+                    model.ResetModel();
+                    finish();
                 } else {
                     startActivity(new Intent(GameActivity.this, MainActivity.class));
+                    model.ResetModel();
+                    imageSource.ourInstance=null;
                     finish();
                 }
             }
@@ -143,6 +150,7 @@ public class GameActivity extends Activity implements Observer{
     @Override
     protected void onPause() {
         super.onPause();
+        finish();
 
     }
 
