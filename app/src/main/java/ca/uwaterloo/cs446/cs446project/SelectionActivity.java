@@ -59,7 +59,7 @@ public class SelectionActivity extends Activity implements Observer{
             levels.get(0).setBackground(getResources().getDrawable(R.drawable.level1_screenshot));
         levels.get(1).setBackground(getResources().getDrawable(R.drawable.level2_screenshot));
         levels.get(2).setBackground(getResources().getDrawable(R.drawable.leve3_screenshot));
-        model.max_frame = 4;
+        model.max_frame = 8;
         if (model.max_frame < 7) {
             levels.get(2).setEnabled(false);
             levels.get(2).setBackground(null);
@@ -84,7 +84,7 @@ public class SelectionActivity extends Activity implements Observer{
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SelectionActivity.this, GameActivity.class));
-                model.cur_frame=6;
+                model.cur_frame=4;
                 finish();
             }
         });

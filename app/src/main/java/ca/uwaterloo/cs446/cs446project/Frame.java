@@ -258,7 +258,7 @@ public class Frame {
             ArrayList<Rect> ladder_src1 = new ArrayList<>();
             ArrayList<Rect> ladder_dest1 = new ArrayList<>();
             ladder_src1.add(new Rect (0, 0, ladder.getWidth(), ladder.getHeight() ));
-            ladder_dest1.add(new Rect (2*point.x+1250, -200, 2*point.x+1350, point.y - 550 ));
+            ladder_dest1.add(new Rect (2*point.x+1450, -200, 2*point.x+1600, point.y - 550 ));
 
             //wraith
             ArrayList<Rect> wraith_src = new ArrayList<>();
@@ -538,9 +538,9 @@ public class Frame {
             ArrayList<Rect> key_src = new ArrayList<>();
             ArrayList<Rect> key_dest = new ArrayList<>();
             key_src.add(new Rect (0, 0, key.getWidth(), key.getHeight() ));
-            key_dest.add(new Rect (700, point.y - 220, 850, point.y - 120 ));
+            key_dest.add(new Rect (1000, point.y - 220, 1100, point.y - 120 ));
 
-            floors.add(new key(context, key, key_src, key_dest, 700, point.y - 120));
+            floors.add(new key(context, key, key_src, key_dest, 1000, point.y - 120));
 
             src.add(new Rect(500, 0, 1000, ground.getHeight()));
             dest.add(new Rect(point.x, point.y - 700, point.x+600, point.y-620));
