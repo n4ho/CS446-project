@@ -538,9 +538,9 @@ public class Frame {
             ArrayList<Rect> key_src = new ArrayList<>();
             ArrayList<Rect> key_dest = new ArrayList<>();
             key_src.add(new Rect (0, 0, key.getWidth(), key.getHeight() ));
-            key_dest.add(new Rect (500, point.y - 220, 600, point.y - 120 ));
+            key_dest.add(new Rect (700, point.y - 220, 850, point.y - 120 ));
 
-            floors.add(new key(context, key, key_src, key_dest, 500, point.y - 120));
+            floors.add(new key(context, key, key_src, key_dest, 700, point.y - 120));
 
             src.add(new Rect(500, 0, 1000, ground.getHeight()));
             dest.add(new Rect(point.x, point.y - 700, point.x+600, point.y-620));
