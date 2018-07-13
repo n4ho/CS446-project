@@ -1033,7 +1033,7 @@ public class Frame {
             canvas.drawBitmap(model.locked_mom,1115,point.y-550,null);
         }
         else if(model.cur_frame == 9 && model.rescue_dad == false){
-            canvas.drawBitmap(model.locked_dad,point.x*2-365, 350,null);
+            canvas.drawBitmap(model.locked_dad,point.x*2-365, 130,null);
         }
 
         for (PhysicalModel p : floors) {

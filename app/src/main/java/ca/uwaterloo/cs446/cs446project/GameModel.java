@@ -104,8 +104,6 @@ public class GameModel extends Observable{
 
             ourInstance.characters.add(new Protagonist(context, ourInstance, 70, 100,0));
             ourInstance.current_char.add(0);
-            ourInstance.characters.add(new Protagonist(context, ourInstance, 70, 100,1));
-            ourInstance.current_char.add(1);
 
             ourInstance.locked_mom = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.momidle),70,100,false);
             ourInstance.locked_dad = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.dadidle),70,100,false);
