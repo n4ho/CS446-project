@@ -66,7 +66,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-
         boolean retry=true;
         thread.setRunning(false);
         thread = null;

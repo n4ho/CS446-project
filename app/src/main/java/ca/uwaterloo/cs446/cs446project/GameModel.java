@@ -122,6 +122,13 @@ public class GameModel extends Observable{
         }
     }
 
+    static void ResetModel(){
+        ourInstance.characters=null;
+        ourInstance.pair=null;
+        ourInstance.structures=null;
+        ourInstance.uis=null;
+    }
+
     static GameModel getInstance()
     {
         return ourInstance;
@@ -306,7 +313,7 @@ public class GameModel extends Observable{
         // only thrust left/ right if character on ground
         getCharacter().state=MoveType.LEFT;
         getCharacter().thrustLeft();
-        System.out.println("char" + current_char.get(0) + "going left, positon = " + getCharacter().left);
+        //System.out.println("char" + current_char.get(0) + "going left, position = " + getCharacter().left);
     }
 
     // left button released

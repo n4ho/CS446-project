@@ -42,7 +42,6 @@ public class imageSource {
     public Bitmap spike_up;
     public Bitmap spike_left;
     public Bitmap spike_down;
-    public Bitmap rock;
     public Bitmap door;
     public Bitmap ground;
     public Bitmap log;
@@ -113,8 +112,6 @@ public class imageSource {
         wraith.add(wraith18);
         wraith.add(wraith19);
         wraith.add(wraith20);
-
-        rock = BitmapFactory.decodeResource(context.getResources(),R.drawable.rock);
 
         //spike
         spike_up = BitmapFactory.decodeResource(context.getResources(),R.drawable.spike_up);
