@@ -55,7 +55,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         thread.setRunning(true);
         thread.start();
-        //model=new GameModel(this.getContext(), display,fps);
 
     }
 
@@ -64,18 +63,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     }
 
+
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+
         boolean retry=true;
-        while (retry){
-            try{
-                thread.setRunning(false);
-                thread.join();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
+        thread.setRunning(false);
+        thread = null;
     }
+
 
     @Override
     public void draw(Canvas canvas){

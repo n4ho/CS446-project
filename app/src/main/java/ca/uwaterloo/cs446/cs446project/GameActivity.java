@@ -28,6 +28,8 @@ public class GameActivity extends Activity implements Observer{
     GameModel model;
     Button quit;
     Button save;
+    FrameLayout game;
+    GameView gameView;
 
     private boolean mIsBound = false;
     private MusicService mServ;
@@ -92,6 +94,8 @@ public class GameActivity extends Activity implements Observer{
             }
         });
 
+
+
         quit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,16 +105,21 @@ public class GameActivity extends Activity implements Observer{
                     model.drawwin = false;
                     model.drawlose = false;
                 } else {
-                    startActivity(new Intent(GameActivity.this, MainActivity.class));
+
+                    model.thread.setRunning(false);
+                    model.thread = null;
+                    game.removeView(gameView);
+                    gameView = null;
                     finish();
+
                 }
             }
         });
 
         model= GameModel.getInstance();
 
-        FrameLayout game=new FrameLayout(this);
-        GameView gameView=new GameView(this, getWindowManager().getDefaultDisplay(), model);
+        game=new FrameLayout(this);
+        gameView=new GameView(this, getWindowManager().getDefaultDisplay(), model);
         LinearLayout gameWidgets=new LinearLayout(this);
 
         gameWidgets.addView(quit);

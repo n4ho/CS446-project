@@ -24,13 +24,18 @@ public class SelectionActivity extends Activity implements Observer{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
+        super.onCreate(null);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_selection);
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        System.out.println("making a new selection activity ------------------------------");
+
+
 
         levels=new ArrayList<>();
 
@@ -40,7 +45,7 @@ public class SelectionActivity extends Activity implements Observer{
         levels.add((Button)findViewById(R.id.level2));
         levels.add((Button)findViewById(R.id.level3));
 
-        GameModel.readModel();
+       // GameModel.readModel();
         model= GameModel.getInstance();
 
         GameModel.setInstance(this, getWindowManager().getDefaultDisplay(), 60, false);
@@ -76,7 +81,7 @@ public class SelectionActivity extends Activity implements Observer{
             public void onClick(View view) {
                 startActivity(new Intent(SelectionActivity.this, GameActivity.class));
                    model.cur_frame=0;
-                   finish();
+                  // finish();
             }
         });
 
@@ -85,7 +90,7 @@ public class SelectionActivity extends Activity implements Observer{
             public void onClick(View view) {
                 startActivity(new Intent(SelectionActivity.this, GameActivity.class));
                 model.cur_frame=4;
-                finish();
+              //  finish();
             }
         });
 
@@ -94,12 +99,13 @@ public class SelectionActivity extends Activity implements Observer{
             public void onClick(View view) {
                 startActivity(new Intent(SelectionActivity.this, GameActivity.class));
                 model.cur_frame=7;
-                finish();
+               // finish();
             }
         });
 
 
     }
+
 
     @Override
     public void update(Observable observable, Object o) {

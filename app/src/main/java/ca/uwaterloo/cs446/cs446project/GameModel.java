@@ -252,6 +252,7 @@ public class GameModel extends Observable{
         point = new Point();
     }
 
+
     public void optionalDraw(int option, Canvas canvas){
         if(option==0){
             for(UI ui: uis){
