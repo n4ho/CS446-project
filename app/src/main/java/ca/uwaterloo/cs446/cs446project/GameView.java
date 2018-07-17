@@ -66,9 +66,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-        boolean retry=true;
-        thread.setRunning(false);
-        thread = null;
+        if (thread != null) {
+            thread.setRunning(false);
+           // thread = null;
+        }
     }
 
 
@@ -531,7 +532,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             model.setFrame(model.cur_frame + 1);
                             model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true,false);
                         } else {
-                            model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true,false);
+                           model.characterReborn(model.structures.get(model.cur_frame).startx, model.structures.get(model.cur_frame).starty, true,false);
                         }
                         this.drawend = true;
                     }

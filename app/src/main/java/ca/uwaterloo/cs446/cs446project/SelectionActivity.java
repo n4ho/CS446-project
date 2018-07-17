@@ -48,7 +48,7 @@ public class SelectionActivity extends Activity implements Observer{
        // GameModel.readModel();
         model= GameModel.getInstance();
 
-        GameModel.setInstance(this, getWindowManager().getDefaultDisplay(), 60, false);
+       // GameModel.setInstance(this, getWindowManager().getDefaultDisplay(), 60, false);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +61,7 @@ public class SelectionActivity extends Activity implements Observer{
                 levels.get(i).setEnabled(true);
             }
 
-            levels.get(0).setBackground(getResources().getDrawable(R.drawable.level1_screenshot));
+        levels.get(0).setBackground(getResources().getDrawable(R.drawable.level1_screenshot));
         levels.get(1).setBackground(getResources().getDrawable(R.drawable.level2_screenshot));
         levels.get(2).setBackground(getResources().getDrawable(R.drawable.leve3_screenshot));
         model.max_frame = 8;
@@ -81,25 +81,29 @@ public class SelectionActivity extends Activity implements Observer{
             public void onClick(View view) {
                 startActivity(new Intent(SelectionActivity.this, GameActivity.class));
                    model.cur_frame=0;
-                  // finish();
+                  finish();
             }
         });
 
         levels.get(1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(SelectionActivity.this, GameActivity.class));
+                System.out.println("inside selection page 2*********************");
                 model.cur_frame=4;
-              //  finish();
+                startActivity(new Intent(SelectionActivity.this, GameActivity.class));
+
+               finish();
             }
         });
 
         levels.get(2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                model.cur_frame=9;
+                System.out.println("inside selection page 3*********************");
                 startActivity(new Intent(SelectionActivity.this, GameActivity.class));
-                model.cur_frame=7;
-               // finish();
+
+               finish();
             }
         });
 

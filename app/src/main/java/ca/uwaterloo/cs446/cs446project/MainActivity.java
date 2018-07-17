@@ -60,7 +60,7 @@ public class MainActivity extends Activity implements Observer{
         bluetoothButton=(Button)findViewById(R.id.bluetooth);
 
 
-        model= GameModel.getInstance();
+        //model= GameModel.getInstance();
         GameModel.setInstance(this, getWindowManager().getDefaultDisplay(), 60, false);
 
         startButton.setOnClickListener(new View.OnClickListener(){
