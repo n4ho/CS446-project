@@ -607,7 +607,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
         ArrayList<Character> unselectedChar = model.getUnselectedChar();
         for(Character c : unselectedChar){
-            Rect hitBox=new Rect(c.left,c.top,c.left+c.width,c.top+c.height+20);
+            Rect hitBox=new Rect(c.left,c.top,c.left+c.width,c.top+c.height);
             if(lever == false) {
                 if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.LEVER) == HitType.LEVER){
                     lever = true;
@@ -635,6 +635,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             if(!spikesensor) spikesensorOffset++;
             if(!sensor) sensorOffset++;
             if(!lever) leverOffset++;
+            model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN);
             if(model.structures.get(model.cur_frame).hitFloor(hitBox, HitType.DOWN) == HitType.DOWN){
                 c.setY(model.structures.get(model.cur_frame).floorHeight - c.height + 5);
             }
