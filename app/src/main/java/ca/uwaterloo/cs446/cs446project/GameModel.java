@@ -236,8 +236,9 @@ public class GameModel extends Observable{
     public int bomb = 2;
 
     public int magnet = 2;
-    public int key = 2;
-  
+    public int key = 0;
+    public int key = 0;
+
     public boolean useBomb = false;
     public boolean useMagnet = false;
     static public boolean connectionSuccess = false;
