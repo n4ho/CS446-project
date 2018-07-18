@@ -306,7 +306,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                             if (model.current_char.contains(i)) {
                                 model.current_char.remove((Integer) i);
                             } else {
-                                model.current_char.add(i);
+                                if(!model.haveSelectedCharacter()){
+                                    model.current_char.add(i);
+                                }
+                                else if (model.close_enough(model.getCharacter(),model.characters.get(i))){
+                                    model.current_char.add(i);
+                                }
                             }
                             isScroll = false;
                             break;

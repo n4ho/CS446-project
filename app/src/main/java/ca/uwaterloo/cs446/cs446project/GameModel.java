@@ -111,8 +111,10 @@ public class GameModel extends Observable{
             ourInstance.characters.add(new Protagonist(context, ourInstance, 70, 100,0));
             ourInstance.current_char.add(0);
 
-            ourInstance.characters.add(new Protagonist(context, ourInstance, 70, 100,1));
-            ourInstance.current_char.add(1);
+            if(ourInstance.cur_frame >= 7 && ourInstance.characters.size() == 1){
+                ourInstance.characters.add(new Protagonist(context, ourInstance, 70, 100,1));
+                ourInstance.current_char.add(1);
+            }
 
             ourInstance.locked_mom = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.momidle),70,100,false);
             ourInstance.locked_dad = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.dadidle),70,100,false);
@@ -377,6 +379,14 @@ public class GameModel extends Observable{
 
     public boolean haveSelectedCharacter(){
         return current_char.size() > 0;
+    }
+
+    public boolean close_enough(Character a, Character b){
+        int x1 = a.left;
+        int y1 = a.top;
+        int x2 = b.left;
+        int y2 = b.top;
+        return ((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2)) < 40000;
     }
 
     public ArrayList<Character> getUnselectedChar(){
