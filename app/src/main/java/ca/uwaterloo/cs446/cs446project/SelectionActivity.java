@@ -64,7 +64,10 @@ public class SelectionActivity extends Activity implements Observer{
         levels.get(0).setBackground(getResources().getDrawable(R.drawable.level1_screenshot));
         levels.get(1).setBackground(getResources().getDrawable(R.drawable.level2_screenshot));
         levels.get(2).setBackground(getResources().getDrawable(R.drawable.leve3_screenshot));
-        model.max_frame = 8;
+
+        GameModel.getInstance().context=this;
+        GameModel.readModel();
+
         if (model.max_frame < 7) {
             levels.get(2).setEnabled(false);
             levels.get(2).setBackground(null);

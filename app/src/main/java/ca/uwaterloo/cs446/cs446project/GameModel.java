@@ -154,7 +154,23 @@ public class GameModel extends Observable{
                 OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
                         ourInstance.context.openFileOutput("game.txt", Context.MODE_PRIVATE));
                 ourInstance.max_frame=Math.max(ourInstance.max_frame,ourInstance.cur_frame);
-                outputStreamWriter.write(Integer.toString(ourInstance.max_frame));
+                outputStreamWriter.write(Integer.toString(ourInstance.max_frame)+"\n");
+                outputStreamWriter.write(Integer.toString(ourInstance.cur_frame)+"\n");
+                outputStreamWriter.write(Integer.toString(ourInstance.trans_x)+"\n");
+                outputStreamWriter.write(Integer.toString(ourInstance.trans_y)+"\n");
+                outputStreamWriter.write(Integer.toString(ourInstance.bomb)+"\n");
+                outputStreamWriter.write(Integer.toString(ourInstance.key)+"\n");
+                outputStreamWriter.write(Integer.toString(ourInstance.magnet)+"\n");
+                if(ourInstance.rescue_dad){
+                    outputStreamWriter.write("true\n");
+                }else{
+                    outputStreamWriter.write("false\n");
+                }
+                if(ourInstance.rescue_mom){
+                    outputStreamWriter.write("true\n");
+                }else{
+                    outputStreamWriter.write("false\n");
+                }
                 outputStreamWriter.close();
             }
             catch (IOException e) {
@@ -162,9 +178,9 @@ public class GameModel extends Observable{
             }
     }
 
-    static void readModel(){
+    static void resumeModel(){
 
-        String ret = "";
+        ArrayList<String> ret=null;
 
         try {
             InputStream inputStream = ourInstance.context.openFileInput("game.txt");
@@ -173,14 +189,14 @@ public class GameModel extends Observable{
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                 String receiveString = "";
-                StringBuilder stringBuilder = new StringBuilder();
+
+                ret=new ArrayList<>();
 
                 while ( (receiveString = bufferedReader.readLine()) != null ) {
-                    stringBuilder.append(receiveString);
+                    ret.add(receiveString);
                 }
 
                 inputStream.close();
-                ret = stringBuilder.toString();
             }
         }
         catch (FileNotFoundException e) {
@@ -189,7 +205,7 @@ public class GameModel extends Observable{
             Log.e("read model", "Can not read file: " + e.toString());
         }
 
-        if(ret==""){
+        if(ret==null){
             ourInstance.max_frame=0;
             File directory = ourInstance.context.getFilesDir();
             File new_file =
@@ -205,10 +221,79 @@ public class GameModel extends Observable{
             Log.d("Create File", "File exists?"+new_file.exists());
 
         }else {
-            ourInstance.max_frame = Integer.parseInt(ret);
+            // ret
+            System.out.println("ResumeModel: "+ret);
+            ourInstance.max_frame = Integer.parseInt(ret.get(0));
+            ourInstance.cur_frame = Integer.parseInt(ret.get(1));
+            ourInstance.trans_x=Integer.parseInt(ret.get(2));
+            ourInstance.trans_y=Integer.parseInt(ret.get(3));
+            ourInstance.bomb=Integer.parseInt(ret.get(4));
+            ourInstance.key=Integer.parseInt(ret.get(5));
+            ourInstance.magnet=Integer.parseInt(ret.get(6));
+            if(ret.get(7)=="true"){
+                ourInstance.rescue_dad=true;
+            }else{
+                ourInstance.rescue_dad=false;
+            }
+            if(ret.get(8)=="true"){
+                ourInstance.rescue_mom=true;
+            }else{
+                ourInstance.rescue_mom=false;
+            }
         }
 
     }
+
+
+    static void readModel(){
+
+        ArrayList<String> ret=null;
+
+        try {
+            InputStream inputStream = ourInstance.context.openFileInput("game.txt");
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+
+                ret=new ArrayList<>();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    ret.add(receiveString);
+                }
+
+                inputStream.close();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("read model", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("read model", "Can not read file: " + e.toString());
+        }
+
+        if(ret==null){
+            ourInstance.max_frame=0;
+            File directory = ourInstance.context.getFilesDir();
+            File new_file =
+                    new File(directory.getAbsolutePath() + File.separator +  "game.txt");
+            try
+            {
+                new_file.createNewFile();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            Log.d("Create File", "File exists?"+new_file.exists());
+
+        }else {
+            System.out.println("SaveModel: "+ret);
+            ourInstance.max_frame = Integer.parseInt(ret.get(0));
+        }
+
+    }
+
 
     static public Bitmap compress(Context context, int image){
         InputStream is = context.getResources().openRawResource(+ image);
