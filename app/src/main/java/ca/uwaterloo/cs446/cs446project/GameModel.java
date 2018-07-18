@@ -111,6 +111,9 @@ public class GameModel extends Observable{
             ourInstance.characters.add(new Protagonist(context, ourInstance, 70, 100,0));
             ourInstance.current_char.add(0);
 
+            ourInstance.characters.add(new Protagonist(context, ourInstance, 70, 100,1));
+            ourInstance.current_char.add(1);
+
             ourInstance.locked_mom = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.momidle),70,100,false);
             ourInstance.locked_dad = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.dadidle),70,100,false);
 
@@ -329,8 +332,8 @@ public class GameModel extends Observable{
     public int bomb = 2;
 
     public int magnet = 2;
-    public int key = 2;
-  
+    public int key = 0;
+
     public boolean useBomb = false;
     public boolean useMagnet = false;
     static public boolean connectionSuccess = false;
