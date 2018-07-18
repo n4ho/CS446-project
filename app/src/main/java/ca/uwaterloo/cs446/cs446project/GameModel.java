@@ -28,7 +28,7 @@ import java.util.Observable;
 public class GameModel extends Observable{
 
 
-    private static final GameModel ourInstance = new GameModel();
+    private static GameModel ourInstance = null;
     BluetoothConnectionService bluetoothConnection;
     public MainThread thread;
     public int pair_x;
@@ -41,6 +41,12 @@ public class GameModel extends Observable{
 
 
     static void setInstance(Context context, Display d, int _fps, boolean isGameView){
+        System.out.println("inside set Instance*********************");
+        if (ourInstance == null) {
+            ourInstance = new GameModel();
+            System.out.println("inside set Instance Initialization*********************");
+        }
+
         ourInstance.fps=_fps;
         ourInstance.display=d;
         ourInstance.context=context;
@@ -123,15 +129,17 @@ public class GameModel extends Observable{
     }
 
     static void ResetModel(){
-        ourInstance.characters=null;
-        ourInstance.pair=null;
-        ourInstance.structures=null;
-        ourInstance.uis=null;
+        ourInstance = null;
     }
 
     static GameModel getInstance()
     {
-        return ourInstance;
+        System.out.println("inside get Instance*********************");
+            if (ourInstance == null) {
+                ourInstance = new GameModel();
+                System.out.println("inside get Instance Initialization*********************");
+            }
+            return ourInstance;
     }
 
     static void saveModel(){
@@ -259,6 +267,7 @@ public class GameModel extends Observable{
 
         point = new Point();
     }
+
 
     public void optionalDraw(int option, Canvas canvas){
         if(option==0){

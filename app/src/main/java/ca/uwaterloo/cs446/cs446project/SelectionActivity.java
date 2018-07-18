@@ -24,13 +24,18 @@ public class SelectionActivity extends Activity implements Observer{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
+        super.onCreate(null);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_selection);
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        System.out.println("making a new selection activity ------------------------------");
+
+
 
         levels=new ArrayList<>();
 
@@ -40,10 +45,10 @@ public class SelectionActivity extends Activity implements Observer{
         levels.add((Button)findViewById(R.id.level2));
         levels.add((Button)findViewById(R.id.level3));
 
-        GameModel.readModel();
+       // GameModel.readModel();
         model= GameModel.getInstance();
 
-        GameModel.setInstance(this, getWindowManager().getDefaultDisplay(), 60, false);
+       // GameModel.setInstance(this, getWindowManager().getDefaultDisplay(), 60, false);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +61,7 @@ public class SelectionActivity extends Activity implements Observer{
                 levels.get(i).setEnabled(true);
             }
 
-            levels.get(0).setBackground(getResources().getDrawable(R.drawable.level1_screenshot));
+        levels.get(0).setBackground(getResources().getDrawable(R.drawable.level1_screenshot));
         levels.get(1).setBackground(getResources().getDrawable(R.drawable.level2_screenshot));
         levels.get(2).setBackground(getResources().getDrawable(R.drawable.leve3_screenshot));
         model.max_frame = 8;
@@ -76,30 +81,35 @@ public class SelectionActivity extends Activity implements Observer{
             public void onClick(View view) {
                 startActivity(new Intent(SelectionActivity.this, GameActivity.class));
                    model.cur_frame=0;
-                   finish();
+                  finish();
             }
         });
 
         levels.get(1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(SelectionActivity.this, GameActivity.class));
+                System.out.println("inside selection page 2*********************");
                 model.cur_frame=4;
-                finish();
+                startActivity(new Intent(SelectionActivity.this, GameActivity.class));
+
+               finish();
             }
         });
 
         levels.get(2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                model.cur_frame=9;
+                System.out.println("inside selection page 3*********************");
                 startActivity(new Intent(SelectionActivity.this, GameActivity.class));
-                model.cur_frame=7;
-                finish();
+
+               finish();
             }
         });
 
 
     }
+
 
     @Override
     public void update(Observable observable, Object o) {

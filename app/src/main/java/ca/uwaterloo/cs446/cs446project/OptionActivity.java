@@ -32,7 +32,7 @@ public class OptionActivity extends Activity implements Observer {
         model=GameModel.getInstance();
 
         musicSwitch=findViewById(R.id.musicSwitch);
-        musicSwitch.setChecked(true);
+        musicSwitch.setChecked(model.musicOn);
         musicSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 model.musicOn=isChecked;

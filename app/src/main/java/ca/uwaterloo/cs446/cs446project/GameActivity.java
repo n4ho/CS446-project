@@ -28,6 +28,8 @@ public class GameActivity extends Activity implements Observer{
     GameModel model;
     Button quit;
     Button save;
+    FrameLayout game;
+    GameView gameView;
 
     private boolean mIsBound = false;
     private MusicService mServ;
@@ -96,6 +98,8 @@ public class GameActivity extends Activity implements Observer{
             }
         });
 
+
+
         quit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,18 +114,27 @@ public class GameActivity extends Activity implements Observer{
                     model.ResetModel();
                     finish();
                 } else {
-                    startActivity(new Intent(GameActivity.this, MainActivity.class));
+                    System.out.println("inside onclick *******************");
+                    if (model.thread != null) {
+                        model.thread.setRunning(false);
+                      //  model.thread = null;
+                    }
                     model.ResetModel();
-                    imageSource.ourInstance=null;
+                    game.removeView(gameView);
+                    gameView = null;
+                    startActivity(new Intent(GameActivity.this, SelectionActivity.class));
                     finish();
+
                 }
             }
         });
 
+        System.out.println("inside game activity*********************");
+        GameModel.setInstance(this, getWindowManager().getDefaultDisplay(), 60, true);
         model= GameModel.getInstance();
 
-        FrameLayout game=new FrameLayout(this);
-        GameView gameView=new GameView(this, getWindowManager().getDefaultDisplay(), model);
+        game=new FrameLayout(this);
+        gameView=new GameView(this, getWindowManager().getDefaultDisplay(), model);
         LinearLayout gameWidgets=new LinearLayout(this);
 
         gameWidgets.addView(quit);
@@ -132,7 +145,6 @@ public class GameActivity extends Activity implements Observer{
 
         setContentView(game);
 
-        GameModel.setInstance(this, getWindowManager().getDefaultDisplay(), 60, true);
 
 
             // bind music service to activity
@@ -167,8 +179,8 @@ public class GameActivity extends Activity implements Observer{
     }
 
     public void backToSelection() {
-        startActivity(new Intent(GameActivity.this, SelectionActivity.class));
-        finish();
+        System.out.println("inside backtoSelection***********************");
+        quit.callOnClick();
     }
 
     @Override
