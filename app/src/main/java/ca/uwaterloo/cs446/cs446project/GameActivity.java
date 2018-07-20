@@ -9,6 +9,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ public class GameActivity extends Activity implements Observer{
     Button save;
     FrameLayout game;
     GameView gameView;
+    MediaPlayer mPlayer;
 
     private boolean mIsBound = false;
     private MusicService mServ;
@@ -146,15 +148,26 @@ public class GameActivity extends Activity implements Observer{
         setContentView(game);
 
 
+        mPlayer = MediaPlayer.create(this, R.raw.intheautumn);
+
+        if (mPlayer != null) {
+            mPlayer.setLooping(true);
+            mPlayer.setVolume(100, 100);
+        }
+
+        mPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+
+            public boolean onError(MediaPlayer mp, int what, int
+                    extra) {
+
+                onError(mPlayer, what, extra);
+                return true;
+            }
+        });
+
 
             // bind music service to activity
-            doBindService();
-        if(model.musicOn) {
-            // start service
-            Intent music = new Intent();
-            music.setClass(this, MusicService.class);
-            startService(music);
-        }
+//            doBindService();
 
 
     }
@@ -162,6 +175,9 @@ public class GameActivity extends Activity implements Observer{
     @Override
     protected void onPause() {
         super.onPause();
+//        if(mPlayer!=null) {
+//            mPlayer.pause();
+//        }
         finish();
 
     }
@@ -169,13 +185,31 @@ public class GameActivity extends Activity implements Observer{
     @Override
     protected void onResume() {
         super.onResume();
+        if(mPlayer!=null&model.musicOn) {
+            // start service
+//            Intent music = new Intent();
+//            music.setClass(this, MusicService.class);
+//            startService(music);
+
+            mPlayer.start();
+
+        }
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        doUnbindService();
+        finish();
+        if(mPlayer!=null&&model.musicOn){
+            mPlayer.pause();
+        }
+//        if(mPlayer!=null) {
+//            mPlayer.stop();
+//            mPlayer.release();
+//            mPlayer = null;
+//        }
+        //doUnbindService();
     }
 
     public void backToSelection() {
